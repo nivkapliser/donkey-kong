@@ -3,6 +3,7 @@
 void Mario::isValidMove() {
 	for (int i = 0; i < 5; i++) {
 		if (pBoard->getChar(x, y - 1) == dontTouch[i]) {
+			// change
 
 		}
 	}
