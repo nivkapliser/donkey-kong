@@ -11,6 +11,7 @@ constexpr int ESC = 27;
 
 int main()
 {
+	ShowConsoleCursor(false);
 	Board board;
 	Mario mario;
 	board.reset();
