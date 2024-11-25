@@ -18,6 +18,8 @@ class Mario
 	int dirX = 0;
 	int dirY = 0;
 
+	bool isJump = false;
+
 	Board* pBoard = nullptr;
 
 	void draw(char c) const {
@@ -33,8 +35,11 @@ public:
 		draw(' ');
 	}
 	
+	void climbUp();
+	bool isLadder();
 	void changeDir(Direction dir);
-	void isValidMove();
+	bool isValidMove();
+	bool gravitation();
 	void move();
 	void keyPressed(char key);
 	void setBoard(Board& board) {

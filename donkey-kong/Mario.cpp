@@ -1,16 +1,51 @@
 #include "Mario.h"
 
-void Mario::isValidMove() {
-	for (int i = 0; i < 5; i++) {
-		if (pBoard->getChar(x, y - 1) == dontTouch[i]) {
-			// change
+bool Mario::isLadder() {
+	if (pBoard->getChar(x, y - 1) == 'H' || pBoard->getChar(x, y + 1) == 'H') {
+		return true;
+	}
+	return false;
+}
 
+void Mario::climbUp() {
+	dirY = -1;
+	dirX = 0;
+	while (isLadder() == true)
+	{
+		x += dirX;
+		y += dirY;
+		draw();
+		gotoxy(x, y + 1);
+		std::cout << 'H';
+		Sleep(175);
+		erase();
+	
+
+	}
+
+	
+}
+
+bool Mario::gravitation() {
+	if (pBoard->getChar(x, y + 1) == ' ' && isJump == false) {
+		return true;
+	}
+	return false;
+}
+
+bool Mario::isValidMove() {
+	for (int i = 0; i < 5; i++) {
+		if (pBoard->getChar(x + dirX, y + dirY) == dontTouch[i]) {
+			//changeDir(STAY);
+			return false;
 		}
 	}
+	return true;
 }
 
 void Mario::jump() {
 
+	isJump = true;
 	dirY = -1;
 	for (int i = 0; i < 2; i++) {
 		Sleep(100);
@@ -26,6 +61,7 @@ void Mario::jump() {
 		draw();
 	}
 	dirY = 0;
+	isJump = false;
 	
 
 }
@@ -37,9 +73,12 @@ void Mario::changeDir(Direction dir) {
 		dirX = -1;
 		break;
 	case UP:
-		jump();
-		//dirY = -1;
-		//dirX = 0;
+		if (isLadder()) {
+			climbUp();
+		}
+		else {
+			jump();
+		}
 		break;
 	case RIGHT:
 		dirY = 0;
@@ -66,8 +105,20 @@ void Mario::keyPressed(char key) {
 
 void Mario::move() {
 
-	if (pBoard->getChar(x + dirX, y + dirY) == 'Q') {
+
+	//if (pBoard->getChar(x + dirX, y + dirY) == 'Q') {
+	//	changeDir(STAY);
+	//}
+	//if (pBoard->getChar(x + dirX, y + dirY) == '<') {
+	//	changeDir(STAY);
+	//}
+	//
+	
+	if (isValidMove() == false) {
 		changeDir(STAY);
+	}
+	if (gravitation()) {
+		changeDir(DOWN);
 	}
 	
 	x += dirX;
