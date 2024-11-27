@@ -1,35 +1,50 @@
 #include "Mario.h"
 
 
+/*\
+TODO: 
+	1. save constants with constexpr
+	2. think about implement the climbing/down ladder inside "move" (checking if there is ladder and canging dirY. Barrels can't move at the same time as Mario) 
+	3. implement the jump inside move (same reasons as climb)
+	4.
+*/
+
+
+
+
+
+/*This function checks if there is ladder above Mario*/
 bool Mario::isLadderUp() {
-	if (pBoard->getChar(x, y) == 'H')
+	if (pBoard->getChar(x, y) == 'H') // Ladder in Mario's current place
 		return true;
-	else if (pBoard->getChar(x, y - 1) == 'H')
+	else if (pBoard->getChar(x, y - 1) == 'H') // ladder in Mario's next place
 		return true;
-	else if (pBoard->getChar(x, y + 1) == 'H')
-		return true;
-	return false;
-}
-bool Mario::isLadderDown() {
-	if (pBoard->getChar(x, y + 2) == 'H' || pBoard->getChar(x, y) == 'H')
+	else if (pBoard->getChar(x, y + 1) == 'H') // to handle last step
 		return true;
 	return false;
 }
 
-void Mario::climbLadder() {
+/*This function checks if there is ladder below Mario*/
+bool Mario::isLadderDown() {
+	if (pBoard->getChar(x, y + 2) == 'H' || pBoard->getChar(x, y + 1) == 'H')
+		return true;
+	return false;
+}
+
+/*This function implement the ladder climbing logic*/
+void Mario::climbLadder() { 
 	dirY = -1;
 	dirX = 0;
-	while (isLadderUp())
-	{
+	while (isLadderUp()) { 
 		erase();
 		y += dirY;
 		draw();
 		Sleep(175);
-		
 	}	
-	changeDir(STAY);
+	changeDir(STAY); // to stop moving at the end of the climb
 }
 
+/*This function implement the getting down the ladder logic*/
 void Mario::downLadder() {
 	dirY = 1;
 	dirX = 0;
@@ -39,33 +54,33 @@ void Mario::downLadder() {
 		y += dirY;
 		draw();
 		Sleep(175);
-		if (!isValidMove()) {
-			break;
-		}
 	}
 	changeDir(STAY);
 }
 
+/*This function implement gravitation when Mario reach the end of a surface*/
 bool Mario::gravitation() {
-	if (pBoard->getChar(x, y + 1) == ' ' && isJump == false) {
+	if (pBoard->getChar(x, y + 1) == ' ' && isJump == false) { // save constant
 		return true;
 	}
 	return false;
 }
 
+/*This function checks if Mario next move is a valid move (not "Q,<,>,=")*/
 bool Mario::isValidMove() {
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 5; i++) { // change to the one like python
 		if (pBoard->getChar(x + dirX, y + dirY) == dontTouch[i]) {
-			//changeDir(STAY);
 			return false;
 		}
 	}
 	return true;
 }
 
+/*This function implement the jump logic*/
 void Mario::jump() {
 
-	isJump = true;
+	isJump = true; // to avoid gravitation
+
 	dirY = -1;
 	for (int i = 0; i < 2; i++) {
 		Sleep(100);
@@ -82,17 +97,16 @@ void Mario::jump() {
 	}
 	dirY = 0;
 	isJump = false;
-	
-
 }
 
+/*This function sets Mario direction*/
 void Mario::changeDir(Direction dir) {
 	switch (dir) {
 	case LEFT:
 		dirY = 0;
 		dirX = -1;
 		break;
-	case UP:
+	case UP: //can only jump or climb
 		if (isLadderUp()) {
 			climbLadder();
 		}
@@ -105,7 +119,7 @@ void Mario::changeDir(Direction dir) {
 		dirX = 1;
 		break;
 	case DOWN:
-		if (isLadderDown()) {
+		if (isLadderDown()) { // can only go down a ladder
 			downLadder();
 		}
 		else {
@@ -120,6 +134,7 @@ void Mario::changeDir(Direction dir) {
 	}
 }
 
+/*This function handles keyboard press and change Mario's direction based on the key pressed*/
 void Mario::keyPressed(char key) {
 	for (size_t i = 0; i < numKeys; i++) {
 		if (std::tolower(key) == keys[i]) {
@@ -128,16 +143,9 @@ void Mario::keyPressed(char key) {
 	}
 }
 
+/*This function handles Morio movement logic*/
 void Mario::move() {
 
-
-	//if (pBoard->getChar(x + dirX, y + dirY) == 'Q') {
-	//	changeDir(STAY);
-	//}
-	//if (pBoard->getChar(x + dirX, y + dirY) == '<') {
-	//	changeDir(STAY);
-	//}
-	//
 	if (pBoard->getChar(x + dirX, y + dirY) == 'H') {
 		Point ladderPosition = Point(x + dirX, y + dirY, 'H');
 		
