@@ -1,23 +1,23 @@
-#include <iostream>
-#include <windows.h>
-#include <conio.h>
+#include "Game.h"
 
-#include "Board.h"
-#include "utils.h"
-#include "Mario.h"
 
-using std::cout;
-constexpr int ESC = 27;
 
 int main()
 {
 	ShowConsoleCursor(false);
-	Board board;
+	Game game;
+	game.run();
+	return 0;
+	/*Board board;
 	Mario mario;
 	board.reset();
 	board.print();
 	mario.setBoard(board);
+	Barrel barrel;
+	barrel.setBoard(board);
 	while (true) {
+		barrel.draw();
+		barrel.floorDirSync();
 		mario.draw();
 		if (_kbhit()) {
 			char key = _getch();
@@ -27,8 +27,11 @@ int main()
 		Sleep(50);
 		mario.erase();
 		mario.move();
+		
+		barrel.erase();
+		barrel.move();
 	}
 
-	return 0;
+	return 0;*/
 }
 

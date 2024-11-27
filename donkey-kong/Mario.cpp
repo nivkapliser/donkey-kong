@@ -89,7 +89,7 @@ void Mario::changeDir(Direction dir) {
 		break;
 	case UP:
 		if (isLadder()) {
-			climbUp();
+			climbLadder();
 		}
 		else {
 			jump();
