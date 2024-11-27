@@ -20,12 +20,34 @@ void Game::resetStage() {
 }
 
 void Game::displayMenu() {
+	char choice;
 	system("cls");
 	std::cout << "Donkey Kong\n";
 	std::cout << "1. Start New Game\n";
 	std::cout << "8. Instructions\n";
 	std::cout << "9. Exit\n";
-	std::cout << "Enter Choice:\n";
+
+	while (true) {
+		std::cout << "Enter Choice:\n";
+		std::cin >> choice;
+		GameState state;
+		if (choice == '1') {
+			setGameState(RUNNING);// need to init new game (mario start at the beggining)
+			break;
+		}
+		else if (choice == '8') {
+			displayInstructions();
+			break;
+		}
+		else if (choice == '9') {
+			exit(0); // the correct one?
+		}
+		else {
+			std::cout << "Invalid Choice. Please try again.";
+		}
+	}
+	system("cls");
+
 }
 
 void Game::displayInstructions() {
@@ -41,29 +63,24 @@ void Game::displayInstructions() {
 }
 
 void Game::run() {
+
 	while (true) {
-		switch (currentState) {
+		switch (getGameState()) {
 		case MENU:
 			displayMenu();
 			break;
 		case RUNNING:
+			system("cls");
+			board.reset();
 			board.print();
-			mario.draw();
-			barrel.draw();
-
-			if (_kbhit()) {
-				char key = _getch();
-				handleKeyPress(key);
-			}
-
-			barrel.move();
-			mario.move(); // switch order?
-
+			mario.setBoard(board);
+			barrel.setBoard(board);
+			runGame();
 			//checkCollisions();
 			break;
 
 		case PAUSED:
-			//need to add
+			pauseGame();
 			break;
 		case GAME_OVER:
 			displayGameOver();
@@ -72,10 +89,46 @@ void Game::run() {
 			displayGameWon();
 			break;
 		}
-
-		Sleep(50);
 	}
+	Sleep(50);
+}
 
+void Game::runGame() {
+	while (true) {
+		barrel.draw();
+		barrel.floorDirSync();
+		mario.draw();
+		if (_kbhit()) {
+			char key = _getch();
+			if (key == ESC) {
+				currentState = PAUSED;
+				break;
+			}
+			mario.keyPressed(key);
+		}
+		Sleep(50);
+		mario.erase();
+		mario.move();
+
+		barrel.erase();
+		barrel.move();
+	}
+}
+
+void Game::pauseGame() {
+	system("cls");
+	std::cout << "Game Paused. Press 'R' to Resume or 'ESC' to Return to Menu.\n";
+	while (currentState == PAUSED) {
+		if (_kbhit()) {
+			char key = _getch();
+			if (key == 'r' || key == 'R') {
+				currentState = RUNNING;
+			}
+			else if (key == ESC) {
+				currentState = MENU;
+			}
+		}
+	}
 }
 
 void Game::handleKeyPress(char key) {

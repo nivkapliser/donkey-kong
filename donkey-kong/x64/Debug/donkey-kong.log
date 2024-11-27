@@ -1,6 +1,5 @@
-﻿  Barrel.cpp
-  Game.cpp
+﻿  Game.cpp
+C:\Users\user\Desktop\Toar\donkey_kong\donkey-kong\Game.cpp(33,13): warning C4101: 'state': unreferenced local variable
   main.cpp
   Generating Code...
-main.obj : error LNK2019: unresolved external symbol "public: __cdecl Game::Game(void)" (??0Game@@QEAA@XZ) referenced in function main
-C:\Users\user\Desktop\Toar\donkey_kong\x64\Debug\donkey-kong.exe : fatal error LNK1120: 1 unresolved externals
+  donkey-kong.vcxproj -> C:\Users\user\Desktop\Toar\donkey_kong\x64\Debug\donkey-kong.exe
