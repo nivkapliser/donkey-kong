@@ -1,5 +1,7 @@
 #include "Mario.h"
 
+
+
 bool Mario::isLadder() {
 	if (pBoard->getChar(x, y - 1) == 'H' || pBoard->getChar(x, y + 1) == 'H') {
 		return true;
@@ -7,7 +9,7 @@ bool Mario::isLadder() {
 	return false;
 }
 
-void Mario::climbUp() {
+void Mario::climbLadder() {
 	dirY = -1;
 	dirX = 0;
 	while (isLadder() == true)
@@ -19,11 +21,24 @@ void Mario::climbUp() {
 		std::cout << 'H';
 		Sleep(175);
 		erase();
-	
+	}	
+	changeDir(STAY);
+}
 
+void Mario::downLadder() {
+	dirY = 1;
+	dirX = 0;
+	while (isLadder() == true)
+	{
+		x += dirX;
+		y += dirY;
+		draw();
+		gotoxy(x, y - 1);
+		std::cout << 'H';
+		Sleep(175);
+		erase();
 	}
-
-	
+	changeDir(STAY);
 }
 
 bool Mario::gravitation() {
@@ -85,8 +100,13 @@ void Mario::changeDir(Direction dir) {
 		dirX = 1;
 		break;
 	case DOWN:
-		dirY = 1;
-		dirX = 0;
+		if (isLadder()) {
+			downLadder();
+		}
+		else {
+			dirY = 1;
+			dirX = 0;
+		}
 		break;
 	case STAY:
 		dirY = 0;

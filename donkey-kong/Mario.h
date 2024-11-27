@@ -35,7 +35,8 @@ public:
 		draw(' ');
 	}
 	
-	void climbUp();
+	void climbLadder();
+	void downLadder();
 	bool isLadder();
 	void changeDir(Direction dir);
 	bool isValidMove();
