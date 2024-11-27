@@ -10,11 +10,12 @@ class Barrel
 	char ch = 'O';
 	int x = START_X;
 	int y = START_Y;
-	char floor[4] = "<>=";
+	char floor[5] = "<>=Q";
 	static constexpr size_t floorTypes = sizeof(floor) / sizeof(floor[0]);
-	enum Direction { LEFT, RIGHT, SAME };
+	enum Direction { LEFT, RIGHT, SAME, BOTTOM };
 	int dirX = 0;
 	int dirY = 0;
+	bool isActive = false;
 
 	Board* pBoard = nullptr;
 
@@ -40,6 +41,20 @@ public:
 
 	bool isValidMove();
 	void floorDirSync();
+	void exploding();
+	bool checkStatus() {
+		return isActive;
+	}
 
+	void barrelActivation()
+	{
+		if (isActive == false)
+		{
+			isActive = true;
+			x = START_X;
+			y = START_Y;
+		}
+
+	}
 };
 

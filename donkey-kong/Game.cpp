@@ -7,16 +7,22 @@
 void Game::initGame() {
 	board.reset();
 	mario.setBoard(board);
-	barrel.setBoard(board);
+	for (int i = 1; i <= MAX_BARRELS - 1; i++)
+	{
+		barrels[i].setBoard(board);
+	}
 }
 
 void Game::resetStage() {
 	board.reset();
 	mario = Mario(); // reset Mario
-	barrel = Barrel(); // reset Barrel
+	//barrel = Barrel(); // reset Barrel
 	mario.setBoard(board);
-	barrel.setBoard(board);
-	lives--; 
+	for (int i = 1; i <= MAX_BARRELS - 1; i++)
+	{
+		barrels[i].setBoard(board);
+	}
+	lives--;
 }
 
 void Game::displayMenu() {
@@ -74,7 +80,10 @@ void Game::run() {
 			board.reset();
 			board.print();
 			mario.setBoard(board);
-			barrel.setBoard(board);
+			for (int i = 1; i <= MAX_BARRELS - 1; i++)
+			{
+				barrels[i].setBoard(board);
+			}
 			runGame();
 			//checkCollisions();
 			break;
@@ -94,10 +103,25 @@ void Game::run() {
 }
 
 void Game::runGame() {
+	int sleepCount = 0;
+	int activateBarrel = 1;
+	static int i = 0;
 	while (true) {
-		barrel.draw();
-		barrel.floorDirSync();
+		for (int i = 1; i <= MAX_BARRELS - 1; i++)
+		{
+			if (barrels[i].checkStatus() == true)
+				barrels[i].draw();
+		}
+
+		for (int i = 1; i <= MAX_BARRELS - 1; i++)
+		{
+			if (barrels[i].checkStatus() == true)
+				barrels[i].floorDirSync();
+
+		}
+	
 		mario.draw();
+
 		if (_kbhit()) {
 			char key = _getch();
 			if (key == ESC) {
@@ -110,8 +134,29 @@ void Game::runGame() {
 		mario.erase();
 		mario.move();
 
-		barrel.erase();
-		barrel.move();
+		for (int i = 1; i <= MAX_BARRELS - 1; i++)
+		{
+			if (barrels[i].checkStatus() == true)
+				barrels[i].erase();
+		}
+		for (int i = 1; i <= MAX_BARRELS - 1; i++)
+		{
+			if (barrels[i].checkStatus() == true)
+				barrels[i].move();
+		}
+		if (sleepCount == 1500)
+		{
+			if(barrels[activateBarrel].checkStatus() == false)
+			{
+				barrels[activateBarrel].barrelActivation();
+				activateBarrel++;
+			}
+			if (activateBarrel == MAX_BARRELS)
+				activateBarrel = 1;
+			sleepCount = 0;
+
+		}
+		sleepCount += 50;
 	}
 }
 

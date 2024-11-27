@@ -21,8 +21,9 @@ void Barrel::floorDirSync()
 	char floor_type = pBoard->getChar(x, y + 1);
 
 	for (size_t i = 0; i < floorTypes; i++) {
-		if ( floor_type == floor[i]) {
+		if (floor_type == floor[i]) {
 			changeDir((Direction)i);
+			break;
 		}
 	}
 }
@@ -55,7 +56,25 @@ void Barrel::changeDir(Direction dir) {
 		dirY = 0;
 		dirX = 1;
 		break;
+	case BOTTOM:
+		isActive = false;
+		exploding();
+		break;
 	case SAME:
 		break;
 	}
+}
+
+void Barrel::exploding()
+{
+	erase();
+	gotoxy(x - 2, y - 2);
+	std::cout << "BOOM!";
+	gotoxy(x - 2, y);
+	std::cout << "_\|/_";
+	Sleep(100);
+	gotoxy(x - 2, y - 2);
+	std::cout << "     ";
+	gotoxy(x - 2, y);
+	std::cout << "     ";
 }

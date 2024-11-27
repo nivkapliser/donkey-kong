@@ -6,12 +6,14 @@
 
 constexpr int ESC = 27; // move to?
 enum GameState { MENU, RUNNING, PAUSED, GAME_OVER, GAME_WON };
+constexpr int MAX_BARRELS = 10;
 
 class Game
 {	
 	Board board;
 	Mario mario;
-	Barrel barrel;
+	//Barrel barrel;
+	Barrel barrels[MAX_BARRELS];
 	int lives;
 	GameState currentState = MENU;
 
