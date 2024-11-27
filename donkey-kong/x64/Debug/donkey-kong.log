@@ -1,5 +1,2 @@
-﻿  Game.cpp
-C:\Users\user\Desktop\Toar\donkey_kong\donkey-kong\Game.cpp(33,13): warning C4101: 'state': unreferenced local variable
-  main.cpp
-  Generating Code...
+﻿  Mario.cpp
   donkey-kong.vcxproj -> C:\Users\user\Desktop\Toar\donkey_kong\x64\Debug\donkey-kong.exe

@@ -1,26 +1,31 @@
 #include "Mario.h"
 
 
-
-bool Mario::isLadder() {
-	if (pBoard->getChar(x, y - 1) == 'H' || pBoard->getChar(x, y + 1) == 'H') {
+bool Mario::isLadderUp() {
+	if (pBoard->getChar(x, y) == 'H')
 		return true;
-	}
+	else if (pBoard->getChar(x, y - 1) == 'H')
+		return true;
+	else if (pBoard->getChar(x, y + 1) == 'H')
+		return true;
+	return false;
+}
+bool Mario::isLadderDown() {
+	if (pBoard->getChar(x, y + 2) == 'H' || pBoard->getChar(x, y) == 'H')
+		return true;
 	return false;
 }
 
 void Mario::climbLadder() {
 	dirY = -1;
 	dirX = 0;
-	while (isLadder() == true)
+	while (isLadderUp())
 	{
-		x += dirX;
+		erase();
 		y += dirY;
 		draw();
-		gotoxy(x, y + 1);
-		std::cout << 'H';
 		Sleep(175);
-		erase();
+		
 	}	
 	changeDir(STAY);
 }
@@ -28,15 +33,15 @@ void Mario::climbLadder() {
 void Mario::downLadder() {
 	dirY = 1;
 	dirX = 0;
-	while (isLadder() == true)
+	while (isLadderDown())
 	{
-		x += dirX;
+		erase();
 		y += dirY;
 		draw();
-		gotoxy(x, y - 1);
-		std::cout << 'H';
 		Sleep(175);
-		erase();
+		if (!isValidMove()) {
+			break;
+		}
 	}
 	changeDir(STAY);
 }
@@ -88,7 +93,7 @@ void Mario::changeDir(Direction dir) {
 		dirX = -1;
 		break;
 	case UP:
-		if (isLadder()) {
+		if (isLadderUp()) {
 			climbLadder();
 		}
 		else {
@@ -100,7 +105,7 @@ void Mario::changeDir(Direction dir) {
 		dirX = 1;
 		break;
 	case DOWN:
-		if (isLadder()) {
+		if (isLadderDown()) {
 			downLadder();
 		}
 		else {
@@ -133,6 +138,10 @@ void Mario::move() {
 	//	changeDir(STAY);
 	//}
 	//
+	if (pBoard->getChar(x + dirX, y + dirY) == 'H') {
+		Point ladderPosition = Point(x + dirX, y + dirY, 'H');
+		
+	}
 	
 	if (isValidMove() == false) {
 		changeDir(STAY);

@@ -2,6 +2,7 @@
 #include <iostream>
 #include "utils.h"
 #include "Board.h"
+#include "Point.h"
 
 enum Direction { LEFT, UP, RIGHT, DOWN, STAY }; // should be public?
 
@@ -17,13 +18,14 @@ class Mario
 	int x = START_X;
 	int y = START_Y;
 
+	char lastPoint;
+
 	Direction currenDirection = STAY;
 	int dirX = 0;
 	int dirY = 0;
 
 	bool isJump = false;
 	bool isClimbing = false;
-	int jumpHeight = 0;
 
 	Board* pBoard = nullptr;
 
@@ -39,18 +41,21 @@ public:
 		draw(ch);
 	}
 	void erase() {
-		draw(' ');
+		setLastPoint();	
+		draw(lastPoint);
 	}
 	void setBoard(Board& board) {
 		pBoard = &board;
 	}
-	bool isOnLadder() const {
-		return pBoard->getChar(x, y) == 'H';
+
+	void setLastPoint() {
+		lastPoint = pBoard->getChar(x, y);
 	}
-	bool isAtFloor();
+
 	void climbLadder();
 	void downLadder();
-	bool isLadder();
+	bool isLadderUp();
+	bool isLadderDown();
 	void changeDir(Direction dir);
 	bool isValidMove();
 	bool gravitation();
