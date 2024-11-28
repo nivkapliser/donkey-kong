@@ -1,4 +1,6 @@
-﻿  Game.cpp
+﻿  Barrel.cpp
+C:\Users\team3\source\repos\donkey-kong5\donkey-kong\Barrel.cpp(74,15): warning C4129: '|': unrecognized character escape sequence
+  Game.cpp
 C:\Users\team3\source\repos\donkey-kong5\donkey-kong\Game.cpp(39,13): warning C4101: 'state': unreferenced local variable
   main.cpp
   Generating Code...

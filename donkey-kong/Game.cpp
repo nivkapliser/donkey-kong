@@ -144,7 +144,8 @@ void Game::runGame() {
 			if (barrels[i].checkStatus() == true)
 				barrels[i].move();
 		}
-		if (sleepCount == 1500)
+
+		if (sleepCount == BARRELS_PACE)
 		{
 			if(barrels[activateBarrel].checkStatus() == false)
 			{

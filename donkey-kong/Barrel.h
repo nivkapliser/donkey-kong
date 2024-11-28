@@ -3,6 +3,9 @@
 #include "utils.h"
 #include "Board.h"
 
+constexpr int MAX_BARRELS = 10;
+constexpr int BARRELS_PACE = 1500;
+
 class Barrel
 {
 	static constexpr int START_X = 11;
@@ -16,6 +19,8 @@ class Barrel
 	int dirX = 0;
 	int dirY = 0;
 	bool isActive = false;
+	char lastPoint;
+
 
 	Board* pBoard = nullptr;
 
@@ -29,7 +34,11 @@ public:
 		draw(ch);
 	}
 	void erase() {
-		draw(' ');
+		setLastPoint();
+		draw(lastPoint);
+	}
+	void setLastPoint() {
+		lastPoint = pBoard->getChar(x, y);
 	}
 
 	void changeDir(Direction dir);

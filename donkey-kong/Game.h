@@ -6,7 +6,6 @@
 
 constexpr int ESC = 27; // move to?
 enum GameState { MENU, RUNNING, PAUSED, GAME_OVER, GAME_WON };
-constexpr int MAX_BARRELS = 10;
 
 class Game
 {	
