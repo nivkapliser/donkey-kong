@@ -2,8 +2,11 @@
 
 bool Barrel::gravitation() {
 	if (pBoard->getChar(x, y + 1) == ' ') {
+		linesFallen++;
+		isFalling = true;
 		return true;
 	}
+	isFalling = false;
 	return false;
 }
 
@@ -30,7 +33,7 @@ void Barrel::floorDirSync()
 
 
 void Barrel::move() {
-
+	
 	if (isValidMove() == false) {
 		dirX = 0;
 		dirY = 0;
@@ -57,7 +60,6 @@ void Barrel::changeDir(Direction dir) {
 		dirX = 1;
 		break;
 	case BOTTOM:
-		isActive = false;
 		exploding();
 		break;
 	case SAME:
@@ -67,14 +69,55 @@ void Barrel::changeDir(Direction dir) {
 
 void Barrel::exploding()
 {
+	isActive = false;
 	erase();
 	gotoxy(x - 2, y - 2);
 	std::cout << "BOOM!";
 	gotoxy(x - 2, y);
 	std::cout << "_\|/_";
 	Sleep(100);
-	gotoxy(x - 2, y - 2);
-	std::cout << "     ";
-	gotoxy(x - 2, y);
-	std::cout << "     ";
+	eraseBoom();
+	linesFallen = 0;
+}
+void Barrel::eraseBoom()
+{
+	char lastchar;
+	for (int i = 0; i <= 5; i++)
+	{
+		lastchar = pBoard->getChar(x - 2 + i, y - 2);
+		gotoxy(x - 2 + i, y - 2);
+		std::cout << lastchar;
+		lastchar = pBoard->getChar(x - 2 + i, y);
+		gotoxy(x - 2 + i, y);
+		std::cout << lastchar;
+	}
+}
+bool Barrel::barrelFallManager()
+{
+	if (isFalling == false && linesFallen >= FALL_LIMIT)
+		return true;
+	else if (isFalling == false && linesFallen < FALL_LIMIT)
+	{
+		linesFallen = 0;
+		return false;
+	}
+	return false;
+}
+
+/*
+void Barrel::checkCollision()
+{
+	collideMario = true;
+}
+*/
+
+void Barrel::barrelActivation()
+{
+	if (isActive == false)
+	{
+		isActive = true;
+		x = START_X;
+		y = START_Y;
+	}
+
 }

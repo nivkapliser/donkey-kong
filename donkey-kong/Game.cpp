@@ -109,17 +109,16 @@ void Game::runGame() {
 	while (true) {
 		for (int i = 1; i <= MAX_BARRELS - 1; i++)
 		{
-			if (barrels[i].checkStatus() == true)
+			if (barrels[i].checkActivationStatus() == true)
+			{
 				barrels[i].draw();
-		}
-
-		for (int i = 1; i <= MAX_BARRELS - 1; i++)
-		{
-			if (barrels[i].checkStatus() == true)
 				barrels[i].floorDirSync();
-
+				if (barrels[i].barrelFallManager() == true)
+					barrels[i].exploding();
+			}
 		}
-	
+
+
 		mario.draw();
 
 		if (_kbhit()) {
@@ -136,18 +135,18 @@ void Game::runGame() {
 
 		for (int i = 1; i <= MAX_BARRELS - 1; i++)
 		{
-			if (barrels[i].checkStatus() == true)
+			if (barrels[i].checkActivationStatus() == true)
 				barrels[i].erase();
 		}
 		for (int i = 1; i <= MAX_BARRELS - 1; i++)
 		{
-			if (barrels[i].checkStatus() == true)
+			if (barrels[i].checkActivationStatus() == true)
 				barrels[i].move();
 		}
 
 		if (sleepCount == BARRELS_PACE)
 		{
-			if(barrels[activateBarrel].checkStatus() == false)
+			if(barrels[activateBarrel].checkActivationStatus() == false)
 			{
 				barrels[activateBarrel].barrelActivation();
 				activateBarrel++;

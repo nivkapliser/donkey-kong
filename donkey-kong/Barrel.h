@@ -5,14 +5,16 @@
 
 constexpr int MAX_BARRELS = 10;
 constexpr int BARRELS_PACE = 1500;
+constexpr int FALL_LIMIT = 8;
+
 
 class Barrel
 {
 	static constexpr int START_X = 11;
 	static constexpr int START_Y = 7;
 	char ch = 'O';
-	int x = START_X;
-	int y = START_Y;
+	int x;
+	int y;
 	char floor[5] = "<>=Q";
 	static constexpr size_t floorTypes = sizeof(floor) / sizeof(floor[0]);
 	enum Direction { LEFT, RIGHT, SAME, BOTTOM };
@@ -20,16 +22,17 @@ class Barrel
 	int dirY = 0;
 	bool isActive = false;
 	char lastPoint;
-
-
+	int linesFallen = 0;
 	Board* pBoard = nullptr;
 
 	void draw(char c) const {
 		gotoxy(x, y);
 		std::cout << c;
 	}
-
+	bool isFalling = false;
+	bool collideMario = false;
 public:
+	Barrel() : x(START_X), y(START_Y) {}
 	void draw() const {
 		draw(ch);
 	}
@@ -51,19 +54,19 @@ public:
 	bool isValidMove();
 	void floorDirSync();
 	void exploding();
-	bool checkStatus() {
+	bool barrelFallManager();
+
+	bool checkActivationStatus() {
 		return isActive;
 	}
 
-	void barrelActivation()
-	{
-		if (isActive == false)
-		{
-			isActive = true;
-			x = START_X;
-			y = START_Y;
-		}
-
+	void barrelActivation();
+	void eraseBoom();
+	bool fallingStatus(){
+		return isFalling;
 	}
+	//void checkCollision();
+
 };
+
 
