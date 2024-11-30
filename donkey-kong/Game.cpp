@@ -7,7 +7,7 @@
 void Game::initGame() {
 	board.reset();
 	mario.setBoard(board);
-	for (int i = 1; i <= MAX_BARRELS - 1; i++)
+	for (int i = 0; i <= MAX_BARRELS; i++)
 	{
 		barrels[i].setBoard(board);
 	}
@@ -18,7 +18,7 @@ void Game::resetStage() {
 	mario = Mario(); // reset Mario
 	//barrel = Barrel(); // reset Barrel
 	mario.setBoard(board);
-	for (int i = 1; i <= MAX_BARRELS - 1; i++)
+	for (int i = 0; i <= MAX_BARRELS; i++)
 	{
 		barrels[i].setBoard(board);
 	}
@@ -80,7 +80,7 @@ void Game::run() {
 			board.reset();
 			board.print();
 			mario.setBoard(board);
-			for (int i = 1; i <= MAX_BARRELS - 1; i++)
+			for (int i = 0; i <= MAX_BARRELS; i++)
 			{
 				barrels[i].setBoard(board);
 			}
@@ -107,18 +107,8 @@ void Game::runGame() {
 	int activateBarrel = 1;
 	static int i = 0;
 	while (true) {
-		for (int i = 1; i <= MAX_BARRELS - 1; i++)
-		{
-			if (barrels[i].checkActivationStatus() == true)
-			{
-				barrels[i].draw();
-				barrels[i].floorDirSync();
-				if (barrels[i].barrelFallManager() == true)
-					barrels[i].exploding();
-			}
-		}
 
-
+		drawBarrels();
 		mario.draw();
 
 		if (_kbhit()) {
@@ -132,17 +122,7 @@ void Game::runGame() {
 		Sleep(50);
 		mario.erase();
 		mario.move();
-
-		for (int i = 1; i <= MAX_BARRELS - 1; i++)
-		{
-			if (barrels[i].checkActivationStatus() == true)
-				barrels[i].erase();
-		}
-		for (int i = 1; i <= MAX_BARRELS - 1; i++)
-		{
-			if (barrels[i].checkActivationStatus() == true)
-				barrels[i].move();
-		}
+		moveBarrels();
 
 		if (sleepCount == BARRELS_PACE)
 		{
@@ -152,7 +132,7 @@ void Game::runGame() {
 				activateBarrel++;
 			}
 			if (activateBarrel == MAX_BARRELS)
-				activateBarrel = 1;
+				activateBarrel = 0;
 			sleepCount = 0;
 
 		}
@@ -211,4 +191,30 @@ void Game::displayGameWon() { // add nicer graphic
 	std::cout << "Press any key to return to menu...\n";
 	_getch();
 	currentState = MENU;
+}
+
+void Game::drawBarrels()
+{
+	for (int i = 0; i <= MAX_BARRELS; i++)
+	{
+		if (barrels[i].checkActivationStatus() == true)
+		{
+			barrels[i].draw();
+			barrels[i].floorDirSync();
+			if (barrels[i].barrelFallManager() == true)
+				barrels[i].exploding();
+		}
+	}
+}
+void Game::moveBarrels()
+{
+	for (int i = 0; i <= MAX_BARRELS; i++)
+	{
+		if (barrels[i].checkActivationStatus() == true)
+		{
+			barrels[i].erase();
+			barrels[i].move();
+		}
+
+	}
 }

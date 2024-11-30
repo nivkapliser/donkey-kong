@@ -40,6 +40,10 @@ public:
 	void runGame();
 	void pauseGame();
 	void handleKeyPress(char key);
+	
+	void drawBarrels();
+	void eraseBarrels();
+	void moveBarrels();
 	// color function?
 };
 
