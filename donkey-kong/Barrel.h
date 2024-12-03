@@ -2,10 +2,12 @@
 #include <iostream>
 #include "utils.h"
 #include "Board.h"
+#include "Mario.h"
 
 constexpr int MAX_BARRELS = 10;
 constexpr int BARRELS_PACE = 1500;
 constexpr int FALL_LIMIT = 8;
+constexpr int EXPLODE_ZONE = 2;
 
 
 class Barrel
@@ -16,13 +18,12 @@ class Barrel
 	char ch = 'O';
 	int x;
 	int y;
-
 	char floor[5] = "<>=Q";
 	static constexpr size_t floorTypes = sizeof(floor) / sizeof(floor[0]);
 	enum Direction { LEFT, RIGHT, SAME, BOTTOM };
 	int dirX = 0;
 	int dirY = 0;
-	bool isActive = false;
+	bool isActive;
 	char lastPoint;
 	int linesFallen = 0;
 	Board* pBoard = nullptr;
@@ -32,9 +33,15 @@ class Barrel
 		std::cout << c;
 	}
 	bool isFalling = false;
-	bool collideMario = false;
+	bool isExploding = false;
 public:
-	Barrel() : x(START_X), y(START_Y) {}
+	Barrel() : x(START_X), y(START_Y) { isActive = false; }
+	int getX() {
+		return x;
+	}
+	int getY() {
+		return y;
+	}
 	void draw() const {
 		draw(ch);
 	}
@@ -55,7 +62,7 @@ public:
 
 	bool isValidMove();
 	void floorDirSync();
-	void exploding();
+	void explode();
 	bool barrelFallManager();
 
 	bool checkActivationStatus() {
@@ -67,8 +74,7 @@ public:
 	bool fallingStatus(){
 		return isFalling;
 	}
-	//void checkCollision();
-
+	bool checkEncounters(Mario& mario);
 };
 
 

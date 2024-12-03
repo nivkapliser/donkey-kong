@@ -37,6 +37,12 @@ class Mario
 
 public:
 	Mario() : x(START_X), y(START_Y), lastPoint(' ') {}
+	int getX() {
+		return x;
+	}
+	int getY() {
+		return y;
+	}
 
 	void draw() const {
 		draw(ch);

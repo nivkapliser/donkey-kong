@@ -15,12 +15,14 @@ void Game::initGame() {
 }
 
 void Game::resetStage() {
+	system("cls");
 	board.reset();
+	board.print();
 	mario = Mario(); // reset Mario
-	//barrel = Barrel(); // reset Barrel
 	mario.setBoard(board);
-	for (int i = 0; i <= MAX_BARRELS - 1; i++)
+	for (int i = 0; i <= MAX_BARRELS; i++)
 	{
+		barrels[i] = Barrel();
 		barrels[i].setBoard(board);
 	}
 	lives--;
@@ -85,8 +87,8 @@ void Game::run() {
 			{
 				barrels[i].setBoard(board);
 			}
+			//Maybe to put resetStage() instead of the below?
 			runGame();
-			//checkCollisions();
 			break;
 
 		case PAUSED:
@@ -108,9 +110,8 @@ void Game::runGame() {
 	int activateBarrel = 1;
 	static int i = 0;
 	while (true) {
-
-		drawBarrels();
 		mario.draw();
+		drawBarrels();
 
 		if (_kbhit()) {
 			char key = _getch();
@@ -205,7 +206,10 @@ void Game::drawBarrels()
 			barrels[i].draw();
 			barrels[i].floorDirSync();
 			if (barrels[i].barrelFallManager() == true)
-				barrels[i].exploding();
+				barrels[i].explode();
+
+			if (barrels[i].checkEncounters(mario))
+				resetStage();
 		}
 	}
 }
@@ -215,6 +219,9 @@ void Game::moveBarrels()
 	{
 		if (barrels[i].checkActivationStatus() == true)
 		{
+
+			if (barrels[i].checkEncounters(mario))
+				resetStage();
 			barrels[i].erase();
 			barrels[i].move();
 		}
