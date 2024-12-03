@@ -60,15 +60,16 @@ void Barrel::changeDir(Direction dir) {
 		dirX = 1;
 		break;
 	case BOTTOM:
-		exploding();
+		explode();
 		break;
 	case SAME:
 		break;
 	}
 }
 
-void Barrel::exploding()
+void Barrel::explode()
 {
+	isExploding = true;
 	isActive = false;
 	erase();
 	gotoxy(x - 2, y - 2);
@@ -104,17 +105,24 @@ bool Barrel::barrelFallManager()
 	return false;
 }
 
-/*
-void Barrel::checkCollision()
+
+bool Barrel::checkEncounters(Mario& mario)
 {
-	collideMario = true;
+	if (mario.getX() == getX() && mario.getY() == getY())
+	{
+		explode();
+		return true;
+	}
+	else if ((abs(mario.getX() - getX()) <= EXPLODE_ZONE && mario.getY() == getY()) && isExploding)
+		return true;
+	return false;
 }
-*/
 
 void Barrel::barrelActivation()
 {
 	if (isActive == false)
 	{
+		isExploding = false;
 		isActive = true;
 		x = START_X;
 		y = START_Y;

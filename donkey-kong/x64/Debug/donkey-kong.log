@@ -1,3 +1,6 @@
-﻿  Mario.cpp
-C:\Users\niv\source\repos\donkey-kong\donkey-kong\Mario.cpp(33,1): warning C4715: 'Mario::isFloorUp': not all control paths return a value
-  donkey-kong.vcxproj -> C:\Users\niv\Source\Repos\donkey-kong\x64\Debug\donkey-kong.exe
+﻿  Barrel.cpp
+  Game.cpp
+C:\Users\team3\source\repos\donkey-kong-3.12\donkey-kong\Game.cpp(42,13): warning C4101: 'state': unreferenced local variable
+  main.cpp
+  Generating Code...
+  donkey-kong.vcxproj -> C:\Users\team3\source\repos\donkey-kong-3.12\x64\Debug\donkey-kong.exe
