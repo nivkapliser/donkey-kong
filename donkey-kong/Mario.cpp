@@ -15,13 +15,21 @@ TODO:
 
 /*This function checks if there is ladder above Mario*/
 bool Mario::isLadderUp() {
-	if (pBoard->getChar(x, y) == 'H') // Ladder in Mario's current place
-		return true;
-	else if (pBoard->getChar(x, y - 1) == 'H') // ladder in Mario's next place
-		return true;
-	else if (pBoard->getChar(x, y + 1) == 'H') // to handle last step
+	if (pBoard->getChar(x, y - 1) == 'H') // ladder in Mario's next place
 		return true;
 	return false;
+}
+
+bool Mario::isLadder() {
+	return pBoard->getChar(x, y) == 'H';
+}
+
+bool Mario::isFloorUp() {
+	for (int i = 0; i < 5; i++) {
+		if (pBoard->getChar(x, y - 1) == dontTouch[i]) {
+			return true;
+		}
+	}
 }
 
 /*This function checks if there is ladder below Mario*/
@@ -106,26 +114,17 @@ void Mario::changeDir(Direction dir) {
 		dirY = 0;
 		dirX = -1;
 		break;
-	case UP: //can only jump or climb
-		if (isLadderUp()) {
-			climbLadder();
-		}
-		else {
-			jump();
-		}
+	case UP: 
+		dirY = -1;
+		dirX = 0;
 		break;
 	case RIGHT:
 		dirY = 0;
 		dirX = 1;
 		break;
 	case DOWN:
-		if (isLadderDown()) { // can only go down a ladder
-			downLadder();
-		}
-		else {
-			dirY = 1;
-			dirX = 0;
-		}
+		dirY = 1;
+		dirX = 0;
 		break;
 	case STAY:
 		dirY = 0;
@@ -145,29 +144,38 @@ void Mario::keyPressed(char key) {
 
 /*This function handles Morio movement logic*/
 void Mario::move() {
+	int newX = x + dirX;
+	int newY = y + dirY;
 
-	if (pBoard->getChar(x + dirX, y + dirY) == 'H') {
-		Point ladderPosition = Point(x + dirX, y + dirY, 'H');
-		
+
+
+	if (dirX == 0 && dirY == -1 && isLadder()) {  // climbing ladder
+		if (isFloorUp() && !isLadderUp()) {  // last climbing ladder step
+			y -= 2;
+			changeDir(STAY);
+		}
+		else {
+			y--;
+		}
 	}
-	
-	if (isValidMove() == false) {
+	else if (dirX == 0 && dirY == 1 && isLadder()) { // descending ladder
+		if (isLadderDown()) {  // last descending ladder step
+			y += 2;
+			changeDir(STAY);
+		}
+		else {
+			y++;
+		}
+	}
+	else if (!isValidMove()) {
 		changeDir(STAY);
 	}
-	if (gravitation()) {
+	else if (gravitation()) {
 		changeDir(DOWN);
+		y++;
 	}
-	
-	x += dirX;
-	y += dirY;
-	
-	// Better use a function in Board to check if the new position is valid
-	// + Better use a constant for the wall character
-	//if (pBoard->getChar(newX, newY) == 'W') {
-	//	dir = { 0, 0 };
-	//}
-	//else {
-	//	x = newX;
-	//	y = newY;
-	//}
+	else {
+		x = newX;
+		y = newY;
+	}
 }

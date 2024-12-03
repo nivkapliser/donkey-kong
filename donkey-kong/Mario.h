@@ -35,7 +35,7 @@ class Mario
 	}
 
 public:
-	// add constructors
+	Mario() : x(START_X), y(START_Y), lastPoint(' ') {}
 
 	void draw() const {
 		draw(ch);
@@ -52,13 +52,15 @@ public:
 		lastPoint = pBoard->getChar(x, y);
 	}
 
-	void climbLadder();
-	void downLadder();
-	bool isLadderUp();
-	bool isLadderDown();
+	bool isFloorUp();
+	bool isLadder();
+	void climbLadder();// delete
+	void downLadder(); // delete
+	bool isLadderUp(); // delete
+	bool isLadderDown(); // delete
 	void changeDir(Direction dir);
 	bool isValidMove();
-	bool gravitation();
+	bool gravitation(); // move to game?
 	void move();
 	void keyPressed(char key);
 

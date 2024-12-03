@@ -26,7 +26,7 @@ class Game
 	//add colors...?
 
 public:
-	Game() {
+	Game(): lives(3), currentState(MENU) {
 		initGame();
 	}
 

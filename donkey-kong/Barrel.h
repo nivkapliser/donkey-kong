@@ -12,9 +12,11 @@ class Barrel
 {
 	static constexpr int START_X = 11;
 	static constexpr int START_Y = 7;
+
 	char ch = 'O';
 	int x;
 	int y;
+
 	char floor[5] = "<>=Q";
 	static constexpr size_t floorTypes = sizeof(floor) / sizeof(floor[0]);
 	enum Direction { LEFT, RIGHT, SAME, BOTTOM };

@@ -4,10 +4,11 @@
 #include <Windows.h>
 
 
+
 void Game::initGame() {
 	board.reset();
 	mario.setBoard(board);
-	for (int i = 0; i <= MAX_BARRELS; i++)
+	for (int i = 0; i <= MAX_BARRELS - 1; i++)
 	{
 		barrels[i].setBoard(board);
 	}
@@ -18,7 +19,7 @@ void Game::resetStage() {
 	mario = Mario(); // reset Mario
 	//barrel = Barrel(); // reset Barrel
 	mario.setBoard(board);
-	for (int i = 0; i <= MAX_BARRELS; i++)
+	for (int i = 0; i <= MAX_BARRELS - 1; i++)
 	{
 		barrels[i].setBoard(board);
 	}
@@ -118,6 +119,8 @@ void Game::runGame() {
 				break;
 			}
 			mario.keyPressed(key);
+
+			drawBarrels();
 		}
 		Sleep(50);
 		mario.erase();
