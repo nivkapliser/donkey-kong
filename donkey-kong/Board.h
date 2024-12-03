@@ -43,5 +43,11 @@ public:
 	char getChar(int x, int y) const {
 		return currentBoard[y][x];
 	}
+
+	bool isValidMovw(int x, int y) const { // for check
+		if (currentBoard[x][y] == '>' || currentBoard[x][y] == '<' || currentBoard[x][y] == 'Q' || currentBoard[x][y] == '=')
+			return false;
+		return true;
+	}
 };
 

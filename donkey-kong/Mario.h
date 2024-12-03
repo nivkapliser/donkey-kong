@@ -24,6 +24,7 @@ class Mario
 	int dirX = 0;
 	int dirY = 0;
 
+	int fallCounter = 0;
 	bool isJump = false;
 	bool isClimbing = false;
 
@@ -52,21 +53,14 @@ public:
 		lastPoint = pBoard->getChar(x, y);
 	}
 
-	bool isFloorUp();
-	bool isLadder();
-	void climbLadder();// delete
-	void downLadder(); // delete
-	bool isLadderUp(); // delete
-	bool isLadderDown(); // delete
+	bool isFloor(char ch) const;
+	bool isLadder() const;
+	bool isLadderUp() const; // delete
+	bool isLadderDown() const; // delete
 	void changeDir(Direction dir);
-	bool isValidMove();
-	bool gravitation(); // move to game?
+	bool isValidMove() const;
+	bool gravitation() const; // move to game?
 	void move();
 	void keyPressed(char key);
-
-
-	void jump();
-
-
 };
 
