@@ -1,36 +1,31 @@
 #include "Mario.h"
 #include <algorithm>
 
-// Use constexpr for compile-time constants
-namespace {
-    constexpr char FORBIDDEN_CHARS[] = { 'Q', '<', '>', '=' };
-    constexpr char LADDER = 'H';
-    constexpr char EMPTY_SPACE = ' ';
-}
+// can delete:
+// ------------------------------------------------
+//bool Mario::isLadderUp() const { // move to board
+//    return pBoard->getChar(x, y - 1) == LADDER;
+//}
+//
+//bool Mario::isLadder() const { // move to board
+//    return pBoard->getChar(x, y) == LADDER;
+//}
+//
+//bool Mario::isFloor(char ch) const { // move to board
+//    return std::any_of(std::begin(FORBIDDEN_CHARS), std::end(FORBIDDEN_CHARS),
+//        [ch](char forbidden) { return ch == forbidden; });
+//}
+//
+//bool Mario::isLadderDown() const { // move to board
+//    return pBoard->getChar(x, y + 2) == LADDER ||
+//        pBoard->getChar(x, y + 1) == LADDER;
+//}
+//
+//bool Mario::gravitation() const { // move to board
+//    return pBoard->getChar(x, y + 1) == EMPTY_SPACE;
+//}
 
-bool Mario::isLadderUp() const {
-    return pBoard->getChar(x, y - 1) == LADDER;
-}
-
-bool Mario::isLadder() const {
-    return pBoard->getChar(x, y) == LADDER;
-}
-
-bool Mario::isFloor(char ch) const {
-    return std::any_of(std::begin(FORBIDDEN_CHARS), std::end(FORBIDDEN_CHARS),
-        [ch](char forbidden) { return ch == forbidden; });
-}
-
-bool Mario::isLadderDown() const {
-    return pBoard->getChar(x, y + 2) == LADDER ||
-        pBoard->getChar(x, y + 1) == LADDER;
-}
-
-bool Mario::gravitation() const {
-    return pBoard->getChar(x, y + 1) == EMPTY_SPACE && !isJump;
-}
-
-bool Mario::isValidMove() const {
+bool Mario::isValidMove() const { // move to board
     char nextChar = pBoard->getChar(x + dirX, y + dirY);
     return std::none_of(std::begin(FORBIDDEN_CHARS), std::end(FORBIDDEN_CHARS),
         [nextChar](char forbidden) { return nextChar == forbidden; });
@@ -70,17 +65,20 @@ void Mario::keyPressed(char key) {
     }
 }
 
+// built base on the lab code
 void Mario::move() {
-    // Ladder climbing logic - prioritize this
-    if (isLadder() || pBoard->getChar(x, y + 1) == LADDER) {
-        // Vertical ladder movement takes precedence
+
+    
+    // Ladder climbing logic
+    if (pBoard->isLadder(x, y) || pBoard->getChar(x, y + 1) == LADDER) {
         if (dirY == -1) {
             // Climbing up
             if (pBoard->getChar(x, y - 1) == LADDER) {
                 y--;
                 return;
             }
-            else if (pBoard->getChar(x, y - 1) == '<' || pBoard->getChar(x, y - 1) == '>' || pBoard->getChar(x, y - 1) == '=') {
+            else if (pBoard->getChar(x, y - 1) == '<' || pBoard->getChar(x, y - 1) == '>' || pBoard->getChar(x, y - 1) == '=') { // in function
+               // Climbing last level
                 y -= 2;
                 changeDir(STAY);
                 return;
@@ -93,25 +91,39 @@ void Mario::move() {
         }
     }
 
-    // Rest of the existing movement logic
+    //// Handle jumping logic
+    //if (dirY == -1 && jumpCounter < 2) {
+    //    if (isValidMove()) {
+    //        y--;
+    //        x += dirX;
+    //        jumpCounter++;
+    //        return;
+    //    }
+    //}
+    //else if (jumpCounter >= 2) {
+    //    jumpCounter = 0;
+    //    changeDir(DOWN);
+    //}
+
     int newX = x + dirX;
     int newY = y + dirY;
-    bool isFallSession = false;
-
+    bool gravity = false;
+    
+    // first step in climbing down ladder
     if (dirX == 0 && dirY == 1 &&
         pBoard->getChar(x, y + 2) == LADDER &&
-        isFloor(pBoard->getChar(x, y + 1))) {
+        pBoard->isFloor(pBoard->getChar(x, y + 1))) {
         y += 2;
     }
     else if (!isValidMove()) {
         changeDir(STAY);
     }
-    else if (pBoard->getChar(x, y + 1) == EMPTY_SPACE) {
-        isFallSession = true;
+    else if (pBoard->gravitation(x, y)) { //)pBoard->getChar(x, y + 1) == EMPTY_SPACE) {
+        gravity = true;
         y++;
     }
     else if (dirX == 0 && dirY == -1 && pBoard->getChar(x, y - 2) == EMPTY_SPACE) {
-        x += 2 * dirX;
+        //x += dirX;
         y -= 2;
         changeDir(STAY);
     }
@@ -119,7 +131,7 @@ void Mario::move() {
         x += 2 * dirX;
         y += dirY;
     }
-    else if (!isValidMove() && isLadder()) {
+    else if (!isValidMove() && pBoard->isLadder(x, y)) {
         y -= 2;
     }
     else {
@@ -127,5 +139,6 @@ void Mario::move() {
         y = newY;
     }
 
-    fallCounter = isFallSession ? ++fallCounter : 0;
+    fallCounter = gravity ? ++fallCounter : 0;
 }
+

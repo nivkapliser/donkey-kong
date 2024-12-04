@@ -3,6 +3,7 @@
 static constexpr int MAX_X = 80;
 static constexpr int MAX_Y = 25;
 const char dontTouch[5] = "<>=Q";
+//constexpr char FORBIDDEN_CHARS[] = { 'Q', '<', '>', '=' };
 
 class Board
 {
@@ -44,10 +45,15 @@ public:
 		return currentBoard[y][x];
 	}
 
-	bool isValidMovw(int x, int y) const { // for check
+	bool isValidMove(int x, int y) const { // for check
 		if (currentBoard[x][y] == '>' || currentBoard[x][y] == '<' || currentBoard[x][y] == 'Q' || currentBoard[x][y] == '=')
 			return false;
 		return true;
 	}
+
+	bool isFloor(char ch) const;
+	bool isLadder(int x, int y) const;
+	bool gravitation(int x, int y) const; 
+
 };
 

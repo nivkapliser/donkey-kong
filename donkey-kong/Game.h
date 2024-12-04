@@ -4,23 +4,24 @@
 #include "Mario.h"
 #include "Barrel.h"
 
-constexpr int ESC = 27; // move to?
-enum GameState { MENU, RUNNING, PAUSED, GAME_OVER, GAME_WON };
 
 class Game
-{	
+{
+
+	static constexpr int ESC = 27; 
+	enum GameState { MENU, RUNNING, PAUSED, GAME_OVER, GAME_WON };
+	
 	Board board;
 	Mario mario;
-	//Barrel barrel;
-	Barrel barrels[MAX_BARRELS];
+	Barrel barrels[MAX_BARRELS]; // vector?
+	
 	int lives;
 	GameState currentState = MENU;
 
 	void initGame();
 	void resetStage();
-	//void checkCollisions();
 	void displayMenu();
-	void displayInstructions();
+	void displayInstructions() const;
 	void displayGameOver();
 	void displayGameWon();
 	//add colors...?
@@ -42,7 +43,7 @@ public:
 	void handleKeyPress(char key);
 	
 	void drawBarrels();
-	void eraseBarrels();
+	void eraseBarrels(); // delete?
 	void moveBarrels();
 	// color function?
 };

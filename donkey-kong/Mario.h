@@ -4,11 +4,13 @@
 #include "Board.h"
 #include "Point.h"
 
-enum Direction { LEFT, UP, RIGHT, DOWN, STAY }; // should be public?
+constexpr char FORBIDDEN_CHARS[] = { 'Q', '<', '>', '=' };
+constexpr char LADDER = 'H';
+constexpr char EMPTY_SPACE = ' ';
 
 class Mario
 {
-
+	enum Direction { LEFT, UP, RIGHT, DOWN, STAY }; // should be public?
 	static constexpr char keys[] = { 'a', 'w', 'd', 'x', 's' };
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);
 	static constexpr int START_X = 70;
@@ -25,8 +27,7 @@ class Mario
 	int dirY = 0;
 
 	int fallCounter = 0;
-	bool isJump = false;
-	bool isClimbing = false;
+	int jumpCounter = 0;
 
 	Board* pBoard = nullptr;
 

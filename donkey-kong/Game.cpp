@@ -59,7 +59,7 @@ void Game::displayMenu() {
 
 }
 
-void Game::displayInstructions() {
+void Game::displayInstructions() const {
 	system("cls");
 	std::cout << "Game Controls:\n";
 	std::cout << "A/D: Move Left/Right\n";
