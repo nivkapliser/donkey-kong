@@ -4,16 +4,17 @@
 #include "Board.h"
 #include "Mario.h"
 
-constexpr int MAX_BARRELS = 10;
-constexpr int BARRELS_PACE = 1500;
-constexpr int FALL_LIMIT = 8;
-constexpr int EXPLODE_ZONE = 2;
+static constexpr int MAX_BARRELS = 10;
+static constexpr int BARRELS_PACE = 1500;
+static constexpr int FALL_LIMIT = 8;
+static constexpr int EXPLODE_ZONE = 2;
 
 
 class Barrel
 {
 	static constexpr int START_X = 11;
 	static constexpr int START_Y = 7;
+
 
 	char ch = 'O';
 	int x;

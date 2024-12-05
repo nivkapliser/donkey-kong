@@ -19,6 +19,7 @@ class Mario
 	char ch = '@';
 	int x = START_X;
 	int y = START_Y;
+	int lives = 3;
 
 	char lastPoint;
 
@@ -37,12 +38,30 @@ class Mario
 	}
 
 public:
-	Mario() : x(START_X), y(START_Y), lastPoint(' ') {}
+	Mario() : x(START_X), y(START_Y), lastPoint(' '), lives(3) {}
+	
+	void resetMarioPosition() {
+		x = START_X;
+		y = START_Y;
+	}
+
 	int getX() {
 		return x;
 	}
 	int getY() {
 		return y;
+	}
+
+	int setLives(int l) {
+		lives = l;
+	}
+
+	int getLives() const {
+		return lives;
+	}
+
+	void downLives() {
+		lives--;
 	}
 
 	void draw() const {

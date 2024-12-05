@@ -4,7 +4,6 @@
 #include <Windows.h>
 
 
-
 void Game::initGame() {
 	board.reset();
 	mario.setBoard(board);
@@ -18,14 +17,15 @@ void Game::resetStage() {
 	system("cls");
 	board.reset();
 	board.print();
-	mario = Mario(); // reset Mario
+	//mario = Mario(); // reset Mario
+	mario.resetMarioPosition();
 	mario.setBoard(board);
 	for (int i = 0; i <= MAX_BARRELS; i++)
 	{
 		barrels[i] = Barrel();
 		barrels[i].setBoard(board);
 	}
-	lives--;
+	//mario.lives--;
 }
 
 void Game::displayMenu() {
@@ -110,6 +110,7 @@ void Game::runGame() {
 	int activateBarrel = 1;
 	static int i = 0;
 	while (true) {
+		
 		mario.draw();
 		drawBarrels();
 
@@ -141,6 +142,15 @@ void Game::runGame() {
 
 		}
 		sleepCount += 50;
+
+
+		if (currentState == GAME_OVER) {
+			break;
+		}
+		if (currentState == GAME_WON) {
+			break;
+		}
+
 	}
 }
 
@@ -178,7 +188,11 @@ void Game::handleKeyPress(char key) {
 			currentState = RUNNING;
 		}
 		break;
+	case GAME_OVER:
+		// Handle game over
+		break;
 	}
+
 }
 
 void Game::displayGameOver() { // add nicer graphic
@@ -209,7 +223,14 @@ void Game::drawBarrels()
 				barrels[i].explode();
 
 			if (barrels[i].checkEncounters(mario))
-				resetStage();
+				if (mario.getLives() == 1) {
+					currentState = GAME_OVER;
+					mario.downLives();
+				}
+				else {
+					resetStage();
+					mario.downLives();
+				}	
 		}
 	}
 }
@@ -221,7 +242,15 @@ void Game::moveBarrels()
 		{
 
 			if (barrels[i].checkEncounters(mario))
-				resetStage();
+				if (mario.getLives() == 1) {
+					currentState = GAME_OVER;
+					mario.downLives();
+				}
+				else {
+					resetStage();
+					mario.downLives();
+				}
+				//resetStage();
 			barrels[i].erase();
 			barrels[i].move();
 		}

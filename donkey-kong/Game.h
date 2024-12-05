@@ -15,7 +15,7 @@ class Game
 	Mario mario;
 	Barrel barrels[MAX_BARRELS]; // vector?
 	
-	int lives;
+	//int lives;
 	GameState currentState = MENU;
 
 	void initGame();
@@ -27,7 +27,7 @@ class Game
 	//add colors...?
 
 public:
-	Game(): lives(3), currentState(MENU) {
+	Game(): currentState(MENU) {
 		initGame();
 	}
 
