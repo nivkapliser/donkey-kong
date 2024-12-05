@@ -120,10 +120,10 @@ void Mario::move() {
         gravity = true;
         y++;
     }
+    
     else if (isJump == 2) {
         x += dirX;
-        dirY = 1;
-        y += dirY;
+        //y += dirY;
         dirY = 0;
         //x += 2 * dirX;
         //y += dirY;

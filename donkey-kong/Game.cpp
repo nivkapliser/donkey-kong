@@ -228,7 +228,7 @@ void Game::drawBarrels()
 					mario.downLives();
 				}
 				else {
-					Sleep(100);
+					Sleep(250);
 					resetStage();
 					mario.downLives();
 				}	
@@ -248,7 +248,7 @@ void Game::moveBarrels()
 					mario.downLives();
 				}
 				else {
-					Sleep(100);
+					Sleep(250);
 					resetStage();
 					mario.downLives();
 				}
