@@ -15,6 +15,7 @@ class Mario
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);
 	static constexpr int START_X = 70;
 	static constexpr int START_Y = 23;
+	int isJump = false;
 
 	char ch = '@';
 	int x = START_X;
@@ -89,4 +90,14 @@ public:
 	void move();
 	void keyPressed(char key);
 };
-
+//
+//void Mario::jump() {
+//
+//	isJump = true; // to avoid gravitation
+//	dirY = -1;
+//	for (int i = 0; i < 2; i++) {
+//		Sleep(100);
+//		dirY = 0;
+//		isJump = false;
+//
+//	}

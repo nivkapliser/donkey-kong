@@ -76,7 +76,7 @@ void Barrel::explode()
 	std::cout << "BOOM!";
 	gotoxy(x - 2, y);
 	std::cout << "_\\|/_";
-	Sleep(100);
+	Sleep(50);
 	eraseBoom();
 	linesFallen = 0;
 }

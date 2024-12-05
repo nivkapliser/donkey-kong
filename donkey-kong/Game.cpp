@@ -79,15 +79,15 @@ void Game::run() {
 			displayMenu();
 			break;
 		case RUNNING:
-			system("cls");
-			board.reset();
-			board.print();
-			mario.setBoard(board);
-			for (int i = 0; i <= MAX_BARRELS; i++)
-			{
-				barrels[i].setBoard(board);
-			}
-			//Maybe to put resetStage() instead of the below?
+			//system("cls");
+			//board.reset();
+			//board.print();
+			//mario.setBoard(board);
+			//for (int i = 0; i <= MAX_BARRELS; i++)
+			//{
+			//	barrels[i].setBoard(board);
+			//}
+			resetStage();
 			runGame();
 			break;
 
@@ -228,6 +228,7 @@ void Game::drawBarrels()
 					mario.downLives();
 				}
 				else {
+					Sleep(100);
 					resetStage();
 					mario.downLives();
 				}	
@@ -247,6 +248,7 @@ void Game::moveBarrels()
 					mario.downLives();
 				}
 				else {
+					Sleep(100);
 					resetStage();
 					mario.downLives();
 				}

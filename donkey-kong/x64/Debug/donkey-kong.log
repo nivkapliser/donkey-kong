@@ -1,6 +1,5 @@
 ﻿  Barrel.cpp
   Game.cpp
-C:\Users\niv\source\repos\donkey-kong\donkey-kong\Game.cpp(42,13): warning C4101: 'state': unreferenced local variable
-  main.cpp
+C:\Users\team3\source\repos\donkey-kong-5.12-2\donkey-kong\Game.cpp(42,13): warning C4101: 'state': unreferenced local variable
   Generating Code...
-  donkey-kong.vcxproj -> C:\Users\niv\Source\Repos\donkey-kong\x64\Debug\donkey-kong.exe
+  donkey-kong.vcxproj -> C:\Users\team3\source\repos\donkey-kong-5.12-2\x64\Debug\donkey-kong.exe
