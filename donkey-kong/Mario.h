@@ -7,6 +7,7 @@
 constexpr char FORBIDDEN_CHARS[] = { 'Q', '<', '>', '=' };
 constexpr char LADDER = 'H';
 constexpr char EMPTY_SPACE = ' ';
+constexpr int JUMP_HEIGHT = 2;
 
 class Mario
 {
@@ -44,6 +45,8 @@ public:
 	void resetMarioPosition() {
 		x = START_X;
 		y = START_Y;
+		dirX = 0;
+		dirY = 0;
 	}
 
 	int getX() {
@@ -89,6 +92,7 @@ public:
 	bool gravitation() const; // move to game?
 	void move();
 	void keyPressed(char key);
+	void jump();
 };
 //
 //void Mario::jump() {

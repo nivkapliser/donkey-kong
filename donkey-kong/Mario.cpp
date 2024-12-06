@@ -68,6 +68,7 @@ void Mario::keyPressed(char key) {
 // built base on the lab code
 void Mario::move() {
     // Ladder climbing logic
+
     if (pBoard->isLadder(x, y) || pBoard->getChar(x, y + 1) == LADDER) {
         if (dirY == -1) {
             // Climbing up
@@ -116,29 +117,16 @@ void Mario::move() {
     else if (!isValidMove()) {
         changeDir(STAY);
     }
+
     else if (pBoard->gravitation(x, y) && !isJump) { //)pBoard->getChar(x, y + 1) == EMPTY_SPACE) {
         gravity = true;
         y++;
     }
-    
-    else if (isJump == 2) {
-        x += dirX;
-        //y += dirY;
-        dirY = 0;
-        //x += 2 * dirX;
-        //y += dirY;
-        //dirY = 0;
-        isJump = 0;
-        //changeDir(STAY);
 
-    }
-    else if (isJump == 1) {
-        x += dirX;
-        y += dirY;
-        //dirY = 0;
-        isJump = 2;
-        //changeDir(STAY);
-    }
+    else if (isJump != 0)
+        jump();
+    
+
     else if (dirY == -1 && pBoard->getChar(x, y - 2) == EMPTY_SPACE && !isJump) {
         x += dirX;
         y += dirY;
@@ -169,4 +157,25 @@ void Mario::move() {
 
     fallCounter = gravity ? ++fallCounter : 0;
 }
-
+void Mario::jump()
+{
+    if (isJump < JUMP_HEIGHT)
+    {
+        x += dirX;
+        y += dirY;
+        //dirY = 0;
+        isJump++;
+        //changeDir(STAY);
+    }
+    else
+    {
+        x += dirX;
+        //y += dirY;
+        dirY = 0;
+        //x += 2 * dirX;
+        //y += dirY;
+        //dirY = 0;
+        isJump = 0;
+        //changeDir(STAY);
+    }
+}

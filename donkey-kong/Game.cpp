@@ -19,6 +19,7 @@ void Game::resetStage() {
 	board.print();
 	//mario = Mario(); // reset Mario
 	mario.resetMarioPosition();
+	
 	mario.setBoard(board);
 	for (int i = 0; i <= MAX_BARRELS; i++)
 	{
