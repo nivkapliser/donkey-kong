@@ -1,13 +1,13 @@
 #pragma once
 
-static constexpr int MAX_X = 80;
-static constexpr int MAX_Y = 25;
-const char dontTouch[5] = "<>=Q";
-//constexpr char FORBIDDEN_CHARS[] = { 'Q', '<', '>', '=' };
-
 class Board
 {
-	
+	static constexpr int MAX_X = 80;
+	static constexpr int MAX_Y = 25;
+	static constexpr char EMPTY_SPACE = ' ';
+	static constexpr char LADDER = 'H';
+	static constexpr char FORBIDDEN_CHARS[] = { 'Q', '<', '>', '=' };
+
 	const char* originalBoard[MAX_Y] = {
 		// 01234567890123456789012345678901234567890123456789012345678901234567890123456789
 		  "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW", // 0
@@ -44,16 +44,14 @@ public:
 	char getChar(int x, int y) const {
 		return currentBoard[y][x];
 	}
-
-	bool isValidMove(int x, int y) const { // for check
-		if (currentBoard[x][y] == '>' || currentBoard[x][y] == '<' || currentBoard[x][y] == 'Q' || currentBoard[x][y] == '=')
-			return false;
-		return true;
-	}
-
-	bool isFloor(char ch) const;
+	
+	bool isValidMove(int x, int y) const;
+	bool isFloor(int x, int y) const;
 	bool isLadder(int x, int y) const;
 	bool gravitation(int x, int y) const; 
+	bool isEmptySpace(int x, int y) const {
+		return getChar(x, y) == EMPTY_SPACE;
+	}
 
 };
 

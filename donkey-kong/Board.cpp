@@ -16,9 +16,20 @@ void Board::print() const
 	std::cout << currentBoard[MAX_Y - 1];
 }
 
-bool Board::isFloor(char ch) const { // change to coord?
-	for (int i = 0; i < 5; ++i) {
-		if (ch == dontTouch[i]) { // change to forbiden after deleting from mario
+bool Board::isValidMove(int x, int y) const {
+	char nextChar = getChar(x, y);
+	for (auto ch : FORBIDDEN_CHARS) {
+		if (nextChar == ch) {
+			return false;
+		}
+	}
+	return true;
+}
+
+bool Board::isFloor(int x, int y) const { 
+	char c = getChar(x, y);
+	for (auto ch : FORBIDDEN_CHARS) {
+		if (c == ch) { 
 			return true;
 		}
 	}
@@ -27,9 +38,9 @@ bool Board::isFloor(char ch) const { // change to coord?
 }
 
 bool Board::isLadder(int x, int y) const {
-	return currentBoard[y][x] == 'H'; // change to saved word LADDER
+	return currentBoard[y][x] == LADDER; // change to saved word LADDER
 }
 
 bool Board::gravitation(int x, int y) const {
-	return getChar(x, y + 1) == ' '; // change to saved word EMPTY_SPACE
+	return getChar(x, y + 1) == EMPTY_SPACE; // change to saved word EMPTY_SPACE
 }

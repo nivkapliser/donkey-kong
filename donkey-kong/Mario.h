@@ -4,31 +4,26 @@
 #include "Board.h"
 #include "Point.h"
 
-constexpr char FORBIDDEN_CHARS[] = { 'Q', '<', '>', '=' };
-constexpr char LADDER = 'H';
-constexpr char EMPTY_SPACE = ' ';
-constexpr int JUMP_HEIGHT = 2;
-
 class Mario
 {
-	enum Direction { LEFT, UP, RIGHT, DOWN, STAY }; // should be public?
+	enum Direction { LEFT, UP, RIGHT, DOWN, STAY };
+	static constexpr int JUMP_HEIGHT = 2;
 	static constexpr char keys[] = { 'a', 'w', 'd', 'x', 's' };
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);
 	static constexpr int START_X = 70;
 	static constexpr int START_Y = 23;
-	int isJump = false;
 
 	char ch = '@';
 	int x = START_X;
 	int y = START_Y;
-	int lives = 3;
-
-	char lastPoint;
+	int lives;
 
 	Direction currenDirection = STAY;
 	int dirX = 0;
 	int dirY = 0;
 
+	char lastPoint;
+	int isJump = false;
 	int fallCounter = 0;
 	int jumpCounter = 0;
 
@@ -83,25 +78,8 @@ public:
 		lastPoint = pBoard->getChar(x, y);
 	}
 
-	bool isFloor(char ch) const;
-	bool isLadder() const;
-	bool isLadderUp() const; // delete
-	bool isLadderDown() const; // delete
 	void changeDir(Direction dir);
-	bool isValidMove() const;
-	bool gravitation() const; // move to game?
 	void move();
 	void keyPressed(char key);
 	void jump();
 };
-//
-//void Mario::jump() {
-//
-//	isJump = true; // to avoid gravitation
-//	dirY = -1;
-//	for (int i = 0; i < 2; i++) {
-//		Sleep(100);
-//		dirY = 0;
-//		isJump = false;
-//
-//	}
