@@ -3,7 +3,7 @@
 #include <conio.h>
 #include <Windows.h>
 
-
+// Initializes the game by resetting the board and setting up mario and barrels
 void Game::initGame() {
 	board.reset();
 	mario.setBoard(board);
@@ -13,34 +13,35 @@ void Game::initGame() {
 	}
 }
 
+// Resets the stage entities, including the board, mario, and barrels
 void Game::resetStage() {
 	system("cls");
 	board.reset();
 	board.print();
-	//mario = Mario(); // reset Mario
 	mario.resetMarioPosition();
-	
 	mario.setBoard(board);
+
 	for (int i = 0; i <= MAX_BARRELS; i++)
 	{
 		barrels[i] = Barrel();
 		barrels[i].setBoard(board);
 	}
-	//mario.lives--;
 }
 
+// Displays the main menu and handles user input for menu selection
 void Game::displayMenu() {
 	char choice;
 	system("cls");
 	std::cout << "Donkey Kong\n";
 	std::cout << "1. Start New Game\n";
+	// add colors?
 	std::cout << "8. Instructions\n";
 	std::cout << "9. Exit\n";
 
 	while (true) {
 		std::cout << "Enter Choice:\n";
 		std::cin >> choice;
-		GameState state;
+		//GameState state;
 		if (choice == '1') {
 			setGameState(RUNNING);// need to init new game (mario start at the beggining)
 			break;
@@ -60,6 +61,7 @@ void Game::displayMenu() {
 
 }
 
+// Displays the game instructions
 void Game::displayInstructions() const {
 	system("cls");
 	std::cout << "Game Controls:\n";
@@ -72,6 +74,7 @@ void Game::displayInstructions() const {
 	_getch();
 }
 
+// Main game loop to handle different game states
 void Game::run() {
 
 	while (true) {
@@ -80,18 +83,9 @@ void Game::run() {
 			displayMenu();
 			break;
 		case RUNNING:
-			//system("cls");
-			//board.reset();
-			//board.print();
-			//mario.setBoard(board);
-			//for (int i = 0; i <= MAX_BARRELS; i++)
-			//{
-			//	barrels[i].setBoard(board);
-			//}
 			resetStage();
 			runGame();
 			break;
-
 		case PAUSED:
 			pauseGame();
 			break;
@@ -106,10 +100,13 @@ void Game::run() {
 	Sleep(50);
 }
 
+// Runs the game logic, including handling user input and moving entities
 void Game::runGame() {
 	int sleepCount = 0;
-	int activateBarrel = 1;
+	int activatedBarrel = 1;
 	static int i = 0;
+
+	// moving loop for mario and barrels
 	while (true) {
 		
 		mario.draw();
@@ -130,15 +127,16 @@ void Game::runGame() {
 		mario.move();
 		moveBarrels();
 
-		if (sleepCount == BARRELS_PACE)
+		// barrel activation loop
+		if (sleepCount == BARRELS_PACE) // need a separate function for this?
 		{
-			if(barrels[activateBarrel].checkActivationStatus() == false)
+			if(barrels[activatedBarrel].checkActivationStatus() == false)
 			{
-				barrels[activateBarrel].barrelActivation();
-				activateBarrel++;
+				barrels[activatedBarrel].barrelActivation();
+				activatedBarrel++;
 			}
-			if (activateBarrel == MAX_BARRELS)
-				activateBarrel = 0;
+			if (activatedBarrel == MAX_BARRELS)
+				activatedBarrel = 0;
 			sleepCount = 0;
 
 		}
@@ -155,6 +153,7 @@ void Game::runGame() {
 	}
 }
 
+// Pauses the game and waits for user input to resume or return to menu
 void Game::pauseGame() {
 	system("cls");
 	std::cout << "Game Paused. Press 'R' to Resume or 'ESC' to Return to Menu.\n";
@@ -171,6 +170,10 @@ void Game::pauseGame() {
 	}
 }
 
+
+// no need - can delete:
+// ------------------------------------------------
+/*
 void Game::handleKeyPress(char key) {
 	switch (currentState) {
 	case MENU:
@@ -195,7 +198,9 @@ void Game::handleKeyPress(char key) {
 	}
 
 }
+*/
 
+// Displays the game over screen and waits for user input to return to menu
 void Game::displayGameOver() { // add nicer graphic
 	system("cls");
 	std::cout << "GAME OVER!\n";
@@ -204,6 +209,7 @@ void Game::displayGameOver() { // add nicer graphic
 	currentState = MENU;
 }
 
+// Displays the game won screen and waits for user input to return to menu
 void Game::displayGameWon() { // add nicer graphic
 	system("cls");
 	std::cout << "Congratulations! You rescued Pauline!\n";
@@ -212,6 +218,7 @@ void Game::displayGameWon() { // add nicer graphic
 	currentState = MENU;
 }
 
+// shoud be in barrel class?
 void Game::drawBarrels()
 {
 	for (int i = 0; i <= MAX_BARRELS; i++)
@@ -236,6 +243,9 @@ void Game::drawBarrels()
 		}
 	}
 }
+
+
+// should be in barrel class?
 void Game::moveBarrels()
 {
 	for (int i = 0; i <= MAX_BARRELS; i++)

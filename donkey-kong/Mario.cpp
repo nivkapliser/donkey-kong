@@ -1,36 +1,7 @@
 #include "Mario.h"
-#include <algorithm>
 
-// can delete:
-// ------------------------------------------------
-//bool Mario::isLadderUp() const { // move to board
-//    return pBoard->getChar(x, y - 1) == LADDER;
-//}
-//
-//bool Mario::isLadder() const { // move to board
-//    return pBoard->getChar(x, y) == LADDER;
-//}
-//
-//bool Mario::isFloor(char ch) const { // move to board
-//    return std::any_of(std::begin(FORBIDDEN_CHARS), std::end(FORBIDDEN_CHARS),
-//        [ch](char forbidden) { return ch == forbidden; });
-//}
-//
-//bool Mario::isLadderDown() const { // move to board
-//    return pBoard->getChar(x, y + 2) == LADDER ||
-//        pBoard->getChar(x, y + 1) == LADDER;
-//}
-//
-//bool Mario::gravitation() const { // move to board
-//    return pBoard->getChar(x, y + 1) == EMPTY_SPACE;
-//}
-
-bool Mario::isValidMove() const { // move to board
-    char nextChar = pBoard->getChar(x + dirX, y + dirY);
-    return std::none_of(std::begin(FORBIDDEN_CHARS), std::end(FORBIDDEN_CHARS),
-        [nextChar](char forbidden) { return nextChar == forbidden; });
-}
-
+// Function to change the direction of Mario
+// based on code from the lab
 void Mario::changeDir(Direction dir) {
     switch (dir) {
     case LEFT:
@@ -56,6 +27,8 @@ void Mario::changeDir(Direction dir) {
     }
 }
 
+// Function to handle key press
+// based on code from the lab
 void Mario::keyPressed(char key) {
     for (size_t i = 0; i < numKeys; i++) {
         if (std::tolower(key) == keys[i]) {
@@ -65,44 +38,31 @@ void Mario::keyPressed(char key) {
     }
 }
 
+// Function to handle marios movement logic
 // built base on the lab code
 void Mario::move() {
-    // Ladder climbing logic
 
-    if (pBoard->isLadder(x, y) || pBoard->getChar(x, y + 1) == LADDER) {
+    // Ladder climbing logic
+	if (pBoard->isLadder(x, y) || pBoard->isLadder(x, y + 1)) { 
         if (dirY == -1) {
             // Climbing up
-            if (pBoard->getChar(x, y - 1) == LADDER) {
+            if (pBoard->isLadder(x, y - 1)) {
                 y--;
                 return;
             }
-            else if (pBoard->getChar(x, y - 1) == '<' || pBoard->getChar(x, y - 1) == '>' || pBoard->getChar(x, y - 1) == '=') { // in function
-               // Climbing last level
+			else if (pBoard->isFloor(x, y - 1)) {
+            // Climbing last level
                 y -= 2;
                 changeDir(STAY);
                 return;
             }
         }
-        else if (dirY == 1 && pBoard->getChar(x, y + 2) == LADDER) {
-            // Climbing down
+        else if (dirY == 1 && pBoard->isLadder(x, y + 2)) {
+            // Deccending ladder
             y++;
             return;
         }
     }
-
-    //// Handle jumping logic
-    //if (dirY == -1 && jumpCounter < 2) {
-    //    if (isValidMove()) {
-    //        y--;
-    //        x += dirX;
-    //        jumpCounter++;
-    //        return;
-    //    }
-    //}
-    //else if (jumpCounter >= 2) {
-    //    jumpCounter = 0;
-    //    changeDir(DOWN);
-    //}
 
     int newX = x + dirX;
     int newY = y + dirY;
@@ -110,15 +70,15 @@ void Mario::move() {
     
     // first step in climbing down ladder
     if (dirX == 0 && dirY == 1 &&
-        pBoard->getChar(x, y + 2) == LADDER &&
-        pBoard->isFloor(pBoard->getChar(x, y + 1))) {
+        pBoard->isLadder(x, y + 2) &&
+        pBoard->isFloor(x, y + 1)) {
         y += 2;
     }
-    else if (!isValidMove()) {
+    else if (!pBoard->isValidMove(newX, newY)) {
         changeDir(STAY);
     }
 
-    else if (pBoard->gravitation(x, y) && !isJump) { //)pBoard->getChar(x, y + 1) == EMPTY_SPACE) {
+    else if (pBoard->gravitation(x, y) && !isJump) { 
         gravity = true;
         y++;
     }
@@ -127,16 +87,14 @@ void Mario::move() {
         jump();
     
 
-    else if (dirY == -1 && pBoard->getChar(x, y - 2) == EMPTY_SPACE && !isJump) {
-        x += dirX;
-        y += dirY;
-        //dirY = 0;
+    else if (dirY == -1 && pBoard->isEmptySpace(x, y - 2)&& !isJump) {
+        x = newX; 
+        y = newY; 
         isJump = 1;
-        //changeDir(STAY);
     }
 
 
-    else if (!isValidMove() && pBoard->isLadder(x, y) && !isJump) {
+    else if (!pBoard->isValidMove(newX, newY) && pBoard->isLadder(x, y) && !isJump) {
         y -= 2;
     }
     else {
@@ -147,35 +105,23 @@ void Mario::move() {
         }
 
     }
-    
-    //if (dirY == -1)
-    //{
-    //    gravity = false;
-    //    y--;
 
-    //}
-
-    fallCounter = gravity ? ++fallCounter : 0;
+    fallCounter = gravity ? ++fallCounter : 0; // change the syntax a bit
 }
+
+// Function to handle marios jump logic
 void Mario::jump()
 {
     if (isJump < JUMP_HEIGHT)
     {
         x += dirX;
         y += dirY;
-        //dirY = 0;
         isJump++;
-        //changeDir(STAY);
     }
     else
     {
         x += dirX;
-        //y += dirY;
         dirY = 0;
-        //x += 2 * dirX;
-        //y += dirY;
-        //dirY = 0;
         isJump = 0;
-        //changeDir(STAY);
     }
 }

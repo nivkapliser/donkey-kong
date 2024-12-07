@@ -1,5 +1,5 @@
 #include "Barrel.h"
-
+/*
 bool Barrel::gravitation() {
 	if (pBoard->getChar(x, y + 1) == ' ') {
 		linesFallen++;
@@ -8,8 +8,8 @@ bool Barrel::gravitation() {
 	}
 	isFalling = false;
 	return false;
-}
-
+}*/
+/*
 bool Barrel::isValidMove() {
 	for (int i = 0; i < 5; i++) {
 		if (pBoard->getChar(x + dirX, y + dirY) == dontTouch[i]) {
@@ -17,7 +17,7 @@ bool Barrel::isValidMove() {
 		}
 	}
 	return true;
-}
+}*/
 
 void Barrel::floorDirSync()
 {
@@ -34,12 +34,12 @@ void Barrel::floorDirSync()
 
 void Barrel::move() {
 	
-	if (isValidMove() == false) {
+	if (!pBoard->isValidMove(x + dirX, y + dirY)) {
 		dirX = 0;
 		dirY = 0;
 
 	}
-	if (gravitation()) {
+	if (pBoard->gravitation(x, y)) {
 		dirX = 0;
 		dirY = 1;
 	}
@@ -76,7 +76,7 @@ void Barrel::explode()
 	std::cout << "BOOM!";
 	gotoxy(x - 2, y);
 	std::cout << "_\\|/_";
-	Sleep(50);
+	Sleep(50);//???
 	eraseBoom();
 	linesFallen = 0;
 }
