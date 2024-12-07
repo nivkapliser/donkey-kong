@@ -4,23 +4,19 @@
 #include "Board.h"
 #include "Mario.h"
 
-//static constexpr int MAX_BARRELS = 10;
-//static constexpr int BARRELS_PACE = 1500;
-static constexpr int FALL_LIMIT = 8;
-static constexpr int EXPLODE_ZONE = 2;
-const char dontTouch[5] = "<>=Q";
-
 
 class Barrel
 {
 	static constexpr int START_X = 11;
 	static constexpr int START_Y = 7;
+	static constexpr int FALL_LIMIT = 8;
+	static constexpr int EXPLODE_ZONE = 2;
 
 
 	char ch = 'O';
 	int x;
 	int y;
-	char floor[5] = "<>=Q";
+	char floor[5] = "<>=Q"; // FORBIDDEN_CHARS??
 	static constexpr size_t floorTypes = sizeof(floor) / sizeof(floor[0]);
 	enum Direction { LEFT, RIGHT, SAME, BOTTOM };
 	int dirX = 0;
@@ -36,12 +32,14 @@ class Barrel
 	}
 	bool isFalling = false;
 	bool isExploding = false;
+
 public:
 	Barrel() : x(START_X), y(START_Y) { isActive = false; }
-	int getX() {
+
+	int getX() const {
 		return x;
 	}
-	int getY() {
+	int getY() const {
 		return y;
 	}
 	void draw() const {
@@ -56,24 +54,21 @@ public:
 	}
 
 	void changeDir(Direction dir);
-	bool gravitation();
 	void move();
 	void setBoard(Board& board) {
 		pBoard = &board;
 	}
-
-	bool isValidMove();
 	void floorDirSync();
 	void explode();
 	bool barrelFallManager();
 
-	bool checkActivationStatus() {
+	bool checkActivationStatus() const {
 		return isActive;
 	}
 
 	void barrelActivation();
 	void eraseBoom();
-	bool fallingStatus(){
+	bool fallingStatus() const {
 		return isFalling;
 	}
 	bool checkEncounters(Mario& mario);

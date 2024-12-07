@@ -1,5 +1,7 @@
 #include "Mario.h"
 
+// need to add checks if fall 5 lines
+
 // Function to change the direction of Mario
 // based on code from the lab
 void Mario::changeDir(Direction dir) {
@@ -124,4 +126,8 @@ void Mario::jump()
         dirY = 0;
         isJump = 0;
     }
+}
+
+bool Mario::metPauline() const {
+	return pBoard->getChar(x, y) == '$';
 }

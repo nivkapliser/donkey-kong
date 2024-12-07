@@ -82,4 +82,5 @@ public:
 	void move();
 	void keyPressed(char key);
 	void jump();
+	bool metPauline() const;
 };

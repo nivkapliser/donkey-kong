@@ -1,24 +1,6 @@
 #include "Barrel.h"
-/*
-bool Barrel::gravitation() {
-	if (pBoard->getChar(x, y + 1) == ' ') {
-		linesFallen++;
-		isFalling = true;
-		return true;
-	}
-	isFalling = false;
-	return false;
-}*/
-/*
-bool Barrel::isValidMove() {
-	for (int i = 0; i < 5; i++) {
-		if (pBoard->getChar(x + dirX, y + dirY) == dontTouch[i]) {
-			return false;
-		}
-	}
-	return true;
-}*/
 
+// Function to set the barrel direction according to the floor type
 void Barrel::floorDirSync()
 {
 	char floor_type = pBoard->getChar(x, y + 1);
@@ -31,7 +13,7 @@ void Barrel::floorDirSync()
 	}
 }
 
-
+// Function to handle barrels movement logic
 void Barrel::move() {
 	
 	if (!pBoard->isValidMove(x + dirX, y + dirY)) {
@@ -49,6 +31,7 @@ void Barrel::move() {
 
 }
 
+// Function to change the direction of the barrels
 void Barrel::changeDir(Direction dir) {
 	switch (dir) {
 	case LEFT:
@@ -67,6 +50,7 @@ void Barrel::changeDir(Direction dir) {
 	}
 }
 
+// Function to explode the barrel 
 void Barrel::explode()
 {
 	isExploding = true;
@@ -80,6 +64,8 @@ void Barrel::explode()
 	eraseBoom();
 	linesFallen = 0;
 }
+
+// Function to erase the explosion
 void Barrel::eraseBoom()
 {
 	char lastchar;
@@ -93,6 +79,8 @@ void Barrel::eraseBoom()
 		std::cout << lastchar;
 	}
 }
+
+// Function to check if the barrel has fallen enough lines
 bool Barrel::barrelFallManager()
 {
 	if (isFalling == false && linesFallen >= FALL_LIMIT)
@@ -105,7 +93,7 @@ bool Barrel::barrelFallManager()
 	return false;
 }
 
-
+// Function to check if the barrel encounters mario
 bool Barrel::checkEncounters(Mario& mario)
 {
 	if (mario.getX() == getX() && mario.getY() == getY())
@@ -118,6 +106,7 @@ bool Barrel::checkEncounters(Mario& mario)
 	return false;
 }
 
+// Function to activate a barrel
 void Barrel::barrelActivation()
 {
 	if (isActive == false)
