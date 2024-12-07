@@ -41,7 +41,6 @@ void Game::displayMenu() {
 	while (true) {
 		std::cout << "Enter Choice:\n";
 		std::cin >> choice;
-		//GameState state;
 		if (choice == '1') {
 			setGameState(RUNNING);// need to init new game (mario start at the beggining)
 			break;
@@ -142,6 +141,9 @@ void Game::runGame() {
 		}
 		sleepCount += 50;
 
+		if (mario.metPauline()) {
+			currentState = GAME_WON;
+		}
 
 		if (currentState == GAME_OVER) {
 			break;

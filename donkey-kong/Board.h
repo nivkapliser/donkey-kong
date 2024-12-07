@@ -7,6 +7,7 @@ class Board
 	static constexpr char EMPTY_SPACE = ' ';
 	static constexpr char LADDER = 'H';
 	static constexpr char FORBIDDEN_CHARS[] = { 'Q', '<', '>', '=' };
+	static constexpr char PAULINE = '$';
 
 	const char* originalBoard[MAX_Y] = {
 		// 01234567890123456789012345678901234567890123456789012345678901234567890123456789
