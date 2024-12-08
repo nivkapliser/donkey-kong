@@ -139,6 +139,10 @@ void Game::runGame() {
 		Sleep(50);
 		mario.erase();
 		mario.move();
+		if (mario.getFallCounter() >= 5) {
+			mario.downLives();
+			resetStage();
+		}
 		moveBarrels();
 		barrelsActivation();
 
