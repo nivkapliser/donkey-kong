@@ -6,10 +6,16 @@
 // to delete
 // Initializes the game by resetting the board and setting up mario and barrels
 void Game::initGame() {
+	system("cls");
 	board.reset();
+	board.print();
+	mario.resetMarioPosition();
 	mario.setBoard(board);
+	mario.setLives(3);
+
 	for (int i = 0; i < MAX_BARRELS; i++)
 	{
+		barrels[i] = Barrel();
 		barrels[i].setBoard(board);
 	}
 }
@@ -86,7 +92,7 @@ void Game::run() {
 			displayMenu();
 			break;
 		case RUNNING:
-			resetStage();
+			initGame();	
 			runGame();
 			break;
 		case PAUSED:
@@ -101,8 +107,8 @@ void Game::run() {
 			setGameState(MENU);
 			break;
 		case FINISH:
-			//run = false;
-			return;
+			run = false;
+			//return;
 			break;
 		default: 
 			setGameState(MENU);
@@ -134,15 +140,21 @@ void Game::runGame() {
 			}
 			mario.keyPressed(key);
 
-			//drawBarrels();  need???
+			//drawBarrels();  need?
 		}
 		Sleep(50);
 		mario.erase();
 		mario.move();
-		if (mario.getFallCounter() >= 5) {
-			mario.downLives();
+
+		if (mario.getFallCounter() >= 5 && mario.isOnFloor()) {
 			resetStage();
+			mario.downLives();
+			if (mario.getLives() == 0) {
+				currentState = GAME_OVER;
+				break;
+			}
 		}
+
 		moveBarrels();
 		barrelsActivation();
 
@@ -152,7 +164,6 @@ void Game::runGame() {
 		}
 
 		if (currentState == GAME_OVER) {
-			Sleep(500);
 			break;
 		}
 	}

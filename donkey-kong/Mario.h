@@ -52,7 +52,7 @@ public:
 		return y;
 	}
 
-	int setLives(int l) {
+	void setLives(int l) {
 		lives = l;
 	}
 
@@ -100,4 +100,5 @@ public:
 	void keyPressed(char key);
 	void jump();
 	bool metPauline() const;
+	bool isOnFloor() const;
 };
