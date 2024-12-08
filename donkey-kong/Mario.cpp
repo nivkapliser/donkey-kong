@@ -80,13 +80,14 @@ void Mario::move() {
         changeDir(STAY);
     }
 
-    else if (pBoard->gravitation(x, y) && !isJump) { 
+    else if (pBoard->gravitation(x, y) && !isJump && pBoard->isValidMove(newX, y+1)) { 
         gravity = true;
         y++;
+        x += dirX;
     }
 
     else if (isJump != 0)
-        jump();
+        jump(); 
     
 
     else if (dirY == -1 && pBoard->isEmptySpace(x, y - 2)&& !isJump) {
@@ -107,7 +108,10 @@ void Mario::move() {
         }
 
     }
-
+	if (fallCounter == 5) {
+		downLives();
+		resetMarioPosition();
+	}
     fallCounter = gravity ? ++fallCounter : 0; // change the syntax a bit
 }
 

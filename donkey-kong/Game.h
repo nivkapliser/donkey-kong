@@ -27,9 +27,24 @@ class Game
 
 public:
 	Game(): currentState(MENU) {
-		initGame();
+		mario.setBoard(board);
+		for (int i = 0; i < MAX_BARRELS; i++)
+		{
+			barrels[i].setBoard(board);
+		}
 	}
-	~Game() {}
+
+	//
+	//void Game::initGame() {
+	//	board.reset();
+	//	mario.setBoard(board);
+	//	for (int i = 0; i <= MAX_BARRELS - 1; i++)
+	//	{
+	//		barrels[i].setBoard(board);
+	//	}
+	//}
+
+	//~Game() {}
 
 	void setGameState(GameState state) {
 		currentState = state;

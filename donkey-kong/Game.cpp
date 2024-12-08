@@ -3,11 +3,12 @@
 #include <conio.h>
 #include <Windows.h>
 
+// to delete
 // Initializes the game by resetting the board and setting up mario and barrels
 void Game::initGame() {
 	board.reset();
 	mario.setBoard(board);
-	for (int i = 0; i <= MAX_BARRELS - 1; i++)
+	for (int i = 0; i < MAX_BARRELS; i++)
 	{
 		barrels[i].setBoard(board);
 	}
@@ -21,7 +22,7 @@ void Game::resetStage() {
 	mario.resetMarioPosition();
 	mario.setBoard(board);
 
-	for (int i = 0; i <= MAX_BARRELS; i++)
+	for (int i = 0; i < MAX_BARRELS; i++)
 	{
 		barrels[i] = Barrel();
 		barrels[i].setBoard(board);
@@ -50,9 +51,10 @@ void Game::displayMenu() {
 			break;
 		}
 		else if (choice == '9') {
-			//setGameState(FINISH);
+			setGameState(FINISH);
 			//break;
-			exit(0); // the correct one?
+			//exit(0); // the correct one?
+			return;
 		}
 		else {
 			std::cout << "Invalid Choice. Please try again.";
@@ -99,7 +101,8 @@ void Game::run() {
 			setGameState(MENU);
 			break;
 		case FINISH:
-			run = false;
+			//run = false;
+			return;
 			break;
 		default: 
 			setGameState(MENU);
@@ -108,6 +111,7 @@ void Game::run() {
 		
 	}
 	Sleep(50);
+	std::cout << "Goodbye!\n";
 }
 
 // Runs the game logic, including handling user input and moving entities
