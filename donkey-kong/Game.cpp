@@ -144,6 +144,7 @@ void Game::runGame() {
 		}
 
 		if (currentState == GAME_OVER) {
+			Sleep(500);
 			break;
 		}
 	}

@@ -19,12 +19,16 @@ void Barrel::move() {
 	if (!pBoard->isValidMove(x + dirX, y + dirY)) {
 		dirX = 0;
 		dirY = 0;
-
 	}
+
 	if (pBoard->gravitation(x, y)) {
 		dirX = 0;
 		dirY = 1;
+		linesFallen++;
+		isFalling = true;
 	}
+	else
+		isFalling = false;
 
 	x += dirX;
 	y += dirY;
