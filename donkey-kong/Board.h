@@ -11,8 +11,8 @@ class Board
 
 	const char* originalBoard[MAX_Y] = {
 		// 01234567890123456789012345678901234567890123456789012345678901234567890123456789
-		  "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW", // 0
-		  "W                                                                              W", // 1
+		  " Remaining Lives:                                                               ", // 0
+		  "                                                                                ", // 1
 		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 2
 		  "Q                          $                                                   Q", // 3
 		  "Q                 =====================                                        Q", // 4
@@ -40,6 +40,8 @@ class Board
 	char currentBoard[MAX_Y][MAX_X + 1]; // +1 for null terminator
 
 public:
+	//Board() {};
+	~Board() { delete[] currentBoard; }
 	void reset();
 	void print() const;
 	char getChar(int x, int y) const {

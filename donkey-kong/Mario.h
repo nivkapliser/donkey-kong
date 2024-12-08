@@ -36,7 +36,8 @@ class Mario
 
 public:
 	Mario() : x(START_X), y(START_Y), lastPoint(' '), lives(3) {}
-	
+	//~Mario() { delete pBoard; }
+
 	void resetMarioPosition() {
 		x = START_X;
 		y = START_Y;
@@ -61,6 +62,8 @@ public:
 
 	void downLives() {
 		lives--;
+		eraseLife();
+		drawLife();
 	}
 
 	void draw() const {
@@ -76,6 +79,16 @@ public:
 
 	void setLastPoint() {
 		lastPoint = pBoard->getChar(x, y);
+	}
+
+	void eraseLife() {
+		gotoxy(18, 0);
+		std::cout << ' ';
+	}
+
+	void drawLife() {
+		gotoxy(18, 0);
+		std::cout << lives;
 	}
 
 	void changeDir(Direction dir);

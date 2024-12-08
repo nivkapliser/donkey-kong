@@ -116,5 +116,5 @@ void Barrel::barrelActivation()
 		x = START_X;
 		y = START_Y;
 	}
-
 }
+

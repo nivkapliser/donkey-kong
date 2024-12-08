@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Board.h"
 #include "Mario.h"
 #include "Barrel.h"
@@ -11,7 +10,7 @@ class Game
 	static constexpr int ESC = 27; 
 	static constexpr int MAX_BARRELS = 10;
 	static constexpr int BARRELS_PACE = 1500;
-	enum GameState { MENU, RUNNING, PAUSED, GAME_OVER, GAME_WON }; // To manage game state for better game control
+	enum GameState { MENU, RUNNING, PAUSED, GAME_OVER, GAME_WON, FINISH }; // To manage game state for better game control
 	
 	Board board;
 	Mario mario;
@@ -30,6 +29,7 @@ public:
 	Game(): currentState(MENU) {
 		initGame();
 	}
+	~Game() {}
 
 	void setGameState(GameState state) {
 		currentState = state;
@@ -40,9 +40,10 @@ public:
 	void run();
 	void runGame();
 	void pauseGame();
-	
+	//void barrelsManager();
 	void drawBarrels();
 	void moveBarrels();
+	void barrelsActivation();
 	// color function?
 };
 
