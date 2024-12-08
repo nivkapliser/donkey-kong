@@ -50,6 +50,8 @@ void Game::displayMenu() {
 			break;
 		}
 		else if (choice == '9') {
+			//setGameState(FINISH);
+			//break;
 			exit(0); // the correct one?
 		}
 		else {
@@ -75,8 +77,8 @@ void Game::displayInstructions() const {
 
 // Main game loop to handle different game states
 void Game::run() {
-
-	while (true) {
+	bool run = true;
+	while (run) {
 		switch (getGameState()) {
 		case MENU:
 			displayMenu();
@@ -90,11 +92,20 @@ void Game::run() {
 			break;
 		case GAME_OVER:
 			displayGameOver();
+			setGameState(MENU);
 			break;
 		case GAME_WON:
 			displayGameWon();
+			setGameState(MENU);
+			break;
+		case FINISH:
+			run = false;
+			break;
+		default: 
+			setGameState(MENU);
 			break;
 		}
+		
 	}
 	Sleep(50);
 }
@@ -103,8 +114,8 @@ void Game::run() {
 void Game::runGame() {
 	int sleepCount = 0;
 	int activatedBarrel = 1;
-	static int i = 0;
-
+	//static int i = 0;
+	mario.drawLife();
 	// moving loop for mario and barrels
 	while (true) {
 		
@@ -119,39 +130,22 @@ void Game::runGame() {
 			}
 			mario.keyPressed(key);
 
-			drawBarrels();
+			//drawBarrels();  need???
 		}
 		Sleep(50);
 		mario.erase();
 		mario.move();
 		moveBarrels();
-
-		// barrel activation loop
-		if (sleepCount == BARRELS_PACE) // need a separate function for this?
-		{
-			if(barrels[activatedBarrel].checkActivationStatus() == false)
-			{
-				barrels[activatedBarrel].barrelActivation();
-				activatedBarrel++;
-			}
-			if (activatedBarrel == MAX_BARRELS)
-				activatedBarrel = 0;
-			sleepCount = 0;
-
-		}
-		sleepCount += 50;
+		barrelsActivation();
 
 		if (mario.metPauline()) {
 			currentState = GAME_WON;
+			break;
 		}
 
 		if (currentState == GAME_OVER) {
 			break;
 		}
-		if (currentState == GAME_WON) {
-			break;
-		}
-
 	}
 }
 
@@ -172,36 +166,6 @@ void Game::pauseGame() {
 	}
 }
 
-
-// no need - can delete:
-// ------------------------------------------------
-/*
-void Game::handleKeyPress(char key) {
-	switch (currentState) {
-	case MENU:
-		// Handle menu selection
-		break;
-	case RUNNING:
-		if (key == ESC) { 
-			currentState = PAUSED;
-		}
-		else {
-			mario.keyPressed(key);
-		}
-		break;
-	case PAUSED:
-		if (key == ESC) { 
-			currentState = RUNNING;
-		}
-		break;
-	case GAME_OVER:
-		// Handle game over
-		break;
-	}
-
-}
-*/
-
 // Displays the game over screen and waits for user input to return to menu
 void Game::displayGameOver() { // add nicer graphic
 	system("cls");
@@ -219,6 +183,12 @@ void Game::displayGameWon() { // add nicer graphic
 	_getch();
 	currentState = MENU;
 }
+
+/*
+void Game::barrelsManager() {
+
+}
+*/
 
 // shoud be in barrel class?
 void Game::drawBarrels()
@@ -264,6 +234,8 @@ void Game::moveBarrels()
 					Sleep(250);
 					resetStage();
 					mario.downLives();
+					//mario.eraseLife();
+					//mario.drawLife();
 				}
 				//resetStage();
 			barrels[i].erase();
@@ -271,4 +243,24 @@ void Game::moveBarrels()
 		}
 
 	}
+}
+
+// should be in barrel class?
+void Game::barrelsActivation() {
+	static int sleepCount = 0;
+	static int activatedBarrel = 1;
+
+	if (sleepCount == BARRELS_PACE) // need a separate function for this?
+	{
+		if (barrels[activatedBarrel].checkActivationStatus() == false)
+		{
+			barrels[activatedBarrel].barrelActivation();
+			activatedBarrel++;
+		}
+		if (activatedBarrel == MAX_BARRELS)
+			activatedBarrel = 0;
+		sleepCount = 0;
+
+	}
+	sleepCount += 50;
 }

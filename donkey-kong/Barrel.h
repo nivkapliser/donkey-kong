@@ -36,6 +36,8 @@ class Barrel
 public:
 	Barrel() : x(START_X), y(START_Y) { isActive = false; }
 
+	//~Barrel() {delete pBoard;}
+
 	int getX() const {
 		return x;
 	}
