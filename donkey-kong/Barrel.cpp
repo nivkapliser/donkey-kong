@@ -15,17 +15,23 @@ void Barrel::floorDirSync()
 
 // Function to handle barrels movement logic
 void Barrel::move() {
-	
+	// use changedir
 	if (!pBoard->isValidMove(x + dirX, y + dirY)) {
 		dirX = 0;
 		dirY = 0;
 	}
 
 	if (pBoard->gravitation(x, y)) {
-		dirX = 0;
+		//dirX = 0;
 		dirY = 1;
 		linesFallen++;
 		isFalling = true;
+<<<<<<< HEAD
+	}
+	else {
+		isFalling = false;
+=======
+>>>>>>> 1b68a12a11ad291faf2fbe5e771c19872b679e3d
 	}
 	else
 		isFalling = false;
@@ -50,6 +56,7 @@ void Barrel::changeDir(Direction dir) {
 		explode();
 		break;
 	case SAME:
+		dirY = 0;
 		break;
 	}
 }
