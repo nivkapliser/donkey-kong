@@ -118,8 +118,18 @@ void Barrel::barrelActivation()
 	{
 		isExploding = false;
 		isActive = true;
-		x = START_X;
+		x = ((getDirectionRandomly() == 1) ? START_X_L : START_X_R);
 		y = START_Y;
 	}
 }
+int Barrel::getDirectionRandomly()
+{
+	int random_num = rand();
+	random_num %= 2;
 
+	if (random_num == 0)
+		return 1;
+	else
+		return -1;
+
+}

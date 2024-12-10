@@ -7,7 +7,8 @@
 
 class Barrel
 {
-	static constexpr int START_X = 11;
+	static constexpr int START_X_R = 38;
+	static constexpr int START_X_L = 36;
 	static constexpr int START_Y = 7;
 	static constexpr int FALL_LIMIT = 8;
 	static constexpr int EXPLODE_ZONE = 2;
@@ -34,7 +35,7 @@ class Barrel
 	bool isExploding = false;
 
 public:
-	Barrel() : x(START_X), y(START_Y) { isActive = false; }
+	Barrel() : x((getDirectionRandomly() == 1) ? START_X_R:START_X_L), y(START_Y) { isActive = false;}
 
 	//~Barrel() {delete pBoard;}
 
@@ -74,6 +75,7 @@ public:
 		return isFalling;
 	}
 	bool checkEncounters(Mario& mario);
+	int getDirectionRandomly();
 };
 
 
