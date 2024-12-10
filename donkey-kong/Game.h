@@ -8,8 +8,8 @@ class Game
 {
 	
 	static constexpr int ESC = 27; 
-	static constexpr int MAX_BARRELS = 10;
-	static constexpr int BARRELS_PACE = 1500;
+	static constexpr int MAX_BARRELS = 20;
+	static constexpr int BARRELS_PACE = 700;
 	enum GameState { MENU, RUNNING, PAUSED, GAME_OVER, GAME_WON, FINISH }; // To manage game state for better game control
 	
 	Board board;
