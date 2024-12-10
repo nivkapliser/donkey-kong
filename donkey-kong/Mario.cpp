@@ -108,10 +108,11 @@ void Mario::move() {
         }
 
     }
-	/*if (fallCounter >= 5) {
-		downLives();
-		resetMarioPosition();
-	}*/
+	//if (fallCounter >= 5) {
+	//	downLives();
+		//resetMarioPosition();
+	//}
+
     fallCounter = gravity ? ++fallCounter : 0; // change the syntax a bit
 }
 
@@ -132,6 +133,13 @@ void Mario::jump()
     }
 }
 
+
+// can be in h file
 bool Mario::metPauline() const {
 	return pBoard->getChar(x, y) == '$';
+}
+
+// can be in h file
+bool Mario::isOnFloor() const {
+	return pBoard->isFloor(x, y + 1);
 }
