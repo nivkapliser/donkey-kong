@@ -26,12 +26,6 @@ void Barrel::move() {
 		dirY = 1;
 		linesFallen++;
 		isFalling = true;
-<<<<<<< HEAD
-	}
-	else {
-		isFalling = false;
-=======
->>>>>>> 1b68a12a11ad291faf2fbe5e771c19872b679e3d
 	}
 	else
 		isFalling = false;

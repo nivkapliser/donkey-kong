@@ -60,6 +60,10 @@ public:
 		return lives;
 	}
 
+	int getFallCounter() const {
+		return fallCounter;
+	}
+
 	void downLives() {
 		lives--;
 		eraseLife();

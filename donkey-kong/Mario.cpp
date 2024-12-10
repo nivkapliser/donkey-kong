@@ -108,10 +108,10 @@ void Mario::move() {
         }
 
     }
-	if (fallCounter == 5) {
+	/*if (fallCounter >= 5) {
 		downLives();
 		resetMarioPosition();
-	}
+	}*/
     fallCounter = gravity ? ++fallCounter : 0; // change the syntax a bit
 }
 
