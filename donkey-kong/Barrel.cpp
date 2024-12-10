@@ -65,7 +65,11 @@ void Barrel::explode()
 	std::cout << "BOOM!";
 	gotoxy(x - 2, y);
 	std::cout << "_\\|/_";
-	Sleep(25);//???
+	if(encountered == true)
+		Sleep(700);//???
+	else
+		Sleep(25);//???
+
 	eraseBoom();
 	linesFallen = 0;
 }
@@ -103,7 +107,9 @@ bool Barrel::checkEncounters(Mario& mario)
 {
 	if (mario.getX() == getX() && mario.getY() == getY())
 	{
+		encountered = true;
 		explode();
+		encountered = false;
 		return true;
 	}
 	else if ((abs(mario.getX() - getX()) <= EXPLODE_ZONE && mario.getY() == getY()) && isExploding)

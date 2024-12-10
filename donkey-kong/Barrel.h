@@ -25,6 +25,7 @@ class Barrel
 	bool isActive;
 	char lastPoint;
 	int linesFallen = 0;
+	bool encountered = false;
 	Board* pBoard = nullptr;
 
 	void draw(char c) const {
