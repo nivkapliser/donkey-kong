@@ -1,9 +1,10 @@
 #pragma once
+#include "utils.h"
 #include "Board.h"
 #include "Mario.h"
 #include "BarrelManager.h"
 #include "Barrel.h"
-#include "Menu.h"
+#include "MenuGraphics.h"
 
 
 class Game
@@ -14,7 +15,7 @@ class Game
 	static constexpr int BARRELS_PACE = 700;
 	enum GameState { MENU, RUNNING, PAUSED, GAME_OVER, GAME_WON, FINISH }; // To manage game state for better game control
 	
-	Menu menu;
+	MenuGraphics menuGraphics;
 	Board board;
 	Mario mario;
 	BarrelManager barrelsManager;

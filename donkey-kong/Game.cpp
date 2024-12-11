@@ -12,6 +12,9 @@ void Game::initGame() {
 // Resets the stage entities, including the board, mario, and barrels
 void Game::resetStage() {
 	system("cls");
+	if (menuGraphics.getAddColor()) {
+		color(LIGHT_RED);
+	}
 	board.reset();
 	board.print();
 	mario.resetMarioPosition();
@@ -24,22 +27,28 @@ void Game::resetStage() {
 // Displays the main menu and handles user input for menu selection
 void Game::displayMenu() {
 	char choice;
-	system("cls");
-	std::cout << "Donkey Kong\n";
-	std::cout << "1. Start New Game\n";
-	// add colors?
-	std::cout << "8. Instructions\n";
-	std::cout << "9. Exit\n";
+	if (menuGraphics.getAddColor()) {
+		color(LIGHT_CYAN);
+	}
+	menuGraphics.displayMenu();	
 
 	while (true) {
-		std::cout << "Enter Choice:\n";
+		std::cout << "Enter Your Choice:\n";
 		std::cin >> choice;
 		if (choice == '1') {
-			setGameState(RUNNING);// need to init new game (mario start at the beggining)
+			setGameState(RUNNING);
 			break;
 		}
+		else if (choice == '2') {
+			menuGraphics.setAddColor(false);
+			color(WHITE);
+			menuGraphics.displayMenu();
+		}
 		else if (choice == '8') {
-			displayInstructions();
+			if (menuGraphics.getAddColor()) {
+				color(LIGHT_MAGENTA);
+			}
+			menuGraphics.displayInstructions();	
 			break;
 		}
 		else if (choice == '9') {
@@ -47,34 +56,24 @@ void Game::displayMenu() {
 			return;
 		}
 		else {
-			std::cout << "Invalid Choice. Please try again.";
+			std::cout << "Invalid Choice. Please try again.\n";
 		}
 	}
 	system("cls");
 
 }
 
-// Displays the game instructions
-void Game::displayInstructions() const {
-	system("cls");
-	std::cout << "Game Controls:\n";
-	std::cout << "A/D: Move Left/Right\n";
-	std::cout << "W: Jump/Climb Up\n";
-	std::cout << "X: Climb Down\n";
-	std::cout << "S: Stay in Place\n";
-	std::cout << "ESC: Pause Game\n";
-	std::cout << "Press any key to return...\n";
-	_getch();
-}
-
 // Main game loop to handle different game states
 void Game::run() {
 	bool run = true;
-	menu.displayOpenScreen();
+	if (menuGraphics.getAddColor()) {
+		color(LIGHT_MAGENTA);
+	}
+	menuGraphics.displayOpenScreen();
 	while (run) {
 		switch (getGameState()) {
 		case MENU:
-			displayMenu();
+			displayMenu();// create
 			break;
 		case RUNNING:
 			initGame();	
@@ -84,11 +83,19 @@ void Game::run() {
 			pauseGame();
 			break;
 		case GAME_OVER:
-			displayGameOver();
+			if (menuGraphics.getAddColor()) {
+				color(LIGHT_RED);
+			}
+			menuGraphics.displayGameOver();
+			//displayGameOver();
 			setGameState(MENU);
 			break;
 		case GAME_WON:
-			displayGameWon();
+			if (menuGraphics.getAddColor()) {
+				color(LIGHT_GREEN);
+			}
+			menuGraphics.displayGameWon();
+			//displayGameWon();
 			setGameState(MENU);
 			break;
 		case FINISH:
