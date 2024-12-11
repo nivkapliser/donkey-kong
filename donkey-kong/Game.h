@@ -1,6 +1,7 @@
 #pragma once
 #include "Board.h"
 #include "Mario.h"
+#include "BarrelManager.h"
 #include "Barrel.h"
 
 
@@ -14,7 +15,8 @@ class Game
 	
 	Board board;
 	Mario mario;
-	Barrel barrels[MAX_BARRELS]; // vector?
+	BarrelManager barrelsManager;
+	//Barrel barrels[MAX_BARRELS]; // vector?
 	GameState currentState = MENU;
 
 	void initGame();
@@ -26,12 +28,12 @@ class Game
 	//add colors...?
 
 public:
-	Game(): currentState(MENU) {
+	Game(): currentState(MENU), barrelsManager(board) {
 		mario.setBoard(board);
-		for (int i = 0; i < MAX_BARRELS; i++)
-		{
-			barrels[i].setBoard(board);
-		}
+		//for (int i = 0; i < MAX_BARRELS; i++)
+		//{
+			//barrels[i].setBoard(board);
+		//}
 	}
 
 	//
@@ -49,16 +51,16 @@ public:
 	void setGameState(GameState state) {
 		currentState = state;
 	}
+
 	GameState getGameState() {
 		return currentState;
 	}
 	void run();
 	void runGame();
 	void pauseGame();
-	//void barrelsManager();
-	void drawBarrels();
-	void moveBarrels();
-	void barrelsActivation();
+	//void drawBarrels();
+	//void moveBarrels();
+	//void barrelsActivation();
 	// color function?
 };
 

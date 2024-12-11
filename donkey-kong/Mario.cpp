@@ -1,6 +1,5 @@
 #include "Mario.h"
 
-// need to add checks if fall 5 lines
 
 // Function to change the direction of Mario
 // based on code from the lab
@@ -143,3 +142,4 @@ bool Mario::metPauline() const {
 bool Mario::isOnFloor() const {
 	return pBoard->isFloor(x, y + 1);
 }
+

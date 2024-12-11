@@ -10,8 +10,10 @@ class BarrelManager
 
 	Barrel barrels[MAX_BARRELS];
 
+	bool encounters = false;
+
 public:
-	BarrelManager(Board& board) {
+	BarrelManager(Board& board) { // move to cpp
 		for (int i = 0; i < MAX_BARRELS; i++)
 		{
 			barrels[i].setBoard(board);
@@ -22,5 +24,11 @@ public:
 	void drawBarrels(Mario& mario);
 	void moveBarrels(Mario& mario);
 	void barrelsActivation();
+	bool getEncounters() const {
+		return encounters;
+	}
+	void setEncounters(bool value) {
+		encounters = value;
+	}
 };
 

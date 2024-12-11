@@ -3,11 +3,28 @@ class Point
 {
 	int x;
 	int y;
-	char c;
+	//char c;//?
 
 public:
-	Point(int _x, int _y, char _ch) {
-		x = _x; y = _y, c = _ch;
+	Point(int _x, int _y) : x(_x), y(_y) {}
+	
+
+	int getX() const {
+		return x;
 	}
+
+	int getY() const {
+		return y;
+	}
+
+	int setX(int _x) {
+		x = _x;
+	}
+
+	int setY(int _y) {
+		y = _y;
+	}
+
+
 };
 

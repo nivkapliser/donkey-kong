@@ -4,6 +4,7 @@ void BarrelManager::resetBarrels(Board& board)
 {
 	for (int i = 0; i < MAX_BARRELS; i++)
 	{
+		barrels[i] = Barrel();
 		barrels[i].setBoard(board);
 	}
 }
@@ -20,16 +21,9 @@ void BarrelManager::drawBarrels(Mario& mario)
 			if (barrels[i].barrelFallManager() == true)
 				barrels[i].explode();
 
-			if (barrels[i].checkEncounters(mario))
-				if (mario.getLives() == 1) {
-					//currentState = GAME_OVER;
-					mario.downLives();
-				}
-				else {
-					Sleep(250);
-					//resetStage();
-					mario.downLives();
-				}
+			if (barrels[i].checkEncounters(mario)) {
+				encounters = true; // try
+			}
 		}
 	}
 }
@@ -43,19 +37,10 @@ void BarrelManager::moveBarrels(Mario& mario)
 		if (barrels[i].checkActivationStatus() == true)
 		{
 
-			if (barrels[i].checkEncounters(mario))
-				if (mario.getLives() == 1) {
-					//currentState = GAME_OVER;
-					mario.downLives();
-				}
-				else {
-					Sleep(250);
-					//resetStage();
-					mario.downLives();
-					//mario.eraseLife();
-					//mario.drawLife();
-				}
-			//resetStage();
+			if (barrels[i].checkEncounters(mario)) {
+				//Sleep(250);
+				encounters = true; // try	
+			}
 			barrels[i].erase();
 			barrels[i].move();
 		}

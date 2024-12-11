@@ -3,6 +3,7 @@
 #include "utils.h"
 #include "Board.h"
 #include "Point.h"
+#include "Barrel.h"
 
 class Mario
 {
@@ -12,20 +13,24 @@ class Mario
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);
 	static constexpr int START_X = 70;
 	static constexpr int START_Y = 23;
+	static constexpr int MAX_LIVES = 3;
 
+	//Point mario = Point(START_X, START_Y);
+	
 	char ch = '@';
 	int x = START_X;
 	int y = START_Y;
 	int lives;
 
-	Direction currenDirection = STAY;
+	Direction currentDirection = STAY;
 	int dirX = 0;
 	int dirY = 0;
 
-	char lastPoint;
-	int isJump = false;
+	char lastPoint; // point
+	int isJump = false; //???
 	int fallCounter = 0;
 	int jumpCounter = 0;
+	//bool metBarrel = false;
 
 	Board* pBoard = nullptr;
 
@@ -43,6 +48,9 @@ public:
 		y = START_Y;
 		dirX = 0;
 		dirY = 0;
+	}
+	void resetLives() {
+		setLives(MAX_LIVES);
 	}
 
 	int getX() {
@@ -101,4 +109,5 @@ public:
 	void jump();
 	bool metPauline() const;
 	bool isOnFloor() const;
+	//bool checkEncounters(Barrel& barrel); // change to point?
 };

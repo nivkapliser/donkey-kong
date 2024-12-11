@@ -4,6 +4,7 @@
 #include "Board.h"
 #include "Mario.h"
 
+class Mario;
 
 class Barrel
 {
@@ -37,8 +38,6 @@ class Barrel
 
 public:
 	Barrel() : x((getDirectionRandomly() == 1) ? START_X_R:START_X_L), y(START_Y) { isActive = false;}
-
-	//~Barrel() {delete pBoard;}
 
 	int getX() const {
 		return x;

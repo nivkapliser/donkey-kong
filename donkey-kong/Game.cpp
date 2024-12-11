@@ -3,21 +3,10 @@
 #include <conio.h>
 #include <Windows.h>
 
-// to delete
 // Initializes the game by resetting the board and setting up mario and barrels
 void Game::initGame() {
-	system("cls");
-	board.reset();
-	board.print();
-	mario.resetMarioPosition();
-	mario.setBoard(board);
-	mario.setLives(3);
-
-	for (int i = 0; i < MAX_BARRELS; i++)
-	{
-		barrels[i] = Barrel();
-		barrels[i].setBoard(board);
-	}
+	mario.resetLives();
+	resetStage();
 }
 
 // Resets the stage entities, including the board, mario, and barrels
@@ -27,12 +16,15 @@ void Game::resetStage() {
 	board.print();
 	mario.resetMarioPosition();
 	mario.setBoard(board);
+	mario.drawLife();
 
-	for (int i = 0; i < MAX_BARRELS; i++)
+	barrelsManager.resetBarrels(board);
+
+	/*for (int i = 0; i < MAX_BARRELS; i++)
 	{
 		barrels[i] = Barrel();
 		barrels[i].setBoard(board);
-	}
+	}*/
 }
 
 // Displays the main menu and handles user input for menu selection
@@ -108,7 +100,6 @@ void Game::run() {
 			break;
 		case FINISH:
 			run = false;
-			//return;
 			break;
 		default: 
 			setGameState(MENU);
@@ -122,15 +113,15 @@ void Game::run() {
 
 // Runs the game logic, including handling user input and moving entities
 void Game::runGame() {
-	int sleepCount = 0;
-	int activatedBarrel = 1;
+	int sleepCount = 0; // move to barrel manager?
+	int activatedBarrel = 1; // move to barrel manager?
 	//static int i = 0;
-	mario.drawLife();
+	//mario.drawLife();
 	// moving loop for mario and barrels
 	while (true) {
 		
 		mario.draw();
-		drawBarrels();
+		barrelsManager.drawBarrels(mario);
 
 		if (_kbhit()) {
 			char key = _getch();
@@ -155,9 +146,20 @@ void Game::runGame() {
 			}
 		}
 
-		moveBarrels();
-		barrelsActivation();
+		barrelsManager.moveBarrels(mario);
+		barrelsManager.barrelsActivation();
 
+		if (barrelsManager.getEncounters()) {
+			mario.downLives();
+			resetStage();
+			//mario.downLives();
+			if (mario.getLives() == 0) {
+				currentState = GAME_OVER;
+				barrelsManager.setEncounters(false);
+				break;
+			}
+			barrelsManager.setEncounters(false);
+		}
 		if (mario.metPauline()) {
 			currentState = GAME_WON;
 			break;
@@ -204,14 +206,22 @@ void Game::displayGameWon() { // add nicer graphic
 	currentState = MENU;
 }
 
-/*
-void Game::barrelsManager() {
 
-}
-*/
+
+
+
+
+
+
+
+
+
+
+
+
 
 // shoud be in barrel class?
-void Game::drawBarrels()
+/*void Game::drawBarrels()
 {
 	for (int i = 0; i <= MAX_BARRELS; i++)
 	{
@@ -283,4 +293,4 @@ void Game::barrelsActivation() {
 
 	}
 	sleepCount += 50;
-}
+}*/

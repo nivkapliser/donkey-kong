@@ -109,7 +109,7 @@ bool Barrel::checkEncounters(Mario& mario)
 	{
 		encountered = true;
 		explode();
-		encountered = false;
+		encountered = false; // change?
 		return true;
 	}
 	else if ((abs(mario.getX() - getX()) <= EXPLODE_ZONE && mario.getY() == getY()) && isExploding)
