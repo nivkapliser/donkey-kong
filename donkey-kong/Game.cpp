@@ -19,12 +19,6 @@ void Game::resetStage() {
 	mario.drawLife();
 
 	barrelsManager.resetBarrels(board);
-
-	/*for (int i = 0; i < MAX_BARRELS; i++)
-	{
-		barrels[i] = Barrel();
-		barrels[i].setBoard(board);
-	}*/
 }
 
 // Displays the main menu and handles user input for menu selection
@@ -50,8 +44,6 @@ void Game::displayMenu() {
 		}
 		else if (choice == '9') {
 			setGameState(FINISH);
-			//break;
-			//exit(0); // the correct one?
 			return;
 		}
 		else {
@@ -78,6 +70,7 @@ void Game::displayInstructions() const {
 // Main game loop to handle different game states
 void Game::run() {
 	bool run = true;
+	menu.displayOpenScreen();
 	while (run) {
 		switch (getGameState()) {
 		case MENU:

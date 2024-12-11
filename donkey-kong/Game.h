@@ -3,6 +3,7 @@
 #include "Mario.h"
 #include "BarrelManager.h"
 #include "Barrel.h"
+#include "Menu.h"
 
 
 class Game
@@ -13,13 +14,13 @@ class Game
 	static constexpr int BARRELS_PACE = 700;
 	enum GameState { MENU, RUNNING, PAUSED, GAME_OVER, GAME_WON, FINISH }; // To manage game state for better game control
 	
+	Menu menu;
 	Board board;
 	Mario mario;
 	BarrelManager barrelsManager;
-	//Barrel barrels[MAX_BARRELS]; // vector?
 	GameState currentState = MENU;
 
-	void initGame();
+	
 	void resetStage();
 	void displayMenu();
 	void displayInstructions() const;
@@ -30,23 +31,9 @@ class Game
 public:
 	Game(): currentState(MENU), barrelsManager(board) {
 		mario.setBoard(board);
-		//for (int i = 0; i < MAX_BARRELS; i++)
-		//{
-			//barrels[i].setBoard(board);
-		//}
 	}
+	void initGame();
 
-	//
-	//void Game::initGame() {
-	//	board.reset();
-	//	mario.setBoard(board);
-	//	for (int i = 0; i <= MAX_BARRELS - 1; i++)
-	//	{
-	//		barrels[i].setBoard(board);
-	//	}
-	//}
-
-	//~Game() {}
 
 	void setGameState(GameState state) {
 		currentState = state;
