@@ -5,14 +5,12 @@
 
 /*
     TODO:
-	- finish BarrelManager class - V
-	- add Point class - 
-	- add Menu class? - in proccess (change name to menuGraphics)
-	- if barrel hit ground he should not explode -
+	- add Point class - ?
 	- use getters and setters? -
 	- make sure all functions documented, const if needed, etc. -
-	- add nicer menu look -
-	- Add colors -
+	- moving the barrel manager ctor to the cpp file - how to?
+	- Initialize currentBoard in the Board ctor - ???
+	- add a goodbye graphics
 */
 
 int main()

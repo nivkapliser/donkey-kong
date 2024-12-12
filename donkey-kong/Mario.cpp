@@ -11,7 +11,6 @@ void Mario::changeDir(Direction dir) {
         break;
     case UP:
         dirY = -1;
-        //dirX = 0;
         break;
     case RIGHT:
         dirY = 0;
@@ -75,30 +74,35 @@ void Mario::move() {
         pBoard->isFloor(x, y + 1)) {
         y += 2;
     }
+
+	// stop if next step is not valid
     else if (!pBoard->isValidMove(newX, newY)) {
         changeDir(STAY);
     }
 
+	// gravity logic
     else if (pBoard->gravitation(x, y) && !isJump && pBoard->isValidMove(newX, y+1)) { 
         gravity = true;
         y++;
         x += dirX;
     }
 
+	// jump logic
     else if (isJump != 0)
         jump(); 
     
-
+    // to start the jump
     else if (dirY == -1 && pBoard->isEmptySpace(x, y - 2)&& !isJump) {
         x = newX; 
         y = newY; 
         isJump = 1;
     }
 
-
+	// to handle the case when mario is on the ladder and the next step is floor
     else if (!pBoard->isValidMove(newX, newY) && pBoard->isLadder(x, y) && !isJump) {
         y -= 2;
     }
+
     else {
         if (!isJump)
         {
@@ -107,18 +111,14 @@ void Mario::move() {
         }
 
     }
-	//if (fallCounter >= 5) {
-	//	downLives();
-		//resetMarioPosition();
-	//}
 
-    fallCounter = gravity ? ++fallCounter : 0; // change the syntax a bit
+    fallCounter = gravity ? ++fallCounter : 0; 
 }
 
 // Function to handle marios jump logic
 void Mario::jump()
 {
-    if (isJump < JUMP_HEIGHT)
+    if (isJump < JUMP_HEIGHT)  
     {
         x += dirX;
         y += dirY;
@@ -133,13 +133,5 @@ void Mario::jump()
 }
 
 
-// can be in h file
-bool Mario::metPauline() const {
-	return pBoard->getChar(x, y) == '$';
-}
 
-// can be in h file
-bool Mario::isOnFloor() const {
-	return pBoard->isFloor(x, y + 1);
-}
 

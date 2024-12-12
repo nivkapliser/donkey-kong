@@ -15,14 +15,12 @@ void Barrel::floorDirSync()
 
 // Function to handle barrels movement logic
 void Barrel::move() {
-	// use changedir
+	
 	if (!pBoard->isValidMove(x + dirX, y + dirY)) {
-		dirX = 0;
-		dirY = 0;
+		changeDir(STOP);
 	}
 
 	if (pBoard->gravitation(x, y)) {
-		//dirX = 0;
 		dirY = 1;
 		linesFallen++;
 		isFalling = true;
@@ -46,8 +44,9 @@ void Barrel::changeDir(Direction dir) {
 		dirY = 0;
 		dirX = 1;
 		break;
-	case BOTTOM:
-		explode();
+	case STOP:
+		dirX = 0;
+		dirY = 0;
 		break;
 	case SAME:
 		dirY = 0;
@@ -66,16 +65,16 @@ void Barrel::explode()
 	gotoxy(x - 2, y);
 	std::cout << "_\\|/_";
 	if(encountered == true)
-		Sleep(700);//???
+		Sleep(700); // longer Sleep time for visual effect
 	else
-		Sleep(25);//???
+		Sleep(25);
 
 	eraseBoom();
 	linesFallen = 0;
 }
 
 // Function to erase the explosion
-void Barrel::eraseBoom()
+void Barrel::eraseBoom() const
 {
 	char lastchar;
 	for (int i = 0; i <= 5; i++)
@@ -105,14 +104,14 @@ bool Barrel::barrelFallManager()
 // Function to check if the barrel encounters mario
 bool Barrel::checkEncounters(Mario& mario)
 {
-	if (mario.getX() == getX() && mario.getY() == getY())
+	if (mario.getX() == getX() && mario.getY() == getY()) // direct encounter
 	{
 		encountered = true;
 		explode();
-		encountered = false; // change?
+		encountered = false; 
 		return true;
 	}
-	else if ((abs(mario.getX() - getX()) <= EXPLODE_ZONE && mario.getY() == getY()) && isExploding)
+	else if ((abs(mario.getX() - getX()) <= EXPLODE_ZONE && mario.getY() == getY()) && isExploding) // indirect encounter (2 chars away)
 		return true;
 	return false;
 }
@@ -128,10 +127,11 @@ void Barrel::barrelActivation()
 		y = START_Y;
 	}
 }
-int Barrel::getDirectionRandomly()
+
+// Function to get the starting direction of the barrel randomly (left or right)
+int Barrel::getDirectionRandomly() const
 {
-	int random_num = rand();
-	random_num %= 2;
+	int random_num = rand() % 2;
 
 	if (random_num == 0)
 		return 1;

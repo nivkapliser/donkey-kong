@@ -27,20 +27,19 @@ class Board
 		  "Q     H                                       H                                Q", // 13
 		  "Q     H                                       H                                Q", // 14
 		  "Q     H                                       H                                Q", // 15			
-		  "Q>>>>>>>>>>>>>>>>>>>>>>>>>>>>===   ===>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        Q", // 16
-		  "Q                    H                                                H        Q", // 17
+		  "Q     H                                       H                                Q", // 16
+		  "Q>>>>>>>>>>>>>>>>>>>>>                        <<<<<<<<<<<<<<<<<<<<<<<<<        Q", // 17
 		  "Q                    H                                                H        Q", // 18
 		  "Q                    H                                                H        Q", // 19
 		  "Q                    H                                                H        Q", // 20
 		  "Q                    H                                                H        Q", // 21
-		  "Q     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Q", // 22
-		  "Q     H                                                                        Q", // 23
+		  "Q                    H                                                H        Q", // 22
+		  "Q                    H                                                H        Q", // 23
 		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"  // 24
 	};
 	char currentBoard[MAX_Y][MAX_X + 1]; // +1 for null terminator
 
 public:
-	//Board() {}; //need?
 
 	void reset();
 	void print() const;
@@ -55,7 +54,6 @@ public:
 	bool isEmptySpace(int x, int y) const {
 		return getChar(x, y) == EMPTY_SPACE;
 	}
-
 };
 
 

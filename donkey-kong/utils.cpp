@@ -13,6 +13,7 @@ void gotoxy(int x, int y) {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord); // Move the cursor 
 }
 
+// This function set the color of the text in the console window.
 void color(int color)
 {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);

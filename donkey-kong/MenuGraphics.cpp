@@ -1,45 +1,46 @@
 #include "MenuGraphics.h"
 
-void MenuGraphics::displayMenu() {
+// This function prints the graphics to the console.
+void MenuGraphics::printGraphics(const char* graphics[]) const {
 	system("cls");
-	for (int i = 0; i < 23; i++) { // create a constant for 23
-		std::cout << menu[i] << '\n';
+	for (int i = 0; i < GRAPHICS_HIGHT; i++) { 
+		std::cout << graphics[i] << '\n';
 	}
 }
 
+// This function displays the game menu.
+void MenuGraphics::displayMenu() {
+	printGraphics(menu);
+}
+
+// This function displays the open screen.
 void MenuGraphics::displayOpenScreen() {
-	system("cls");
-	for (int i = 0; i < 23; i++) { // create a constant for 23
-		std::cout << openScreen[i] << '\n';
-	}
+	printGraphics(openScreen);
 	Sleep(2000);
 	system("cls");
 }
 
-void MenuGraphics::displayInstructions() const {
-	system("cls");
-	for (int i = 0; i < 22; i++) { // create a constant for 25
-		std::cout << instructions[i] << '\n';
-	}
+// This function displays the instructions screen.
+void MenuGraphics::displayInstructions()  {
+	printGraphics(instructions);
 	_getch();
 }
 
-// need to create
+// This function displays the game over screen.
 void MenuGraphics::displayGameOver() {
-	system("cls");
-	for (int i = 0; i < 23; i++) { // create a constant for 23
-		std::cout << gameOverScreen[i] << '\n';
-	}
+	printGraphics(gameOverScreen);
 	std::cout << "Press any key to return to menu...\n";
 	_getch();
 }
 
-// need to create
+// This function displays the game won screen.
 void MenuGraphics::displayGameWon() {
-	system("cls");
-	for (int i = 0; i < 23; i++) { // create a constant for 23
-		std::cout << gameWonScreen[i] << '\n';
-	}
+	printGraphics(gameWonScreen);
 	std::cout << "Press any key to return to menu...\n";
 	_getch();
+}
+
+// This function displays the stop screen.
+void MenuGraphics::displayStopScreen() {
+	printGraphics(stopScreen);
 }

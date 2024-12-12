@@ -72,33 +72,35 @@ void Game::run() {
 	menuGraphics.displayOpenScreen();
 	while (run) {
 		switch (getGameState()) {
-		case MENU:
-			displayMenu();// create
+		case MENU: // the default game state
+			displayMenu();
 			break;
-		case RUNNING:
+		case RUNNING:  // to start the game movement loop
 			initGame();	
 			runGame();
 			break;
-		case PAUSED:
+		case RESUME: // to resume the game after pausing
+			board.print();
+			runGame();
+			break;
+		case PAUSED: // to pause the game
 			pauseGame();
 			break;
-		case GAME_OVER:
+		case GAME_OVER:	// to display game over screen and return to menu
 			if (menuGraphics.getAddColor()) {
 				color(LIGHT_RED);
 			}
 			menuGraphics.displayGameOver();
-			//displayGameOver();
 			setGameState(MENU);
 			break;
-		case GAME_WON:
+		case GAME_WON: // to display game won screen and return to menu
 			if (menuGraphics.getAddColor()) {
 				color(LIGHT_GREEN);
 			}
 			menuGraphics.displayGameWon();
-			//displayGameWon();
 			setGameState(MENU);
 			break;
-		case FINISH:
+		case FINISH: // to exit the game loop
 			run = false;
 			break;
 		default: 
@@ -108,36 +110,22 @@ void Game::run() {
 		
 	}
 	Sleep(50);
-	std::cout << "Goodbye!\n";
+	std::cout << "Goodbye!\n"; // create graphics for this
 }
 
 // Runs the game logic, including handling user input and moving entities
 void Game::runGame() {
-	int sleepCount = 0; // move to barrel manager?
-	int activatedBarrel = 1; // move to barrel manager?
-	//static int i = 0;
-	//mario.drawLife();
+
 	// moving loop for mario and barrels
 	while (true) {
-		
-		mario.draw();
-		barrelsManager.drawBarrels(mario);
-
-		if (_kbhit()) {
-			char key = _getch();
-			if (key == ESC) {
-				currentState = PAUSED;
-				break;
-			}
-			mario.keyPressed(key);
-
-			//drawBarrels();  need?
+		if (menuGraphics.getAddColor()) {
+			color(LIGHT_GREEN);
 		}
-		Sleep(50);
-		mario.erase();
-		mario.move();
+		mario.draw();
 
-		if (mario.getFallCounter() >= 5 && mario.isOnFloor()) {
+		// check if mario has fallen 5 lines and reset the stage
+		if (mario.fellTooFar() && mario.isOnFloor()) {
+			Sleep(250); // for better visual effect
 			resetStage();
 			mario.downLives();
 			if (mario.getLives() == 0) {
@@ -146,9 +134,34 @@ void Game::runGame() {
 			}
 		}
 
+		if (menuGraphics.getAddColor()) { // for colors
+			color(BROWN);
+		}
+		barrelsManager.drawBarrels(mario); // draw all active barrels
+
+		if (menuGraphics.getAddColor()) { // for colors
+			color(LIGHT_RED);
+		}
+
+		// check for user input
+		if (_kbhit()) {
+			char key = _getch();
+			if (key == ESC) {
+				currentState = PAUSED;
+				break;
+			}
+			mario.keyPressed(key);
+		}
+		Sleep(50); // for better visual effect
+
+		// erase and move mario and barrels
+		mario.erase();
+		mario.move();
+
 		barrelsManager.moveBarrels(mario);
 		barrelsManager.barrelsActivation();
-
+		
+		// if mario encounters a barrel, reset the stage or game over
 		if (barrelsManager.getEncounters()) {
 			mario.downLives();
 			resetStage();
@@ -160,6 +173,8 @@ void Game::runGame() {
 			}
 			barrelsManager.setEncounters(false);
 		}
+
+		// if mario meets Pauline, game won
 		if (mario.metPauline()) {
 			currentState = GAME_WON;
 			break;
@@ -173,124 +188,25 @@ void Game::runGame() {
 
 // Pauses the game and waits for user input to resume or return to menu
 void Game::pauseGame() {
-	system("cls");
-	std::cout << "Game Paused. Press 'R' to Resume or 'ESC' to Return to Menu.\n";
+	if (menuGraphics.getAddColor()) {
+		color(LIGHT_CYAN);
+	}
+	menuGraphics.displayStopScreen();
 	while (currentState == PAUSED) {
 		if (_kbhit()) {
 			char key = _getch();
 			if (key == 'r' || key == 'R') {
-				currentState = RUNNING;
+				currentState = RESUME;
 			}
 			else if (key == ESC) {
 				currentState = MENU;
 			}
 		}
 	}
-}
-
-// Displays the game over screen and waits for user input to return to menu
-void Game::displayGameOver() { // add nicer graphic
-	system("cls");
-	std::cout << "GAME OVER!\n";
-	std::cout << "Press any key to return to menu...\n";
-	_getch();
-	currentState = MENU;
-}
-
-// Displays the game won screen and waits for user input to return to menu
-void Game::displayGameWon() { // add nicer graphic
-	system("cls");
-	std::cout << "Congratulations! You rescued Pauline!\n";
-	std::cout << "Press any key to return to menu...\n";
-	_getch();
-	currentState = MENU;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// shoud be in barrel class?
-/*void Game::drawBarrels()
-{
-	for (int i = 0; i <= MAX_BARRELS; i++)
-	{
-		if (barrels[i].checkActivationStatus() == true)
-		{
-			barrels[i].draw();
-			barrels[i].floorDirSync();
-			if (barrels[i].barrelFallManager() == true)
-				barrels[i].explode();
-
-			if (barrels[i].checkEncounters(mario))
-				if (mario.getLives() == 1) {
-					currentState = GAME_OVER;
-					mario.downLives();
-				}
-				else {
-					Sleep(250);
-					resetStage();
-					mario.downLives();
-				}	
-		}
+	if (menuGraphics.getAddColor()) {
+		color(LIGHT_RED);
 	}
 }
 
 
-// should be in barrel class?
-void Game::moveBarrels()
-{
-	for (int i = 0; i <= MAX_BARRELS; i++)
-	{
-		if (barrels[i].checkActivationStatus() == true)
-		{
 
-			if (barrels[i].checkEncounters(mario))
-				if (mario.getLives() == 1) {
-					currentState = GAME_OVER;
-					mario.downLives();
-				}
-				else {
-					Sleep(250);
-					resetStage();
-					mario.downLives();
-					//mario.eraseLife();
-					//mario.drawLife();
-				}
-				//resetStage();
-			barrels[i].erase();
-			barrels[i].move();
-		}
-
-	}
-}
-
-// should be in barrel class?
-void Game::barrelsActivation() {
-	static int sleepCount = 0;
-	static int activatedBarrel = 1;
-
-	if (sleepCount == BARRELS_PACE) // need a separate function for this?
-	{
-		if (barrels[activatedBarrel].checkActivationStatus() == false)
-		{
-			barrels[activatedBarrel].barrelActivation();
-			activatedBarrel++;
-		}
-		if (activatedBarrel == MAX_BARRELS)
-			activatedBarrel = 0;
-		sleepCount = 0;
-
-	}
-	sleepCount += 50;
-}*/
