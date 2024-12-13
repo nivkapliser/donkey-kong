@@ -111,7 +111,7 @@ void Game::run() {
 		
 	}
 	Sleep(50);
-	std::cout << "Goodbye!\n"; // create graphics for this
+	menuGraphics.displayGoodBye();
 }
 
 // Runs the game logic, including handling user input and moving entities

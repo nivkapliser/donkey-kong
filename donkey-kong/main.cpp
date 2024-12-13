@@ -6,11 +6,8 @@
 /*
     TODO:
 	- add Point class - ?
-	- use getters and setters? -
-	- make sure all functions documented, const if needed, etc. -
+	- use getters and setters? 
 	- moving the barrel manager ctor to the cpp file - how to?
-	- Initialize currentBoard in the Board ctor - ???
-	- add a goodbye graphics
 */
 
 int main()

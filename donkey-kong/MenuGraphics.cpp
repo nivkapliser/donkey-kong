@@ -44,3 +44,9 @@ void MenuGraphics::displayGameWon() {
 void MenuGraphics::displayStopScreen() {
 	printGraphics(stopScreen);
 }
+
+void MenuGraphics::displayGoodBye() {
+	printGraphics(goodBye);
+	Sleep(2000);
+	system("cls");
+}
