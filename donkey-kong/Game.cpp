@@ -207,6 +207,7 @@ void Game::pauseGame() {
 	if (menuGraphics.getAddColor()) {
 		color(LIGHT_RED);
 	}
+	system("cls");
 }
 
 
