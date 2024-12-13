@@ -81,6 +81,7 @@ void Game::run() {
 			break;
 		case RESUME: // to resume the game after pausing
 			board.print();
+			mario.drawLife();
 			runGame();
 			break;
 		case PAUSED: // to pause the game
@@ -125,7 +126,7 @@ void Game::runGame() {
 
 		// check if mario has fallen 5 lines and reset the stage
 		if (mario.fellTooFar() && mario.isOnFloor()) {
-			Sleep(250); // for better visual effect
+			Sleep(500); // for better visual effect
 			resetStage();
 			mario.downLives();
 			if (mario.getLives() == 0) {
