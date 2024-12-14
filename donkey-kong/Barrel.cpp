@@ -15,7 +15,7 @@ void Barrel::floorDirSync()
 
 // Function to handle barrels movement logic
 void Barrel::move() {
-	
+
 	if (!pBoard->isValidMove(x + dirX, y + dirY)) {
 		changeDir(STOP);
 	}
@@ -57,6 +57,7 @@ void Barrel::changeDir(Direction dir) {
 // Function to explode the barrel 
 void Barrel::explode()
 {
+    //CR: why separate the print and the erase, if you separate one separate both of them
 	isExploding = true;
 	isActive = false;
 	erase();
@@ -108,7 +109,7 @@ bool Barrel::checkEncounters(Mario& mario)
 	{
 		encountered = true;
 		explode();
-		encountered = false; 
+		encountered = false;
 		return true;
 	}
 	else if ((abs(mario.getX() - getX()) <= EXPLODE_ZONE && mario.getY() == getY()) && isExploding) // indirect encounter (2 chars away)

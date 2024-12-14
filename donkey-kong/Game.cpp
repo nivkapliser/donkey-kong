@@ -18,6 +18,7 @@ void Game::resetStage() {
 	board.reset();
 	board.print();
 	mario.resetMarioPosition();
+    //CR: do you have the set board when you reset the stage? seems like it should already be
 	mario.setBoard(board);
 	mario.drawLife();
 
@@ -30,8 +31,9 @@ void Game::displayMenu() {
 	if (menuGraphics.getAddColor()) {
 		color(LIGHT_CYAN);
 	}
-	menuGraphics.displayMenu();	
-
+	menuGraphics.displayMenu();
+    //CR: why not use switch case?
+    //CR: some places you retrun\break and there are places that you dont
 	while (true) {
 		std::cout << "Enter Your Choice:\n";
 		std::cin >> choice;
@@ -123,7 +125,7 @@ void Game::runGame() {
 			color(LIGHT_GREEN);
 		}
 		mario.draw();
-
+        // CR: im not sure if the game logics says when mario falls the stage resets
 		// check if mario has fallen 5 lines and reset the stage
 		if (mario.fellTooFar() && mario.isOnFloor()) {
 			Sleep(500); // for better visual effect
@@ -161,11 +163,13 @@ void Game::runGame() {
 
 		barrelsManager.moveBarrels(mario);
 		barrelsManager.barrelsActivation();
-		
+
+        //CR: I would use a better name then getEncounters
 		// if mario encounters a barrel, reset the stage or game over
 		if (barrelsManager.getEncounters()) {
 			mario.downLives();
 			resetStage();
+            // CR: there is unused code here
 			//mario.downLives();
 			if (mario.getLives() == 0) {
 				currentState = GAME_OVER;

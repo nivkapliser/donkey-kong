@@ -50,7 +50,7 @@ void BarrelManager::moveBarrels(Mario& mario)
 
 // Function to activate the barrels at a certain pace (BARRELS_PACE)
 void BarrelManager::barrelsActivation() {
-
+//CR: this is a bit of a wierd logic, we used random number % 100 and then check if its less than 5 so there will be 5% of the barrel creating
 	if (sleepCount == BARRELS_PACE) // need a separate function for this?
 	{
 		if (barrels[activatedBarrel].checkActivationStatus() == false) // if barrel is not active

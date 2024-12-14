@@ -4,7 +4,7 @@
 */
 #include <windows.h>
 #include <cstdlib>
-
+//CR: colors should be in board or something
 enum COLORS {
     BLACK = 0,
     BLUE = 1,

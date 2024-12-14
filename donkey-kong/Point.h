@@ -3,6 +3,7 @@ class Point
 {
 	int x;
 	int y;
+    //CR:un used code
 	//char c;//?
 
 public:

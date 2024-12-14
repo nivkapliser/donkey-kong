@@ -116,7 +116,7 @@ public:
 		gotoxy(18, 0);
 		std::cout << ' ';
 	}
-
+    //CR: shouldn't the drawLife be handled by game/menu?
 	void drawLife() const {
 		gotoxy(18, 0);
 		std::cout << lives;
