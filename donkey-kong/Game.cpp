@@ -251,6 +251,7 @@ void Game::checkEncounters(BarrelManager& bm, Mario& mario) {
 		}
 		bm.setEncounters(false);
 	}
+	system("cls");
 }
 
 
