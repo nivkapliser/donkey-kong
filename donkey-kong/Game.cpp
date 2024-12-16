@@ -2,19 +2,21 @@
 #include <iostream>
 #include <conio.h>
 #include <Windows.h>
+#include <string>
 
 // Initializes the game by resetting the board and setting up mario and barrels
 void Game::initGame() {
 	mario.resetLives();
+	mario.resetFallCounter();
 	resetStage();
 }
 
 // Resets the stage entities, including the board, mario, and barrels
 void Game::resetStage() {
 	system("cls");
-	if (menuGraphics.getAddColor()) {
-		color(LIGHT_RED);
-	}
+	//if (menuGraphics.getAddColor()) {
+		//color(LIGHT_RED);
+	//}
 	board.reset();
 	board.print();
 	mario.resetMarioPosition();
@@ -25,37 +27,51 @@ void Game::resetStage() {
 }
 
 // Displays the main menu and handles user input for menu selection
-void Game::displayMenu() {
+void Game::displayMenu() { // change name
 	char choice;
-	if (menuGraphics.getAddColor()) {
+	bool run = true;
+	std::string input; // to clear the buffer
+
+	/*if (menuGraphics.getAddColor()) {
 		color(LIGHT_CYAN);
-	}
+	}*/
 	menuGraphics.displayMenu();	
 
-	while (true) {
-		std::cout << "Enter Your Choice:\n";
-		std::cin >> choice;
-		if (choice == '1') {
-			setGameState(RUNNING);
-			break;
-		}
-		else if (choice == '2') {
-			menuGraphics.setAddColor(false);
-			color(WHITE);
-			menuGraphics.displayMenu();
-		}
-		else if (choice == '8') {
-			if (menuGraphics.getAddColor()) {
-				color(LIGHT_MAGENTA);
+	while (run) {
+		std::cout << "Enter Your Choice: ";
+		std::getline(std::cin, input);
+		
+		if (input.length() == 1) {
+			choice = input[0];
+			switch (choice) {
+			case '1':
+				setGameState(RUNNING);
+				run = false;
+				break;
+			case '2':
+				//menuGraphics.setAddColor(false);
+				//menuGraphics.displayMenu();
+				menuGraphics.disableColors();
+				break;
+			case '8':
+				//if (menuGraphics.getAddColor()) {
+					//color(LIGHT_MAGENTA);
+				//}
+				menuGraphics.displayInstructions();
+				run = false;
+				break;
+			case '9':
+				setGameState(FINISH);
+				return;
+			default:
+				system("cls"); // for priting in the screen size
+				menuGraphics.displayMenu();
+				std::cout << "Invalid Choice. Please try again.\n";
 			}
-			menuGraphics.displayInstructions();	
-			break;
-		}
-		else if (choice == '9') {
-			setGameState(FINISH);
-			return;
 		}
 		else {
+			system("cls"); // for printing in the screen size
+			menuGraphics.displayMenu();
 			std::cout << "Invalid Choice. Please try again.\n";
 		}
 	}
@@ -66,9 +82,9 @@ void Game::displayMenu() {
 // Main game loop to handle different game states
 void Game::run() {
 	bool run = true;
-	if (menuGraphics.getAddColor()) {
+	/*if (menuGraphics.getAddColor()) {
 		color(LIGHT_MAGENTA);
-	}
+	}*/
 	menuGraphics.displayOpenScreen();
 	while (run) {
 		switch (getGameState()) {
@@ -82,22 +98,23 @@ void Game::run() {
 		case RESUME: // to resume the game after pausing
 			board.print();
 			mario.drawLife();
+			currentState = RUNNING;
 			runGame();
 			break;
 		case PAUSED: // to pause the game
 			pauseGame();
 			break;
 		case GAME_OVER:	// to display game over screen and return to menu
-			if (menuGraphics.getAddColor()) {
-				color(LIGHT_RED);
-			}
+			//if (menuGraphics.getAddColor()) {
+				//color(LIGHT_RED);
+			//}
 			menuGraphics.displayGameOver();
 			setGameState(MENU);
 			break;
 		case GAME_WON: // to display game won screen and return to menu
-			if (menuGraphics.getAddColor()) {
-				color(LIGHT_GREEN);
-			}
+			//if (menuGraphics.getAddColor()) {
+				//color(LIGHT_GREEN);
+			//}
 			menuGraphics.displayGameWon();
 			setGameState(MENU);
 			break;
@@ -118,31 +135,31 @@ void Game::run() {
 void Game::runGame() {
 
 	// moving loop for mario and barrels
-	while (true) {
-		if (menuGraphics.getAddColor()) {
-			color(LIGHT_GREEN);
-		}
+	while (currentState == RUNNING) {
+		//if (menuGraphics.getAddColor()) {
+			//color(LIGHT_GREEN);
+		//}
 		mario.draw();
 
 		// check if mario has fallen 5 lines and reset the stage
-		if (mario.fellTooFar() && mario.isOnFloor()) {
-			Sleep(500); // for better visual effect
+		/*if (mario.fellTooFar() && mario.isOnFloor()) {
+			mario.explode();
 			resetStage();
 			mario.downLives();
 			if (mario.getLives() == 0) {
 				currentState = GAME_OVER;
 				break;
 			}
-		}
+		}*/
 
-		if (menuGraphics.getAddColor()) { // for colors
-			color(BROWN);
-		}
+		//if (menuGraphics.getAddColor()) { // for colors
+			//color(BROWN);
+		//}
 		barrelsManager.drawBarrels(mario); // draw all active barrels
 
-		if (menuGraphics.getAddColor()) { // for colors
-			color(LIGHT_RED);
-		}
+		//if (menuGraphics.getAddColor()) { // for colors
+			//color(LIGHT_RED);
+		//}
 
 		// check for user input
 		if (_kbhit()) {
@@ -163,23 +180,29 @@ void Game::runGame() {
 		barrelsManager.barrelsActivation();
 		
 		// if mario encounters a barrel, reset the stage or game over
-		if (barrelsManager.getEncounters()) {
-			mario.downLives();
-			resetStage();
-			//mario.downLives();
-			if (mario.getLives() == 0) {
-				currentState = GAME_OVER;
-				barrelsManager.setEncounters(false);
-				break;
-			}
-			barrelsManager.setEncounters(false);
-		}
+		//if (barrelsManager.getEncounters()) {
+		//	mario.downLives();
+		//	resetStage();
+		//	//mario.downLives();
+		//	if (mario.getLives() == 0) {
+		//		currentState = GAME_OVER;
+		//		barrelsManager.setEncounters(false);
+		//		break;
+		//	}
+		//	barrelsManager.setEncounters(false);
+		//}
+		checkEncounters(barrelsManager, mario);
+
+		if (mario.fellTooFar() && mario.isOnFloor())
+			explodeMarioAndResetStage(mario);
 
 		// if mario meets Pauline, game won
-		if (mario.metPauline()) {
+		marioMetPauline(mario);
+
+		/*if (mario.metPauline()) {
 			currentState = GAME_WON;
 			break;
-		}
+		}*/
 
 		if (currentState == GAME_OVER) {
 			break;
@@ -189,9 +212,9 @@ void Game::runGame() {
 
 // Pauses the game and waits for user input to resume or return to menu
 void Game::pauseGame() {
-	if (menuGraphics.getAddColor()) {
-		color(LIGHT_CYAN);
-	}
+	//if (menuGraphics.getAddColor()) {
+		//color(LIGHT_CYAN);
+	//}
 	menuGraphics.displayStopScreen();
 	while (currentState == PAUSED) {
 		if (_kbhit()) {
@@ -204,10 +227,30 @@ void Game::pauseGame() {
 			}
 		}
 	}
-	if (menuGraphics.getAddColor()) {
-		color(LIGHT_RED);
+	//if (menuGraphics.getAddColor()) {
+		//color(LIGHT_RED);
+	//}
+}
+
+void Game::explodeMarioAndResetStage(Mario& mario) {
+	mario.explode();
+	resetStage();
+	mario.downLives();
+	if (mario.getLives() == 0) {
+		currentState = GAME_OVER;
 	}
 }
 
+void Game::checkEncounters(BarrelManager& bm, Mario& mario) {
+	if (bm.getEncounters()) {
+		mario.downLives();
+		resetStage();
+		if (mario.getLives() == 0) {
+			currentState = GAME_OVER;
+			bm.setEncounters(false);
+		}
+		bm.setEncounters(false);
+	}
+}
 
 

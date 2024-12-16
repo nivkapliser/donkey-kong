@@ -15,7 +15,9 @@
 class Game
 {
 	static constexpr int ESC = 27; // ASCII value for the escape key
+	static constexpr char PAULINE = '$';
 	enum GameState { MENU, RUNNING, PAUSED, RESUME, GAME_OVER, GAME_WON, FINISH }; // To manage game state for better game control
+
 	
 	MenuGraphics menuGraphics; 
 	Board board;
@@ -46,8 +48,16 @@ public:
 		return currentState;
 	}
 
+	void marioMetPauline(Mario& mario) {
+		if (mario.metPauline())
+			currentState = GAME_WON;	
+	}
+
 	void run();
 	void runGame();
 	void pauseGame();
+	void explodeMarioAndResetStage(Mario& mario);
+	void checkEncounters(BarrelManager& bm, Mario& mario);
+	
 };
 

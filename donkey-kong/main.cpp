@@ -5,9 +5,9 @@
 
 /*
     TODO:
-	- add Point class - ?
 	- use getters and setters? 
 	- moving the barrel manager ctor to the cpp file - how to?
+	- handle colors for the board
 */
 
 int main()

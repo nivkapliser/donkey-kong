@@ -14,11 +14,11 @@ void gotoxy(int x, int y) {
 }
 
 // This function set the color of the text in the console window.
-void color(int color)
-{
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, color);
-}
+//void serColor(int color)
+//{
+//    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+//    SetConsoleTextAttribute(hConsole, color);
+//}
 
 /*
 * This function shows or hides the console cursor.

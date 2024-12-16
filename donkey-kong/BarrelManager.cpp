@@ -1,6 +1,5 @@
 #include "BarrelManager.h"
 
-
 // Function to reset the barrels array and set the board for each barrel
 void BarrelManager::resetBarrels(Board& board)
 {

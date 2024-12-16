@@ -83,6 +83,10 @@ public:
 		return fallCounter;
 	}
 
+	void  resetFallCounter() {
+		fallCounter = 0;
+	}
+
 	// Function to check if mario fell too far (more than 5 lines)
 	bool fellTooFar() const {
 		return fallCounter >= MAX_FALL;
@@ -135,4 +139,5 @@ public:
 	void move();
 	void keyPressed(char key);
 	void jump();
+	void explode();
 };

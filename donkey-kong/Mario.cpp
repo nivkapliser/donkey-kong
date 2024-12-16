@@ -132,6 +132,16 @@ void Mario::jump()
     }
 }
 
+void Mario::explode()
+{
+    erase();
+    gotoxy(x - 2, y - 2);
+    std::cout << "OUCH!";
+    gotoxy(x - 2, y);
+    std::cout << "_\\|/_";
+    Sleep(700); // longer Sleep time for visual effect
+}
+
 
 
 
