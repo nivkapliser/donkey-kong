@@ -41,6 +41,10 @@ void Mario::keyPressed(char key) {
 // built base on the lab code
 void Mario::move() {
 
+    int newX = x + dirX;
+    int newY = y + dirY;
+    bool gravity = false;
+
     // Ladder climbing logic
 	if (pBoard->isLadder(x, y) || pBoard->isLadder(x, y + 1)) { 
         if (dirY == -1) {
@@ -62,10 +66,6 @@ void Mario::move() {
             return;
         }
     }
-
-    int newX = x + dirX;
-    int newY = y + dirY;
-    bool gravity = false;
     
     // first step in climbing down ladder
     if (dirX == 0 && dirY == 1 &&

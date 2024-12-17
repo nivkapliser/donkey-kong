@@ -4,10 +4,8 @@
 #include <Windows.h>
 
 /*
-    TODO:
-	- use getters and setters? 
-	- moving the barrel manager ctor to the cpp file - how to?
-	- separate mario move to functions
+* TODO:
+* add Point object
 */
 
 int main()
