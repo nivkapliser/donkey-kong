@@ -31,15 +31,20 @@ public:
 		}
 	}
 
+	// get the encouters value
+	bool getEncounters() const {
+		return encounters;
+	}
+
+	// set the encouters value
+	void setEncounters(bool value) {
+		encounters = value;
+	}
+
 	void resetBarrels(Board& board);
 	void drawBarrels(Mario& mario); 
 	void moveBarrels(Mario& mario);
 	void barrelsActivation();
-	bool getEncounters() const {
-		return encounters;
-	}
-	void setEncounters(bool value) {
-		encounters = value;
-	}
+
 };
 

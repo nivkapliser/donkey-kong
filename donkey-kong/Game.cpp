@@ -38,7 +38,7 @@ void Game::displayMenu() { // change name
 			choice = input[0];
 			switch (choice) {
 			case '1':
-				setGameState(RUNNING);
+				currentState = RUNNING;
 				run = false;
 				break;
 			case '2':
@@ -49,7 +49,7 @@ void Game::displayMenu() { // change name
 				run = false;
 				break;
 			case '9':
-				setGameState(FINISH);
+				currentState = FINISH;
 				return;
 			default:
 				system("cls"); // for priting in the screen size
@@ -92,17 +92,17 @@ void Game::run() {
 			break;
 		case GAME_OVER:	// to display game over screen and return to menu
 			menuGraphics.displayGameOver();
-			setGameState(MENU);
+			currentState = MENU;
 			break;
 		case GAME_WON: // to display game won screen and return to menu
 			menuGraphics.displayGameWon();
-			setGameState(MENU);
+			currentState = MENU;
 			break;
 		case FINISH: // to exit the game loop
 			run = false;
 			break;
 		default: 
-			setGameState(MENU);
+			currentState = MENU;
 			break;
 		}
 		

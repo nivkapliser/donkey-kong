@@ -1,6 +1,5 @@
 #include "Mario.h"
 
-
 // Function to change the direction of Mario
 // based on code from the lab
 void Mario::changeDir(Direction dir) {
@@ -132,6 +131,7 @@ void Mario::jump()
     }
 }
 
+// Function to draw mario explosion
 void Mario::explode()
 {
     erase();
