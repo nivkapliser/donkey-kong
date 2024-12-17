@@ -23,7 +23,7 @@ void Game::resetStage() {
 }
 
 // Displays the main menu and handles user input for menu selection
-void Game::displayMenu() { // change name
+void Game::showMenu() { 
 	char choice;
 	bool run = true;
 	std::string input; // to clear the buffer
@@ -75,7 +75,7 @@ void Game::run() {
 	while (run) {
 		switch (getGameState()) {
 		case MENU: // the default game state
-			displayMenu();
+			showMenu();
 			break;
 		case RUNNING:  // to start the game movement loop
 			initGame();	
@@ -172,6 +172,7 @@ void Game::pauseGame() {
 	}
 }
 
+// Function to explode mario and reset the stage
 void Game::explodeMarioAndResetStage(Mario& mario) {
 	mario.explode();
 	resetStage();
@@ -181,6 +182,7 @@ void Game::explodeMarioAndResetStage(Mario& mario) {
 	}
 }
 
+// function to check for encounters of mario and barrels
 void Game::checkEncounters(BarrelManager& bm, Mario& mario) {
 	if (bm.getEncounters()) {
 		mario.downLives();

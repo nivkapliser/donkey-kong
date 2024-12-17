@@ -32,7 +32,7 @@ class Barrel
 	int dirY = 0;
 
 	bool isActive; // for the barrelsManager to check if the barrel is active
-	char lastPoint; 
+	char lastPoint; // to save the last point char for latter printing
 
 	int linesFallen = 0;
 	bool encountered = false;
@@ -64,15 +64,23 @@ public:
 		setLastPoint();
 		draw(lastPoint);
 	}
+
+	// Function to set the last point of the barrel
 	void setLastPoint() {
 		lastPoint = pBoard->getChar(x, y);
 	}
+
+	// Function to set the board for the barrel
 	void setBoard(Board& board) {
 		pBoard = &board;
 	}
+
+	// Function to check if the barrel is active
 	bool checkActivationStatus() const {
 		return isActive;
 	}
+
+	// Function to check if the barrel is falling
 	bool fallingStatus() const {
 		return isFalling;
 	}

@@ -29,17 +29,15 @@ class Game
 
 	
 	void resetStage(); 
-	void displayMenu();  
+	void showMenu();
+	void initGame();
+	void runGame();
+	void pauseGame();
 	
 
 public:
 	Game(): currentState(MENU), barrelsManager(board, &menuGraphics), mario(&menuGraphics), board(&menuGraphics) {
 		mario.setBoard(board);
-	}
-
-	// Function to set the game state
-	void setGameState(GameState state) {
-		currentState = state;
 	}
 	
 	// Function to get the game state
@@ -47,18 +45,14 @@ public:
 		return currentState;
 	}
 
+	// Function to check if mario met Pauline and won the game
 	void marioMetPauline(Mario& mario) {
 		if (mario.metPauline())
 			currentState = GAME_WON;	
 	}
-
-	void initGame();
+	
 	void run();
-	void runGame();
-	void pauseGame();
 	void explodeMarioAndResetStage(Mario& mario);
 	void checkEncounters(BarrelManager& bm, Mario& mario);
-	
-	
 };
 

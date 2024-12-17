@@ -3,11 +3,6 @@
 #include <conio.h>
 #include <Windows.h>
 
-/*
-* TODO:
-* add Point object
-*/
-
 int main()
 {
 	ShowConsoleCursor(false);

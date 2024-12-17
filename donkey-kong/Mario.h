@@ -111,29 +111,34 @@ public:
 		draw(lastPoint);
 	}
 
+	// Function to set the board for mario
 	void setBoard(Board& board) {
 		pBoard = &board;
 	}
 
+	// Function to set the last point mario was on
 	void setLastPoint() {
 		lastPoint = pBoard->getChar(x, y);
 	}
 
+	// Function to erase the number of mario's lives
 	void eraseLife() const {
 		gotoxy(18, 0);
 		std::cout << ' ';
 	}
 
+	// Function to draw the number of mario's lives
 	void drawLife() const {
 		gotoxy(18, 0);
 		std::cout << lives;	
 	}
 
-	
+	// Function to check if mario met Pauline
 	bool metPauline() const {
 		return pBoard->getChar(x, y) == '$'; // change to const char
 	}
-
+	
+	// Function to check if mario is on a ladder
 	bool isOnFloor() const {
 		return pBoard->isFloor(x, y + 1);
 	}

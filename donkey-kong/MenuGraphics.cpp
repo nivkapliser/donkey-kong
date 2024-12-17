@@ -1,6 +1,7 @@
 #include "MenuGraphics.h"
 
 // This function sets the color of the console.
+// based on the instructions code
 void MenuGraphics::setColor(int color) const
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
