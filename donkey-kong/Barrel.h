@@ -80,6 +80,7 @@ public:
 	void changeDir(Direction dir);
 	void move();
 	void floorDirSync();
+	void printBoom();
 	void explode();
 	bool barrelFallManager();
 	void barrelActivation();

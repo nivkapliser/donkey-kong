@@ -38,7 +38,6 @@ void BarrelManager::moveBarrels(Mario& mario)
 	{
 		if (barrels[i].checkActivationStatus() == true) // if barrel is active
 		{
-
 			if (barrels[i].checkEncounters(mario)) { // if barrel encounters mario
 				encounters = true; 
 			}
@@ -52,7 +51,7 @@ void BarrelManager::moveBarrels(Mario& mario)
 // Function to activate the barrels at a certain pace (BARRELS_PACE)
 void BarrelManager::barrelsActivation() {
 
-	if (sleepCount == BARRELS_PACE) // need a separate function for this?
+	if (sleepCount == BARRELS_PACE) 
 	{
 		if (barrels[activatedBarrel].checkActivationStatus() == false) // if barrel is not active
 		{

@@ -1,5 +1,6 @@
 #include "MenuGraphics.h"
 
+// This function sets the color of the console.
 void MenuGraphics::setColor(int color) const
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -69,6 +70,7 @@ void MenuGraphics::displayStopScreen() {
 	printGraphics(stopScreen);
 }
 
+// This function displays the good bye screen.
 void MenuGraphics::displayGoodBye() {
 	if (addColor) {
 		setCurrentColor(LIGHT_CYAN);
@@ -78,6 +80,7 @@ void MenuGraphics::displayGoodBye() {
 	system("cls");
 }
 
+// This function disables the colors in the game.
 void MenuGraphics::disableColors() {
 	addColor = false;
 	setCurrentColor(WHITE);

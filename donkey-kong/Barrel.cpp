@@ -54,16 +54,21 @@ void Barrel::changeDir(Direction dir) {
 	}
 }
 
+// Function to print the explosion effect
+void Barrel::printBoom() {
+	gotoxy(x - 2, y - 2);
+	std::cout << "BOOM!";
+	gotoxy(x - 2, y);
+	std::cout << "_\\|/_";
+}
+
 // Function to explode the barrel 
 void Barrel::explode()
 {
 	isExploding = true;
 	isActive = false;
 	erase();
-	gotoxy(x - 2, y - 2);
-	std::cout << "BOOM!";
-	gotoxy(x - 2, y);
-	std::cout << "_\\|/_";
+	printBoom();
 	if(encountered == true)
 		Sleep(700); // longer Sleep time for visual effect
 	else
