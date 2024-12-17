@@ -10,9 +10,6 @@
 #include <conio.h>
 #include <Windows.h>
 #include "utils.h"
-//#include "Board.h"
-
-
 
 class MenuGraphics
 {
@@ -232,12 +229,10 @@ class MenuGraphics
 public:
 	
 	void setCurrentColor(int color) const {
-		if (addColor) {
-			setColor(color);
-		}
-		else 
-			setColor(WHITE);
+		if (addColor) { setColor(color); }
+		else { setColor(WHITE); }
 	}
+
 	void setColor(int color) const;
 	void printGraphics(const char* graphics[]) const;
 	void displayMenu();

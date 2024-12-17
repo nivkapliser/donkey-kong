@@ -4,6 +4,7 @@
 * This class is the main class of the game. It manages the game state, flow, and controls the game loop.
 * It also initializes the game and handles user input. 
 */
+
 #include "utils.h"
 #include "Board.h"
 #include "Mario.h"
@@ -36,15 +37,13 @@ public:
 		mario.setBoard(board);
 	}
 
-	void initGame();
-
 	// Function to set the game state
 	void setGameState(GameState state) {
 		currentState = state;
 	}
 	
 	// Function to get the game state
-	GameState getGameState() {
+	GameState getGameState() const {
 		return currentState;
 	}
 
@@ -53,11 +52,13 @@ public:
 			currentState = GAME_WON;	
 	}
 
+	void initGame();
 	void run();
 	void runGame();
 	void pauseGame();
 	void explodeMarioAndResetStage(Mario& mario);
 	void checkEncounters(BarrelManager& bm, Mario& mario);
+	
 	
 };
 

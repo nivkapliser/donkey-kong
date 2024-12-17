@@ -1,2 +1,8 @@
-﻿  BarrelManager.cpp
+﻿  Barrel.cpp
+  BarrelManager.cpp
+  Game.cpp
+  Mario.cpp
+  Point.cpp
+  main.cpp
+  Generating Code...
   donkey-kong.vcxproj -> C:\Users\niv\Desktop\school\donkey-kong\x64\Debug\donkey-kong.exe

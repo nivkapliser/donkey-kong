@@ -10,7 +10,6 @@
 #include "utils.h"
 #include "Board.h"
 #include "Mario.h"
-//class Mario; // check what is the problem here
 
 class Barrel
 {

@@ -12,7 +12,6 @@
 #include "utils.h"
 #include "Board.h"
 #include "Point.h"
-//#include "Barrel.h"
 #include "MenuGraphics.h"
 
 class Mario
@@ -102,7 +101,7 @@ public:
 	}
 
 	void draw() const {
-		menuGraphics->setCurrentColor(menuGraphics->getLightGreen());//add getter
+		menuGraphics->setCurrentColor(menuGraphics->getLightGreen());
 		draw(ch);
 		menuGraphics->setCurrentColor(menuGraphics->getLightRed());
 	}
