@@ -5,11 +5,12 @@
 * The barrel can fall down from the floor and 'explode' when it encounters with mario.
 * If the barrel falls down 8 lines, it will be 'explode' and deactivated.
 */
+
 #include <iostream>
 #include "utils.h"
 #include "Board.h"
 #include "Mario.h"
-class Mario; // check what is the problem here
+//class Mario; // check what is the problem here
 
 class Barrel
 {
@@ -40,6 +41,7 @@ class Barrel
 	bool isExploding = false;
 
 	Board* pBoard = nullptr;
+	
 
 	void draw(char c) const {
 		gotoxy(x, y);

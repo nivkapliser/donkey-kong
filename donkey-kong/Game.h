@@ -32,7 +32,7 @@ class Game
 	
 
 public:
-	Game(): currentState(MENU), barrelsManager(board) {
+	Game(): currentState(MENU), barrelsManager(board, &menuGraphics), mario(&menuGraphics), board(&menuGraphics) {
 		mario.setBoard(board);
 	}
 

@@ -14,15 +14,11 @@ void Game::initGame() {
 // Resets the stage entities, including the board, mario, and barrels
 void Game::resetStage() {
 	system("cls");
-	//if (menuGraphics.getAddColor()) {
-		//color(LIGHT_RED);
-	//}
 	board.reset();
 	board.print();
 	mario.resetMarioPosition();
 	mario.setBoard(board);
 	mario.drawLife();
-
 	barrelsManager.resetBarrels(board);
 }
 
@@ -32,9 +28,6 @@ void Game::displayMenu() { // change name
 	bool run = true;
 	std::string input; // to clear the buffer
 
-	/*if (menuGraphics.getAddColor()) {
-		color(LIGHT_CYAN);
-	}*/
 	menuGraphics.displayMenu();	
 
 	while (run) {
@@ -49,14 +42,9 @@ void Game::displayMenu() { // change name
 				run = false;
 				break;
 			case '2':
-				//menuGraphics.setAddColor(false);
-				//menuGraphics.displayMenu();
 				menuGraphics.disableColors();
 				break;
 			case '8':
-				//if (menuGraphics.getAddColor()) {
-					//color(LIGHT_MAGENTA);
-				//}
 				menuGraphics.displayInstructions();
 				run = false;
 				break;
@@ -82,9 +70,7 @@ void Game::displayMenu() { // change name
 // Main game loop to handle different game states
 void Game::run() {
 	bool run = true;
-	/*if (menuGraphics.getAddColor()) {
-		color(LIGHT_MAGENTA);
-	}*/
+
 	menuGraphics.displayOpenScreen();
 	while (run) {
 		switch (getGameState()) {
@@ -105,16 +91,10 @@ void Game::run() {
 			pauseGame();
 			break;
 		case GAME_OVER:	// to display game over screen and return to menu
-			//if (menuGraphics.getAddColor()) {
-				//color(LIGHT_RED);
-			//}
 			menuGraphics.displayGameOver();
 			setGameState(MENU);
 			break;
 		case GAME_WON: // to display game won screen and return to menu
-			//if (menuGraphics.getAddColor()) {
-				//color(LIGHT_GREEN);
-			//}
 			menuGraphics.displayGameWon();
 			setGameState(MENU);
 			break;
@@ -136,30 +116,10 @@ void Game::runGame() {
 
 	// moving loop for mario and barrels
 	while (currentState == RUNNING) {
-		//if (menuGraphics.getAddColor()) {
-			//color(LIGHT_GREEN);
-		//}
+
 		mario.draw();
 
-		// check if mario has fallen 5 lines and reset the stage
-		/*if (mario.fellTooFar() && mario.isOnFloor()) {
-			mario.explode();
-			resetStage();
-			mario.downLives();
-			if (mario.getLives() == 0) {
-				currentState = GAME_OVER;
-				break;
-			}
-		}*/
-
-		//if (menuGraphics.getAddColor()) { // for colors
-			//color(BROWN);
-		//}
 		barrelsManager.drawBarrels(mario); // draw all active barrels
-
-		//if (menuGraphics.getAddColor()) { // for colors
-			//color(LIGHT_RED);
-		//}
 
 		// check for user input
 		if (_kbhit()) {
@@ -180,29 +140,14 @@ void Game::runGame() {
 		barrelsManager.barrelsActivation();
 		
 		// if mario encounters a barrel, reset the stage or game over
-		//if (barrelsManager.getEncounters()) {
-		//	mario.downLives();
-		//	resetStage();
-		//	//mario.downLives();
-		//	if (mario.getLives() == 0) {
-		//		currentState = GAME_OVER;
-		//		barrelsManager.setEncounters(false);
-		//		break;
-		//	}
-		//	barrelsManager.setEncounters(false);
-		//}
 		checkEncounters(barrelsManager, mario);
 
+		// check if mario has fallen 5 lines and reset the stage
 		if (mario.fellTooFar() && mario.isOnFloor())
 			explodeMarioAndResetStage(mario);
 
 		// if mario meets Pauline, game won
 		marioMetPauline(mario);
-
-		/*if (mario.metPauline()) {
-			currentState = GAME_WON;
-			break;
-		}*/
 
 		if (currentState == GAME_OVER) {
 			break;
@@ -212,9 +157,7 @@ void Game::runGame() {
 
 // Pauses the game and waits for user input to resume or return to menu
 void Game::pauseGame() {
-	//if (menuGraphics.getAddColor()) {
-		//color(LIGHT_CYAN);
-	//}
+
 	menuGraphics.displayStopScreen();
 	while (currentState == PAUSED) {
 		if (_kbhit()) {
@@ -227,9 +170,6 @@ void Game::pauseGame() {
 			}
 		}
 	}
-	//if (menuGraphics.getAddColor()) {
-		//color(LIGHT_RED);
-	//}
 }
 
 void Game::explodeMarioAndResetStage(Mario& mario) {
@@ -251,7 +191,6 @@ void Game::checkEncounters(BarrelManager& bm, Mario& mario) {
 		}
 		bm.setEncounters(false);
 	}
-	system("cls");
 }
 
 

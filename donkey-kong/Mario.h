@@ -12,7 +12,8 @@
 #include "utils.h"
 #include "Board.h"
 #include "Point.h"
-#include "Barrel.h"
+//#include "Barrel.h"
+#include "MenuGraphics.h"
 
 class Mario
 {
@@ -40,6 +41,7 @@ class Mario
 	int jumpCounter = 0; // to count the number of lines mario jumped
 
 	Board* pBoard = nullptr;
+	MenuGraphics* menuGraphics;
 
 	void draw(char c) const {
 		gotoxy(x, y);
@@ -47,7 +49,7 @@ class Mario
 	}
 
 public:
-	Mario() : x(START_X), y(START_Y), lastPoint(' '), lives(3) {}
+	Mario(MenuGraphics* mg) : menuGraphics(mg), x(START_X), y(START_Y), lastPoint(' '), lives(3) {}
 
 	// Function to reset mario position to the starting point
 	void resetMarioPosition() {
@@ -100,7 +102,9 @@ public:
 	}
 
 	void draw() const {
+		menuGraphics->setCurrentColor(menuGraphics->getLightGreen());//add getter
 		draw(ch);
+		menuGraphics->setCurrentColor(menuGraphics->getLightRed());
 	}
 
 	void erase() {
@@ -123,7 +127,7 @@ public:
 
 	void drawLife() const {
 		gotoxy(18, 0);
-		std::cout << lives;
+		std::cout << lives;	
 	}
 
 	

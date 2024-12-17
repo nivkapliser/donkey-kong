@@ -9,6 +9,7 @@ class Board
 	static constexpr char LADDER = 'H';
 	static constexpr char FORBIDDEN_CHARS[] = { 'Q', '<', '>', '=' };
 	static constexpr char PAULINE = '$';
+	MenuGraphics* menuGraphics;
 
 	const char* originalBoard[MAX_Y] = {
 		// 01234567890123456789012345678901234567890123456789012345678901234567890123456789
@@ -41,7 +42,7 @@ class Board
 	char currentBoard[MAX_Y][MAX_X + 1]; // +1 for null terminator
 
 public:
-
+	Board(MenuGraphics* mg) : menuGraphics(mg) { reset(); }
 	void reset();
 	void print() const;
 	char getChar(int x, int y) const {

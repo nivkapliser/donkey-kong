@@ -10,7 +10,7 @@
 #include <conio.h>
 #include <Windows.h>
 #include "utils.h"
-#include "Board.h"
+//#include "Board.h"
 
 
 
@@ -254,5 +254,16 @@ public:
 	void setAddColor(bool b) {
 		addColor = b;
 	}
+
+	int getLightRed() const {
+		return LIGHT_RED;
+	}
+	int getLightGreen() const {
+		return LIGHT_GREEN;
+	}
+	int getBrown() const {
+		return BROWN;
+	}
+
 };
 

@@ -13,6 +13,7 @@ void BarrelManager::resetBarrels(Board& board)
 // Function to draw all the active barrels on the board 
 void BarrelManager::drawBarrels(Mario& mario)
 {
+	menuGraphics->setCurrentColor(menuGraphics->getBrown());
 	for (int i = 0; i <= MAX_BARRELS; i++)
 	{
 		if (barrels[i].checkActivationStatus() == true)
@@ -27,6 +28,7 @@ void BarrelManager::drawBarrels(Mario& mario)
 			}
 		}
 	}
+	menuGraphics->setCurrentColor(menuGraphics->getLightRed());
 }
 
 // Function to move all the active barrels on the board

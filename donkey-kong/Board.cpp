@@ -13,6 +13,7 @@ void Board::reset() {
 // Function to print the board
 void Board::print() const
 {
+	menuGraphics->setCurrentColor(menuGraphics->getLightRed());
 	for (int i = 0; i < MAX_Y - 1; i++) {
 		std::cout << currentBoard[i] << '\n';
 	}

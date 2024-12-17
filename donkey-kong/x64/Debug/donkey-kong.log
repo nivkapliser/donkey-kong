@@ -1,9 +1,2 @@
-<<<<<<< HEAD
-﻿  MenuGraphics.cpp
+﻿  BarrelManager.cpp
   donkey-kong.vcxproj -> C:\Users\niv\Desktop\school\donkey-kong\x64\Debug\donkey-kong.exe
-=======
-﻿  Game.cpp
-  MenuGraphics.cpp
-  Generating Code...
-  donkey-kong.vcxproj -> C:\Users\user\Source\Repos\donkey-kong\x64\Debug\donkey-kong.exe
->>>>>>> 3cc5244177bd97a60c4257091f3c31918ee54b32
