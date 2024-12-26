@@ -122,7 +122,7 @@ public:
 	}
 
 	// Function to erase the number of mario's lives
-	void eraseLife() const {
+	void eraseLife() const { // should be in menuGraphics? or in Game?
 		gotoxy(18, 0);
 		std::cout << ' ';
 	}
