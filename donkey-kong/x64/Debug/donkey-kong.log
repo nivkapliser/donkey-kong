@@ -1,4 +1,11 @@
-﻿  Game.cpp
+﻿  Barrel.cpp
+  BarrelManager.cpp
+  Board.cpp
+  Game.cpp
   main.cpp
+  Mario.cpp
+  MenuGraphics.cpp
+  utils.cpp
   Generating Code...
-  donkey-kong.vcxproj -> C:\Users\niv\Desktop\school\donkey-kong\x64\Debug\donkey-kong.exe
+  LINK : C:\Users\niv\Desktop\school\c++\Donkey-Kong-Ex2\x64\Debug\donkey-kong.exe not found or not built by the last incremental link; performing full link
+  donkey-kong.vcxproj -> C:\Users\niv\Desktop\school\c++\Donkey-Kong-Ex2\x64\Debug\donkey-kong.exe
