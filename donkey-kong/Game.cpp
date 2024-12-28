@@ -4,6 +4,17 @@
 #include <Windows.h>
 #include <string>
 
+
+/*
+	TODO:
+	1. add update design pattern for better readability and entity management
+	2. split the game loop into smaller functions for better readability
+	3. add more State design pattern to the entities for better game state management
+	4. add Point?
+	5. create a manager class for all entities?
+*/
+
+
 // Initializes the game by resetting the board and setting up mario and barrels
 void Game::initGame() {
 	mario.resetLives();
@@ -20,20 +31,21 @@ void Game::resetStage() {
 	mario.setBoard(board);
 	mario.drawLife();
 	barrelsManager.resetBarrels(board);
+	ghostsManager.resetGhosts(board);
 }
 
 // Displays the main menu and handles user input for menu selection
-void Game::showMenu() { 
+void Game::showMenu() {
 	char choice;
 	bool run = true;
 	std::string input; // to clear the buffer
 
-	menuGraphics.displayMenu();	
+	menuGraphics.displayMenu();
 
 	while (run) {
 		std::cout << "Enter Your Choice: ";
 		std::getline(std::cin, input);
-		
+
 		if (input.length() == 1) {
 			choice = input[0];
 			switch (choice) {
@@ -78,7 +90,7 @@ void Game::run() {
 			showMenu();
 			break;
 		case RUNNING:  // to start the game movement loop
-			initGame();	
+			initGame();
 			runGame();
 			break;
 		case RESUME: // to resume the game after pausing
@@ -101,11 +113,11 @@ void Game::run() {
 		case FINISH: // to exit the game loop
 			run = false;
 			break;
-		default: 
+		default:
 			currentState = MENU;
 			break;
 		}
-		
+
 	}
 	Sleep(50);
 	menuGraphics.displayGoodBye();
@@ -120,6 +132,7 @@ void Game::runGame() {
 		mario.draw();
 
 		barrelsManager.drawBarrels(mario); // draw all active barrels
+		ghostsManager.drawGhosts(mario);
 
 		// check for user input
 		if (_kbhit()) {
@@ -137,8 +150,12 @@ void Game::runGame() {
 		mario.move();
 
 		barrelsManager.moveBarrels(mario);
+		ghostsManager.moveGhosts(mario);
+
+
 		barrelsManager.barrelsActivation();
-		
+		ghostsManager.ghostsActivation();
+
 		// if mario encounters a barrel, reset the stage or game over
 		checkEncounters(barrelsManager, mario);
 
@@ -194,5 +211,3 @@ void Game::checkEncounters(BarrelManager& bm, Mario& mario) {
 		bm.setEncounters(false);
 	}
 }
-
-

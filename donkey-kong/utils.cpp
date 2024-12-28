@@ -22,3 +22,8 @@ void ShowConsoleCursor(bool showFlag) {
     cursorInfo.bVisible = showFlag; // set the cursor visibility
     SetConsoleCursorInfo(out, &cursorInfo);
 }
+
+int randomZeroOrOne()
+{
+    return (rand() % 2);
+}

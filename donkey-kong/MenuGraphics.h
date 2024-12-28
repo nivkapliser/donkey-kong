@@ -253,6 +253,9 @@ public:
 	int getLightRed() const {
 		return LIGHT_RED;
 	}
+	int getCyan() const {
+		return CYAN;
+	}
 	int getLightGreen() const {
 		return LIGHT_GREEN;
 	}
