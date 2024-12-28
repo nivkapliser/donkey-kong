@@ -4,6 +4,7 @@
 #include <cstring>
 
 
+
 class Board
 {
 	static constexpr int MAX_X = 80;
@@ -45,7 +46,7 @@ class Board
 	char currentBoard[MAX_Y][MAX_X + 1]; // +1 for null terminator
 
 public:
-	Board(MenuGraphics* mg) : menuGraphics(mg) { reset(); }
+	Board(MenuGraphics* mg) : menuGraphics(mg) { reset();}
 	void reset();
 	void print() const;
 	char getChar(int x, int y) const {

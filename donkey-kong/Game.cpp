@@ -130,7 +130,6 @@ void Game::runGame() {
 	while (currentState == RUNNING) {
 
 		mario.draw();
-
 		barrelsManager.drawBarrels(mario); // draw all active barrels
 		ghostsManager.drawGhosts(mario);
 
@@ -211,3 +210,10 @@ void Game::checkEncounters(BarrelManager& bm, Mario& mario) {
 		bm.setEncounters(false);
 	}
 }
+
+//void Game::getUserInput() {
+//	char key = _getch();
+//	if (key == ESC) {
+//		currentState = PAUSED;
+//	}
+//	mario.keyPressed(key);

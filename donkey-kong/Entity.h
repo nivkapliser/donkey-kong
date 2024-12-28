@@ -8,15 +8,17 @@
 
 class Entity
 {
+	static constexpr char EMPTY_SPACE = ' ';
+
 	char ch;
 	int x;
 	int y;
 
 	// add direction enum?
-	int dirX;
-	int dirY;
+	int dirX = 0;
+	int dirY = 0;
 
-	char lastPoint; // for printing after player passes through
+	char lastPoint = EMPTY_SPACE; // for printing after player passes through
 
 	Board* pBoard = nullptr;
 

@@ -8,7 +8,5 @@
   Hammer.cpp
   main.cpp
   Mario.cpp
-  MenuGraphics.cpp
-  utils.cpp
   Generating Code...
   donkey-kong.vcxproj -> C:\Users\niv\Desktop\school\c++\Donkey-Kong-Ex2\x64\Debug\donkey-kong.exe

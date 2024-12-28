@@ -1,23 +1,42 @@
 #pragma once
 #include "Entity.h"
+#include "Board.h"
 
 class Hammer: public Entity
 {
+	static constexpr char HAMMER_CHAR = 'p';
+	static constexpr int MAX_SLEEP = 500;
+	static constexpr int SLEEP_STEP = 50;
 
-	bool isActive = false; // if is active mario can pick it up and smash barrels
+	bool active = false; // if is active mario can pick it up and smash barrels
+	bool pickedUp = false;
+
+	int sleepCounter = 0;
+
 public:
-	Hammer(int x, int y, Board* pBoard) : Entity(x, y, pBoard, 'p') {}
+	Hammer(int x, int y, Board* pBoard) : Entity(x, y, pBoard, 'p')
+	{
+		active = true;
+	}
 	
-	void setRandomPosition() {
-		;
+	void activate();
+	void deactivate() {
+		active = false;
 	}
 
-	bool checkActivation() const {
-		return isActive;
+	bool isActive() const {
+		return active;
 	}
-	
-	void setActivation(bool x) {
-		isActive = x;
+
+	bool isPickedUp() const {
+		return pickedUp;
 	}
+
+	void pickUp() {
+		pickedUp = true;
+		active = false; // so hammer don't show on board
+	}
+
+	void placeRandomly(Board& board);
 };
 
