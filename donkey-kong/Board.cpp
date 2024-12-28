@@ -1,6 +1,4 @@
 #include "Board.h"
-#include <cstring>
-#include <iostream>
 
 // Function to reset the board to its original state
 // Based on lab code

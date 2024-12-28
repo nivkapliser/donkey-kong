@@ -26,6 +26,8 @@ class Entity
 	}
 
 public:
+	Entity(int x, int y, Board* pBoard, char ch) : x(x), y(y), pBoard(pBoard), ch(ch) {}
+
 	// getX
 	int getX() const {
 		return x;
