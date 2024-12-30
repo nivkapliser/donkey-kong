@@ -1,4 +1,5 @@
 #pragma once
+#include "Entity.h"
 
 /*
 * This class represents the main character of the game - Mario. 
@@ -14,7 +15,7 @@
 #include "Point.h"
 #include "MenuGraphics.h"
 
-class Mario
+class Mario : public Entity
 {
 	enum Direction { LEFT, UP, RIGHT, DOWN, STAY }; // to set the direction of Mario
 	static constexpr int JUMP_HEIGHT = 2; // how many lines can mario jump
@@ -48,7 +49,7 @@ class Mario
 	}
 
 public:
-	Mario(MenuGraphics* mg) : menuGraphics(mg), x(START_X), y(START_Y), lastPoint(' '), lives(3) {}
+	Mario(MenuGraphics* mg) : Entity(START_X, START_Y, pBoard, '@'), menuGraphics(mg), lastPoint(' '), lives(MAX_LIVES) {}
 
 	// Function to reset mario position to the starting point
 	void resetMarioPosition() {

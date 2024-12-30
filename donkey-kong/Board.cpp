@@ -4,7 +4,7 @@
 // Based on lab code
 void Board::reset() {
 	for (int i = 0; i < MAX_Y; i++) {
-		memcpy(currentBoard[i], originalBoard[i], MAX_X + 1);	
+		memcpy(currentBoard[i], boardFile[i], MAX_X + 1);	
 	}
 }
 
@@ -12,7 +12,7 @@ void Board::reset() {
 void Board::print() const
 {	
 	system("cls");
-	menuGraphics->setCurrentColor(menuGraphics->getLightRed());
+	//menuGraphics->setCurrentColor(menuGraphics->getLightRed());
 	for (int i = 0; i < MAX_Y - 1; i++) {
 		std::cout << currentBoard[i] << '\n';
 	}
@@ -50,4 +50,47 @@ bool Board::isLadder(int x, int y) const {
 // Function to check if a given position is empty space
 bool Board::gravitation(int x, int y) const {
 	return getChar(x, y + 1) == EMPTY_SPACE; 
+}
+
+int Board::readBoard() {
+	std::ifstream myFile("dkong_01.screen.txt");
+	if (!myFile.is_open()) {
+		std::cout << "Error opening file\n";
+		return 0;
+	}
+
+	std::string line;
+	for (int i = 0; i < MAX_Y && std::getline(myFile, line); i++) {
+		if (line.length() > MAX_X) {
+			line = line.substr(0, MAX_X); // for spaces or something
+		}
+		std::copy(line.begin(), line.end(), boardFile[i]);
+		boardFile[i][line.length()] = '\0'; // Null-terminate the string
+
+		// Scan the line for special characters
+		for (int j = 0; j < line.length(); j++) {
+			if (line[j] == '@') {
+				boardFile[i][j] = ' ';	
+				marioX = j;
+				marioY = i;
+			}
+			else if (line[j] == '$') {
+				boardFile[i][j] = ' ';
+				paulineX = j;
+				paulineY = i;
+			}
+			else if (line[j] == 'L') {
+				boardFile[i][j] = ' ';
+				legendX = j;
+				legendY = i;
+			}
+			else if (line[j] == '&') {
+				donkeyX = j;
+				donkeyY = i;
+			}
+		}
+	}
+
+	myFile.close();
+	return 1;
 }

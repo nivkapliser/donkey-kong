@@ -2,6 +2,8 @@
 #include "MenuGraphics.h"
 #include <iostream>
 #include <cstring>
+#include <fstream>
+#include <string>
 
 
 
@@ -14,6 +16,17 @@ class Board
 	static constexpr char FORBIDDEN_CHARS[] = { 'Q', '<', '>', '=' };
 	static constexpr char PAULINE = '$';
 	MenuGraphics* menuGraphics;
+
+	int marioX;
+	int marioY;
+	int paulineX;
+	int paulineY;
+	int legendX;
+	int legendY;
+	int donkeyX;
+	int donkeyY;
+
+	char boardFile[MAX_Y][MAX_X + 1];
 
 	const char* originalBoard[MAX_Y] = {
 		// 01234567890123456789012345678901234567890123456789012345678901234567890123456789
@@ -46,13 +59,18 @@ class Board
 	char currentBoard[MAX_Y][MAX_X + 1]; // +1 for null terminator
 
 public:
-	Board(MenuGraphics* mg) : menuGraphics(mg) { reset();}
+	//Board() {}
+	Board(MenuGraphics* mg) : menuGraphics(mg) { 
+		readBoard();
+		reset();
+	}
 	void reset();
 	void print() const;
 	char getChar(int x, int y) const {
 		return currentBoard[y][x];
 	}
 
+	int readBoard();
 	bool isValidMove(int x, int y) const;
 	bool isFloor(int x, int y) const;
 	bool isLadder(int x, int y) const;

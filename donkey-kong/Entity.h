@@ -22,21 +22,23 @@ class Entity
 
 	Board* pBoard = nullptr;
 
+	
+
+public:
+	Entity(int x, int y, Board* pBoard, char ch) : x(x), y(y), pBoard(pBoard), ch(ch) {}
+
 	void draw(char c) const {
 		gotoxy(x, y);
 		std::cout << c;
 	}
 
-public:
-	Entity(int x, int y, Board* pBoard, char ch) : x(x), y(y), pBoard(pBoard), ch(ch) {}
-
 	// getX
-	int getX() const {
+	virtual int getX() const {
 		return x;
 	}
 
 	// getY
-	int getY() const {
+	virtual int getY() const {
 		return y;
 	}
 
@@ -78,7 +80,8 @@ public:
 	}
 	
 	// move?
-	// changeDir
+	// changeDir	
+	// update()?
 
 };
 
