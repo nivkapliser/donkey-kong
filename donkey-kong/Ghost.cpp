@@ -2,7 +2,7 @@
 
 // Function to set the barrel direction according to the floor type
 
-bool Ghost::ghostsLocationsMap[25][80]; //static variable, must declare in cpp.
+bool Ghost::ghostsLocationsMap[25][80] = { false }; //static variable, must declare in cpp.
 
 void Ghost::floorDirSync()
 {
@@ -25,9 +25,14 @@ void Ghost::move() {
 	ghostsLocationsMap[y][x] = false;
 
 
-	if (ghostsLocationsMap[y + dirY][x + dirX] == true || getRandomIntInRange(100) >= 95)
+	if (ghostsLocationsMap[y][x + dirX] == true || getRandomIntInRange(100) >= 95)
 	{
-		gotoxy(x, y - 1);
+		if ((ghostsLocationsMap[y + dirY][x + dirX] == true))
+		{
+			gotoxy(x, y - 1);
+			std::cout << "hello";
+		}
+
 		dirX = -dirX;
 
 	}
@@ -46,8 +51,6 @@ void Ghost::move() {
 	x += dirX;
 	y += dirY;
 	ghostsLocationsMap[y][x] = true;
-
-
 }
 
 // Function to change the direction of the barrels
