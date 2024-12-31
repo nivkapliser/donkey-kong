@@ -26,16 +26,8 @@ void Ghost::move() {
 
 
 	if (ghostsLocationsMap[y][x + dirX] == true || getRandomIntInRange(100) >= 95)
-	{
-		if ((ghostsLocationsMap[y + dirY][x + dirX] == true))
-		{
-			gotoxy(x, y - 1);
-			std::cout << "hello";
-		}
-
 		dirX = -dirX;
 
-	}
 
 	if (isFloorEnd()) {
 		dirX = -dirX;
