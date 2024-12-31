@@ -27,3 +27,8 @@ int randomZeroOrOne()
 {
     return (rand() % 2);
 }
+int getRandomIntInRange(int biggest)
+{
+    return (rand() % (biggest + 1));
+
+}

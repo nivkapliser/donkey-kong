@@ -142,6 +142,15 @@ void Mario::explode()
     Sleep(700); // longer Sleep time for visual effect
 }
 
+void Mario::ghosted()
+{
+    erase();
+    gotoxy(x - 2, y - 2);
+    std::cout << "BUSTED!";
+    gotoxy(x - 2, y);
+    std::cout << "xX@Xx";
+    Sleep(700); // longer Sleep time for visual effect
+}
 
 
 

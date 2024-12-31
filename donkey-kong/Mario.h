@@ -149,4 +149,5 @@ public:
 	void keyPressed(char key);
 	void jump();
 	void explode();
+	void ghosted();
 };

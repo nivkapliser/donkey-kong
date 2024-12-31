@@ -25,7 +25,7 @@ class Ghost
 	bool isActive; // for the barrelsManager to check if the barrel is active
 	char lastPoint; // to save the last point char for latter printing
 
-	bool encountered = false;
+	bool encountered = false; //MAYBE WE CAN DELETE THIS 
 
 	Board* pBoard = nullptr;
 
@@ -68,6 +68,8 @@ class Ghost
 public:
 	Ghost() : y(getRandomYpos()), x(getRandomXpos()) { isActive = false; }
 
+	static bool ghostsLocationsMap[25][80]; //talk with niv about the static constants of board
+
 
 	int getX() const {
 		return x;
@@ -103,8 +105,7 @@ public:
 	void move();
 	void floorDirSync();
 	void ghostActivation(); //need to be Enemy activator
-	bool checkEncounters(Mario& mario);
+	bool checkEncounters(Mario& mario); //MAYBE WE CAN DELETE THIS
 	int getDirectionRandomly() const;
 	bool isFloorEnd() const;
-
 };

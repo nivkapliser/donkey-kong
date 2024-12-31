@@ -36,8 +36,6 @@ void GhostManager::moveGhosts(Mario& mario)
 		}
 		ghosts[i].erase();
 		ghosts[i].move();
-
-
 	}
 }
 

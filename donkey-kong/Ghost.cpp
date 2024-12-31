@@ -1,6 +1,9 @@
 #include "Ghost.h"
 
 // Function to set the barrel direction according to the floor type
+
+bool Ghost::ghostsLocationsMap[25][80]; //static variable, must declare in cpp.
+
 void Ghost::floorDirSync()
 {
 	char floor_type = pBoard->getChar(x, y + 1);
@@ -19,6 +22,16 @@ void Ghost::move() {
 	//if (!pBoard->isValidMove(x + dirX, y + dirY)) {
 	//	changeDir(STOP);
 	//}
+	ghostsLocationsMap[y][x] = false;
+
+
+	if (ghostsLocationsMap[y + dirY][x + dirX] == true || getRandomIntInRange(100) >= 95)
+	{
+		gotoxy(x, y - 1);
+		dirX = -dirX;
+
+	}
+
 	if (isFloorEnd()) {
 		dirX = -dirX;
 		dirY = 0;
@@ -32,6 +45,8 @@ void Ghost::move() {
 
 	x += dirX;
 	y += dirY;
+	ghostsLocationsMap[y][x] = true;
+
 
 }
 

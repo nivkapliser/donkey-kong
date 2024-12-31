@@ -5,6 +5,7 @@
 #include "MenuGraphics.h"
 #include "Ghost.h"
 
+
 class GhostManager
 {
 	static constexpr int MAX_GHOSTS = 5; // max number of barrels in a game

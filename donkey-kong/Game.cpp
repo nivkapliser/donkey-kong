@@ -157,6 +157,7 @@ void Game::runGame() {
 
 		// if mario encounters a barrel, reset the stage or game over
 		checkEncounters(barrelsManager, mario);
+		checkEncounters(ghostsManager, mario);
 
 		// check if mario has fallen 5 lines and reset the stage
 		if (mario.fellTooFar() && mario.isOnFloor())
@@ -201,6 +202,7 @@ void Game::explodeMarioAndResetStage(Mario& mario) {
 // function to check for encounters of mario and barrels
 void Game::checkEncounters(BarrelManager& bm, Mario& mario) {
 	if (bm.getEncounters()) {
+		mario.explode();
 		mario.downLives();
 		resetStage();
 		if (mario.getLives() == 0) {
@@ -208,6 +210,18 @@ void Game::checkEncounters(BarrelManager& bm, Mario& mario) {
 			bm.setEncounters(false);
 		}
 		bm.setEncounters(false);
+	}
+}
+void Game::checkEncounters(GhostManager& gm, Mario& mario) {
+	if (gm.getEncounters()) {
+		mario.ghosted();
+		mario.downLives();
+		resetStage();
+		if (mario.getLives() == 0) {
+			currentState = GAME_OVER;
+			gm.setEncounters(false);
+		}
+		gm.setEncounters(false);
 	}
 }
 

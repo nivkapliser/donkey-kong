@@ -57,4 +57,6 @@ public:
 	void run();
 	void explodeMarioAndResetStage(Mario& mario);
 	void checkEncounters(BarrelManager& bm, Mario& mario);
+	void checkEncounters(GhostManager& gm, Mario& mario);
+
 };
