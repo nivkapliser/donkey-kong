@@ -12,11 +12,12 @@ void Board::reset() {
 void Board::print() const
 {	
 	system("cls");
-	//menuGraphics->setCurrentColor(menuGraphics->getLightRed());
+	menuGraphics->setCurrentColor(menuGraphics->getLightRed());
 	for (int i = 0; i < MAX_Y - 1; i++) {
 		std::cout << currentBoard[i] << '\n';
 	}
 	std::cout << currentBoard[MAX_Y - 1];
+	printLegend();
 }
 
 // Function to check if a move is valid (i.e. not on a forbidden character)
@@ -74,17 +75,17 @@ int Board::readBoard() {
 				marioX = j;
 				marioY = i;
 			}
-			else if (line[j] == '$') {
+			/*else if (line[j] == '$') { // can delete?
 				boardFile[i][j] = ' ';
 				paulineX = j;
 				paulineY = i;
-			}
+			}*/
 			else if (line[j] == 'L') {
 				boardFile[i][j] = ' ';
 				legendX = j;
 				legendY = i;
 			}
-			else if (line[j] == '&') {
+			else if (line[j] == '&') { // so we can set the barrels starting position
 				donkeyX = j;
 				donkeyY = i;
 			}

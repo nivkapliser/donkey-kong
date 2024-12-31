@@ -130,7 +130,7 @@ public:
 
 	// Function to draw the number of mario's lives
 	void drawLife() const {
-		gotoxy(18, 0);
+		gotoxy(pBoard->getLegendX() + 7, pBoard->getLegendY()); // should be const.. 
 		std::cout << lives;	
 	}
 

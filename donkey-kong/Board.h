@@ -69,7 +69,17 @@ public:
 	char getChar(int x, int y) const {
 		return currentBoard[y][x];
 	}
-
+	void printLegend() const {
+		gotoxy(legendX, legendY);
+		std::cout << "Lives: " << " | Score: " << std::endl;
+		std::cout << " Hammer: ";
+	}
+	int getLegendX() const {
+		return legendX;
+	}
+	int getLegendY() const {
+		return legendY;
+	}
 	int readBoard();
 	bool isValidMove(int x, int y) const;
 	bool isFloor(int x, int y) const;

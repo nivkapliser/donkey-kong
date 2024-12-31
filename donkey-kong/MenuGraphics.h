@@ -205,6 +205,8 @@ class MenuGraphics
 
 	};
 
+	const char* legend = " Lives:  | Score:  ";
+
 	enum COLORS {
 		BLACK = 0,
 		BLUE = 1,
