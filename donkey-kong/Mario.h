@@ -12,13 +12,12 @@
 #include <iostream>
 #include "utils.h"
 #include "Board.h"
-#include "Point.h"
 #include "MenuGraphics.h"
 #include "Hammer.h"
 
 class Mario : public Entity
 {
-	enum Direction { LEFT, UP, RIGHT, DOWN, STAY }; // to set the direction of Mario
+	enum class Direction { LEFT, UP, RIGHT, DOWN, STAY }; // to set the direction of Mario
 	static constexpr int JUMP_HEIGHT = 2; // how many lines can mario jump
 	static constexpr char keys[] = { 'a', 'w', 'd', 'x', 's' }; // to set the keys for the directions
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]); // to get the size of the keys array
@@ -32,7 +31,7 @@ class Mario : public Entity
 	int y = START_Y;
 	int lives;
 
-	Direction currentDirection = STAY; // the default starting direction
+	Direction currentDirection = Direction::STAY; // the default starting direction
 	int dirX = 0;
 	int dirY = 0;
 

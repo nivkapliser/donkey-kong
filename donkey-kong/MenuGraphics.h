@@ -172,7 +172,7 @@ class MenuGraphics
 		  "|                                                                              |",//17
 		  "|                                                                              |",//18
 		  "|                                                                              |",//19
-		  "|               PRESS 'R' TO RESUME OR 'ESC' TO RETURN TO MENU....             |",//20
+		  "|               PRESS 'ESC' TO RESUME OR ANY KEY TO RETURN TO MENU....         |",//20
 		  "|                                                                              |",//21
 		  "+==============================================================================+" //22
 	};

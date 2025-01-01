@@ -50,7 +50,7 @@ void Game::showMenu() {
 			choice = input[0];
 			switch (choice) {
 			case '1':
-				currentState = RUNNING;
+				currentState = GameState::RUNNING;
 				run = false;
 				break;
 			case '2':
@@ -61,7 +61,7 @@ void Game::showMenu() {
 				run = false;
 				break;
 			case '9':
-				currentState = FINISH;
+				currentState = GameState::FINISH;
 				return;
 			default:
 				system("cls"); // for priting in the screen size
@@ -86,35 +86,35 @@ void Game::run() {
 	menuGraphics.displayOpenScreen();
 	while (run) {
 		switch (getGameState()) {
-		case MENU: // the default game state
+		case GameState::MENU: // the default game state
 			showMenu();
 			break;
-		case RUNNING:  // to start the game movement loop
+		case GameState::RUNNING:  // to start the game movement loop
 			initGame();
 			runGame();
 			break;
-		case RESUME: // to resume the game after pausing
+		case GameState::RESUME: // to resume the game after pausing
 			board.print();
 			mario.drawLife();
-			currentState = RUNNING;
+			currentState = GameState::RUNNING;
 			runGame();
 			break;
-		case PAUSED: // to pause the game
+		case GameState::PAUSED: // to pause the game
 			pauseGame();
 			break;
-		case GAME_OVER:	// to display game over screen and return to menu
+		case GameState::GAME_OVER:	// to display game over screen and return to menu
 			menuGraphics.displayGameOver();
-			currentState = MENU;
+			currentState = GameState::MENU;
 			break;
-		case GAME_WON: // to display game won screen and return to menu
+		case GameState::GAME_WON: // to display game won screen and return to menu
 			menuGraphics.displayGameWon();
-			currentState = MENU;
+			currentState = GameState::MENU;
 			break;
-		case FINISH: // to exit the game loop
+		case GameState::FINISH: // to exit the game loop
 			run = false;
 			break;
 		default:
-			currentState = MENU;
+			currentState = GameState::MENU;
 			break;
 		}
 
@@ -127,7 +127,7 @@ void Game::run() {
 void Game::runGame() {
 
 	// moving loop for mario and barrels
-	while (currentState == RUNNING) {
+	while (currentState == GameState::RUNNING) {
 
 		mario.draw();
 		barrelsManager.drawBarrels(mario); // draw all active barrels
@@ -138,7 +138,7 @@ void Game::runGame() {
 		if (_kbhit()) {
 			char key = _getch();
 			if (key == ESC) {
-				currentState = PAUSED;
+				currentState = GameState::PAUSED;
 				break;
 			}
 			mario.keyPressed(key);
@@ -167,7 +167,7 @@ void Game::runGame() {
 		// if mario meets Pauline, game won
 		marioMetPauline(mario);
 
-		if (currentState == GAME_OVER) {
+		if (currentState == GameState::GAME_OVER) {
 			break;
 		}
 	}
@@ -177,14 +177,14 @@ void Game::runGame() {
 void Game::pauseGame() {
 
 	menuGraphics.displayStopScreen();
-	while (currentState == PAUSED) {
+	while (currentState == GameState::PAUSED) {
 		if (_kbhit()) {
 			char key = _getch();
-			if (key == 'r' || key == 'R') {
-				currentState = RESUME;
+			if (key == ESC) {
+				currentState = GameState::RESUME;
 			}
-			else if (key == ESC) {
-				currentState = MENU;
+			else {
+				currentState = GameState::MENU;
 			}
 		}
 	}
@@ -196,7 +196,7 @@ void Game::explodeMarioAndResetStage(Mario& mario) {
 	resetStage();
 	mario.downLives();
 	if (mario.getLives() == 0) {
-		currentState = GAME_OVER;
+		currentState = GameState::GAME_OVER;
 	}
 }
 
@@ -207,7 +207,7 @@ void Game::checkEncounters(BarrelManager& bm, Mario& mario) {
 		mario.downLives();
 		resetStage();
 		if (mario.getLives() == 0) {
-			currentState = GAME_OVER;
+			currentState = GameState::GAME_OVER;
 			bm.setEncounters(false);
 		}
 		bm.setEncounters(false);
@@ -219,7 +219,7 @@ void Game::checkEncounters(GhostManager& gm, Mario& mario) {
 		mario.downLives();
 		resetStage();
 		if (mario.getLives() == 0) {
-			currentState = GAME_OVER;
+			currentState = GameState::GAME_OVER;
 			gm.setEncounters(false);
 		}
 		gm.setEncounters(false);

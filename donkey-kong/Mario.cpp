@@ -4,22 +4,22 @@
 // based on code from the lab
 void Mario::changeDir(Direction dir) {
     switch (dir) {
-    case LEFT:
+    case Direction::LEFT:
         dirY = 0;
         dirX = -1;
         break;
-    case UP:
+    case Direction::UP:
         dirY = -1;
         break;
-    case RIGHT:
+    case Direction::RIGHT:
         dirY = 0;
         dirX = 1;
         break;
-    case DOWN:
+    case Direction::DOWN:
         dirY = 1;
         dirX = 0;
         break;
-    case STAY:
+    case Direction::STAY:
         dirY = 0;
         dirX = 0;
         break;
@@ -46,7 +46,7 @@ void Mario::move() {
     bool gravity = false;
     
     if (pBoard->getChar(x, y) == 'p') {
-		haveHammer = true;
+		//haveHammer = true;
 		pBoard->setChar(x, y, ' ');
     }
 
@@ -61,7 +61,7 @@ void Mario::move() {
 			else if (pBoard->isFloor(x, y - 1)) {
             // Climbing last level
                 y -= 2;
-                changeDir(STAY);
+                changeDir(Direction::STAY);
                 return;
             }
         }
@@ -81,7 +81,7 @@ void Mario::move() {
 
 	// stop if next step is not valid
     else if (!pBoard->isValidMove(newX, newY)) {
-        changeDir(STAY);
+        changeDir(Direction::STAY);
     }
 
 	// gravity logic

@@ -19,7 +19,7 @@ class Game
 {
 	static constexpr int ESC = 27; // ASCII value for the escape key
 	static constexpr char PAULINE = '$';
-	enum GameState { MENU, RUNNING, PAUSED, RESUME, GAME_OVER, GAME_WON, FINISH }; // To manage game state for better game control
+	enum class GameState { MENU, RUNNING, PAUSED, RESUME, GAME_OVER, GAME_WON, FINISH }; // To manage game state for better game control
 
 
 	MenuGraphics menuGraphics;
@@ -31,7 +31,7 @@ class Game
 
 
 
-	GameState currentState = MENU;
+	GameState currentState = GameState::MENU;
 
 
 	void resetStage();
@@ -42,7 +42,7 @@ class Game
 
 
 public:
-	Game() : currentState(MENU), ghostsManager(board, &menuGraphics), barrelsManager(board, &menuGraphics), mario(&menuGraphics), board(&menuGraphics), hammer(&board){
+	Game() : currentState(GameState::MENU), ghostsManager(board, &menuGraphics), barrelsManager(board, &menuGraphics), mario(&menuGraphics), board(&menuGraphics), hammer(&board){
 		mario.setBoard(board);
 	}
 
@@ -54,7 +54,7 @@ public:
 	// Function to check if mario met Pauline and won the game
 	void marioMetPauline(Mario& mario) {
 		if (mario.metPauline())
-			currentState = GAME_WON;
+			currentState = GameState::GAME_WON;
 	}
 
 	void run();
