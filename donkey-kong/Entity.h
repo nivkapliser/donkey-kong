@@ -20,6 +20,7 @@ class Entity
 
 	char lastPoint = EMPTY_SPACE; // for printing after player passes through
 
+protected:
 	Board* pBoard = nullptr;
 
 	

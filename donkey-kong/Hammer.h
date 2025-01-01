@@ -9,12 +9,16 @@ class Hammer : public Entity
 	static constexpr int SLEEP_STEP = 50;
 
 	bool active = true; // if is active mario can pick it up and smash barrels
-	bool pickedUp = false;
+	bool collected = false;
 
 	int sleepCounter = 0;
 
 public:
-	Hammer() {}
+	Hammer(Board* board) {
+		//placeRandomly(*board);
+		setX(15);
+		setY(23);
+	}
 	
 	//void activate();
 	
@@ -31,6 +35,9 @@ public:
 			Entity::erase();
 	}
 
+	bool isCollected() const {
+		return collected;
+	}
 	/*bool isActive() const {
 		return active;
 	}*/
@@ -44,6 +51,6 @@ public:
 	//	active = false; // so hammer don't show on board
 	//}
 
-	void placeRandomly(Board& board);
+	//void placeRandomly(Board& board);
 };
 
