@@ -39,6 +39,7 @@ class Mario : public Entity
 	int isJump = false; 
 	int fallCounter = 0;  // to count the number of lines mario fell
 	int jumpCounter = 0; // to count the number of lines mario jumped
+	bool haveHammer = false; // to check if mario has a hammer
 
 	Board* pBoard = nullptr;
 	MenuGraphics* menuGraphics;
@@ -142,6 +143,10 @@ public:
 	// Function to check if mario is on a ladder
 	bool isOnFloor() const {
 		return pBoard->isFloor(x, y + 1);
+	}
+
+	void pickUpHammer() {
+		haveHammer = true;
 	}
 
 	void changeDir(Direction dir);

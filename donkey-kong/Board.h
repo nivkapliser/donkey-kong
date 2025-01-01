@@ -69,6 +69,9 @@ public:
 	char getChar(int x, int y) const {
 		return currentBoard[y][x];
 	}
+	void setChar(int x, int y, char c) {
+		currentBoard[y][x] = c;
+	}
 	void printLegend() const {
 		gotoxy(legendX, legendY);
 		std::cout << "Lives: " << " | Score: " << std::endl;
@@ -87,6 +90,12 @@ public:
 	bool gravitation(int x, int y) const; 
 	bool isEmptySpace(int x, int y) const {
 		return getChar(x, y) == EMPTY_SPACE;
+	}
+	static int getMaxX() {
+		return MAX_X;
+	}
+	static int getMaxY() {
+		return MAX_Y;
 	}
 };
 

@@ -44,6 +44,11 @@ void Mario::move() {
     int newX = x + dirX;
     int newY = y + dirY;
     bool gravity = false;
+    
+    if (pBoard->getChar(x, y) == 'p') {
+		haveHammer = true;
+		pBoard->setChar(x, y, ' ');
+    }
 
     // Ladder climbing logic
 	if (pBoard->isLadder(x, y) || pBoard->isLadder(x, y + 1)) { 

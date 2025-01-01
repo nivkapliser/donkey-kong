@@ -1,2 +1,5 @@
-﻿  Ghost.cpp
-  donkey-kong.vcxproj -> C:\Users\shtru\source\repos\donkey-kong2-31.12\x64\Debug\donkey-kong.exe
+﻿  Game.cpp
+  Ghost.cpp
+  main.cpp
+  Generating Code...
+  donkey-kong.vcxproj -> C:\Users\niv\Desktop\school\c++\Donkey-Kong-Ex2\x64\Debug\donkey-kong.exe

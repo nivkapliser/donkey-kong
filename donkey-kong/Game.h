@@ -13,6 +13,7 @@
 #include "MenuGraphics.h"
 #include "Ghost.h"
 #include "GhostManager.h"
+#include "Hammer.h"
 
 class Game
 {
@@ -26,6 +27,8 @@ class Game
 	Mario mario;
 	BarrelManager barrelsManager;
 	GhostManager ghostsManager;
+	Hammer hammer;
+
 
 
 	GameState currentState = MENU;

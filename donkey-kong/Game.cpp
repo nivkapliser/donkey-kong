@@ -132,6 +132,7 @@ void Game::runGame() {
 		mario.draw();
 		barrelsManager.drawBarrels(mario); // draw all active barrels
 		ghostsManager.drawGhosts(mario);
+		hammer.draw();
 
 		// check for user input
 		if (_kbhit()) {
@@ -147,7 +148,7 @@ void Game::runGame() {
 		// erase and move mario and barrels
 		mario.erase();
 		mario.move();
-
+		hammer.erase();
 		barrelsManager.moveBarrels(mario);
 		ghostsManager.moveGhosts(mario);
 

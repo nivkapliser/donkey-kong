@@ -25,6 +25,7 @@ class Entity
 	
 
 public:
+	Entity() = default;
 	Entity(int x, int y, Board* pBoard, char ch) : x(x), y(y), pBoard(pBoard), ch(ch) {}
 
 	void draw(char c) const {
