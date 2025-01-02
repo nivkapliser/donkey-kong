@@ -203,7 +203,7 @@ void Game::explodeMarioAndResetStage(Mario& mario) {
 // function to check for encounters of mario and barrels
 void Game::checkEncounters(BarrelManager& bm, Mario& mario) {
 	if (bm.getEncounters()) {
-		mario.explode();
+		//mario.explode();
 		mario.downLives();
 		resetStage();
 		if (mario.getLives() == 0) {

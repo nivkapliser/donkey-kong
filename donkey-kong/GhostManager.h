@@ -8,7 +8,7 @@
 
 class GhostManager
 {
-	static constexpr int MAX_GHOSTS = 5; // max number of barrels in a game
+	static constexpr int MAX_GHOSTS = 7; // max number of barrels in a game
 	static constexpr int GHOSTS_PACE = 1300; // pace at which barrels are activated
 
 	Ghost ghosts[MAX_GHOSTS] = { Ghost() };
@@ -18,6 +18,7 @@ class GhostManager
 	int sleepCount = 0; // counter to keep track of the pace of the barrels activation
 	int activatedGhost = 1; // index of the next barrel to be activated
 	bool encounters = false; // flag to indicate if mario has encountered a barrel
+	int ghostsLocationsMap[25][80];
 
 public:
 	GhostManager(Board b, MenuGraphics* mg) : board(b), menuGraphics(mg) {}

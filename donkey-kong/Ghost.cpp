@@ -2,7 +2,6 @@
 
 // Function to set the barrel direction according to the floor type
 
-bool Ghost::ghostsLocationsMap[25][80] = { false }; //static variable, must declare in cpp.
 
 void Ghost::floorDirSync()
 {
@@ -19,33 +18,25 @@ void Ghost::floorDirSync()
 // Function to handle barrels movement logic
 void Ghost::move() {
 
-	//if (!pBoard->isValidMove(x + dirX, y + dirY)) {
-	//	changeDir(STOP);
-	//}
-	ghostsLocationsMap[y][x] = false;
-
-
-	if (ghostsLocationsMap[y][x + dirX] == true || getRandomIntInRange(100) >= 95)
-		dirX = -dirX;
-
-
 	if (isFloorEnd()) {
 		dirX = -dirX;
 		dirY = 0;
 	}
-
-	if (pBoard->gravitation(x, y)) {
-		dirY = 1;
+	else if (ghostsMeeting == true)
+	{
+		dirX = -dirX;
+		switchGhostsMeeting();
 	}
-
-
+	else if (getRandomIntInRange(100) >= 95)
+	{
+		dirX = -dirX;
+	}
 
 	x += dirX;
 	y += dirY;
-	ghostsLocationsMap[y][x] = true;
 }
 
-// Function to change the direction of the barrels
+// Function to change the direction of the ghosts
 void Ghost::changeDir(Direction dir) {
 	switch (dir) {
 	case LEFT:
@@ -72,16 +63,13 @@ bool Ghost::checkEncounters(Mario& mario)
 {
 	if (mario.getX() == getX() && mario.getY() == getY()) // direct encounter
 	{
-		encountered = true;
-		//SOMETHING TO DO HERE
-		encountered = false;
 		return true;
 	}
 
 	return false;
 }
 
-// Function to activate a barrel
+//delete soon
 void Ghost::ghostActivation()
 {
 	if (isActive == false)
@@ -91,7 +79,7 @@ void Ghost::ghostActivation()
 	}
 }
 
-// Function to get the starting direction of the barrel randomly (left or right)
+// function to delete soon
 int Ghost::getDirectionRandomly() const
 {
 	int random_num = rand() % 2;
@@ -108,4 +96,12 @@ bool Ghost::isFloorEnd() const
 	if (pBoard->getChar(x + dirX, y + 1) == ' ' || pBoard->getChar(x + dirX, y + dirY) == 'Q')
 		return true;
 	return false;
+}
+
+void Ghost::switchGhostsMeeting() {
+
+	if (ghostsMeeting == true)
+		ghostsMeeting = false;
+	else
+		ghostsMeeting = true;
 }

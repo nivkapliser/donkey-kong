@@ -25,7 +25,9 @@ class Ghost
 	bool isActive; // for the barrelsManager to check if the barrel is active
 	char lastPoint; // to save the last point char for latter printing
 
+	bool ghostsMeeting = false;
 	bool encountered = false; //MAYBE WE CAN DELETE THIS 
+
 
 	Board* pBoard = nullptr;
 
@@ -68,15 +70,20 @@ class Ghost
 public:
 	Ghost() : y(getRandomYpos()), x(getRandomXpos()) { isActive = false; }
 
-	static bool ghostsLocationsMap[25][80]; //talk with niv about the static constants of board
-
-
 	int getX() const {
 		return x;
 	}
 	int getY() const {
 		return y;
 	}
+	int getDirX() const{
+		return dirX;
+	}
+	int getDirY() const {
+		return dirY;
+	}
+
+
 	void draw() const {
 		draw(ch);
 	}
@@ -99,6 +106,8 @@ public:
 	bool checkActivationStatus() const {
 		return isActive;
 	}
+
+	void switchGhostsMeeting();
 
 
 	void changeDir(Direction dir);
