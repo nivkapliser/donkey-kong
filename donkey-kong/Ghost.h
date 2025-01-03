@@ -37,6 +37,7 @@ class Ghost
 		std::cout << c;
 	}
 
+	// should be more general for multiple boards
 	const int getRandomYpos()
 	{
 		if (randomZeroOrOne() == 0)

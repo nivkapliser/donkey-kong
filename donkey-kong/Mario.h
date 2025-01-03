@@ -39,7 +39,7 @@ class Mario : public Entity
 	int isJump = false; 
 	int fallCounter = 0;  // to count the number of lines mario fell
 	int jumpCounter = 0; // to count the number of lines mario jumped
-	//bool haveHammer = false; // to check if mario has a hammer
+	bool haveHammer = false; // to check if mario has a hammer
 
 	Board* pBoard = nullptr;
 	MenuGraphics* menuGraphics;
@@ -152,12 +152,9 @@ public:
 	void jump();
 	void explode();
 	void ghosted();
+	void checkIfMetHammer(Hammer* h);
 	void setHammer(Hammer* h) {
 		hammer = h;
 	}
-	bool usedHammer() {
-		if (hammer)
-			return hammer->isCollected();
-		return false;
-	}
+	
 };

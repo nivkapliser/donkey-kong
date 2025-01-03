@@ -14,10 +14,8 @@ class Hammer : public Entity
 	int sleepCounter = 0;
 
 public:
-	Hammer(Board* board) {
-		//placeRandomly(*board);
-		setX(15);
-		setY(23);
+	Hammer(Board* board) : Entity(board) {
+		placeRandomly(*board);
 	}
 	
 	//void activate();
@@ -27,12 +25,16 @@ public:
 	//}
 
 	void draw() const {
-		if (active)
+		if (!collected)
 			Entity::draw(HAMMER_CHAR);
 	}
 	void erase() {
-		if (!active)
+		if (collected)
 			Entity::erase();
+	}
+
+	void setCollected(bool b) {
+		collected = b;
 	}
 
 	bool isCollected() const {
@@ -51,6 +53,6 @@ public:
 	//	active = false; // so hammer don't show on board
 	//}
 
-	//void placeRandomly(Board& board);
+	void placeRandomly(Board& board);
 };
 

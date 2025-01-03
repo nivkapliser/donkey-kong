@@ -28,7 +28,7 @@ void Mario::changeDir(Direction dir) {
 
 // Function to handle key press
 // based on code from the lab
-void Mario::keyPressed(char key) {
+void Mario::keyPressed(char key) { // add 'p' for hammer
     for (size_t i = 0; i < numKeys; i++) {
         if (std::tolower(key) == keys[i]) {
             changeDir(static_cast<Direction>(i));
@@ -117,6 +117,14 @@ void Mario::move() {
     }
 
     fallCounter = gravity ? ++fallCounter : 0; 
+}
+
+void Mario::checkIfMetHammer(Hammer* h) {
+	if (getX() == h->getX() && getY() == h->getY()) { // change to const char
+		haveHammer = true;
+		setHammer(h);
+        hammer->setCollected(true);
+	}
 }
 
 // Function to handle marios jump logic

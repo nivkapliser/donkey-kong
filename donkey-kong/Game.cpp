@@ -159,6 +159,7 @@ void Game::runGame() {
 		// if mario encounters a barrel, reset the stage or game over
 		checkEncounters(barrelsManager, mario);
 		checkEncounters(ghostsManager, mario);
+		checkHammer(mario, hammer);
 
 		// check if mario has fallen 5 lines and reset the stage
 		if (mario.fellTooFar() && mario.isOnFloor())
@@ -225,6 +226,22 @@ void Game::checkEncounters(GhostManager& gm, Mario& mario) {
 		gm.setEncounters(false);
 	}
 }
+
+void Game::checkHammer(Mario& mario, Hammer& hammer) {
+	mario.checkIfMetHammer(&hammer);
+}
+
+//void Game::updateLegend() {
+//	if (hammer.isCollected()) {
+//		board.updateLegend("Hammer: Collected");
+//	}
+//	else {
+//		board.updateLegend("Hammer: Not Collected");
+//	}
+//	printLegend()
+//	
+//
+//}
 
 //void Game::getUserInput() {
 //	char key = _getch();

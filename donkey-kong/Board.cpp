@@ -24,7 +24,7 @@ void Board::print() const
 bool Board::isValidMove(int x, int y) const {
 	char nextChar = getChar(x, y);
 	for (auto ch : FORBIDDEN_CHARS) {
-		if (nextChar == ch) {
+		if (nextChar == ch || nextChar == WALL) {
 			return false;
 		}
 	}

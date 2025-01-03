@@ -1,4 +1,14 @@
-﻿  Ghost.cpp
+﻿  Barrel.cpp
+  BarrelManager.cpp
+  Board.cpp
+  Entity.cpp
+  Game.cpp
+  Ghost.cpp
   GhostManager.cpp
+  Hammer.cpp
+C:\Users\niv\Desktop\school\c++\Donkey-Kong-Ex2\donkey-kong\Hammer.cpp(11,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  main.cpp
+  Mario.cpp
+  MenuGraphics.cpp
   Generating Code...
-  donkey-kong.vcxproj -> C:\Users\team3\source\repos\donkey-kong-2.1\x64\Debug\donkey-kong.exe
+  donkey-kong.vcxproj -> C:\Users\niv\Desktop\school\c++\Donkey-Kong-Ex2\x64\Debug\donkey-kong.exe

@@ -22,12 +22,12 @@ class Entity
 
 protected:
 	Board* pBoard = nullptr;
-
 	
 
 public:
-	Entity() = default;
-	Entity(int x, int y, Board* pBoard, char ch) : x(x), y(y), pBoard(pBoard), ch(ch) {}
+	//Entity() = default;
+	Entity(Board* _pBoard) : pBoard(_pBoard){}
+	Entity(int x, int y, Board* _pBoard, char ch) : x(x), y(y), pBoard(_pBoard), ch(ch) {}
 
 	void draw(char c) const {
 		gotoxy(x, y);
