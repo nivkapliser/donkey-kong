@@ -22,7 +22,6 @@ class Ghost
 	int dirX = -1;
 	int dirY = 0;
 
-	bool isActive; // for the barrelsManager to check if the barrel is active
 	char lastPoint; // to save the last point char for latter printing
 
 	bool ghostsMeeting = false;
@@ -42,7 +41,7 @@ class Ghost
 
 
 public:
-	Ghost() { isActive = false; }
+	Ghost() {}
 
 	int getX() const {
 		return x;
@@ -76,20 +75,14 @@ public:
 		pBoard = &board;
 	}
 
-	// Function to check if the barrel is active
-	bool checkActivationStatus() const {
-		return isActive;
-	}
-
 	void switchGhostsMeeting();
 
 
 	void changeDir(Direction dir);
 	void move();
 	void floorDirSync();
-	void ghostActivation(); //need to be Enemy activator
 	bool checkEncounters(Mario& mario); //MAYBE WE CAN DELETE THIS
 	int getDirectionRandomly() const;
 	bool isFloorEnd() const;
-	void resetLocation(int start_x, int start_y) { x = start_x; y = start_y; }
+	void resetLocation (int start_x, int start_y) { x = start_x; y = start_y; }
 };

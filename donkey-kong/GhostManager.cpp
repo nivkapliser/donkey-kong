@@ -57,11 +57,3 @@ void GhostManager::moveGhosts(Mario& mario)
 }
 
 
-void GhostManager::ghostsActivation() { //function to get rid of, after putting the ghosts in screen file
-
-	for (int i = 1; i < MAX_GHOSTS; i++)
-	{
-		ghosts[activatedGhost].ghostActivation();
-	}
-
-}

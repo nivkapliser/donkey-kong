@@ -154,7 +154,6 @@ void Game::runGame() {
 
 
 		barrelsManager.barrelsActivation();
-		ghostsManager.ghostsActivation();
 
 		// if mario encounters a barrel, reset the stage or game over
 		checkEncounters(barrelsManager, mario);

@@ -36,6 +36,5 @@ public:
 	void resetGhosts(Board& board);
 	void drawGhosts(Mario& mario);
 	void moveGhosts(Mario& mario);
-	void ghostsActivation();
 
 };

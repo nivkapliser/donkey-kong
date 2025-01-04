@@ -69,15 +69,6 @@ bool Ghost::checkEncounters(Mario& mario)
 	return false;
 }
 
-//delete soon
-void Ghost::ghostActivation()
-{
-	if (isActive == false)
-	{
-		isActive = true;
-
-	}
-}
 
 // function to delete soon
 int Ghost::getDirectionRandomly() const
