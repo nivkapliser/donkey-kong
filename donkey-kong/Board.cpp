@@ -54,6 +54,7 @@ bool Board::gravitation(int x, int y) const {
 }
 
 int Board::readBoard() {
+	int g_ind = 1;
 	std::ifstream myFile("dkong_01.screen.txt");
 	if (!myFile.is_open()) {
 		std::cout << "Error opening file\n";
@@ -88,6 +89,12 @@ int Board::readBoard() {
 			else if (line[j] == '&') { // so we can set the barrels starting position
 				donkeyX = j;
 				donkeyY = i;
+			}
+			else if (line[j] == 'x') { // so we can set the ghosts starting position
+				boardFile[i][j] = ' ';
+				ghostsX[g_ind] = j;
+				ghostsY[g_ind] = i;
+				g_ind++;
 			}
 		}
 	}

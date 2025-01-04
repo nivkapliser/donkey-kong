@@ -4,6 +4,7 @@
 #include <cstring>
 #include <fstream>
 #include <string>
+#include <vector>
 
 
 
@@ -26,6 +27,8 @@ class Board
 	int legendY;
 	int donkeyX;
 	int donkeyY;
+	int ghostsX[7];
+	int ghostsY[7];
 
 	char boardFile[MAX_Y][MAX_X + 1];
 	char currentBoard[MAX_Y][MAX_X + 1]; // +1 for null terminator
@@ -69,6 +72,14 @@ public:
 	static int getMaxY() {
 		return MAX_Y;
 	}
+
+	int getGhostX(int index) {
+		return ghostsX[index];
+	}
+	int getGhostY(int index) {
+		return ghostsY[index];
+	}
+
 };
 
 

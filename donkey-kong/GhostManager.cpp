@@ -8,6 +8,7 @@ void GhostManager::resetGhosts(Board& board)
 		ghostsLocationsMap[ghosts[i].getY()][ghosts[i].getX()] = 0; //init the locations table
 		ghosts[i] = Ghost();  //we will delete it soon when we will put the ghosts locations on the screen file, its just for now.
 		ghosts[i].setBoard(board);
+		ghosts[i].resetLocation(board.getGhostX(i), board.getGhostY(i));
 	}
 }
 

@@ -82,9 +82,7 @@ void Ghost::ghostActivation()
 // function to delete soon
 int Ghost::getDirectionRandomly() const
 {
-	int random_num = rand() % 2;
-
-	if (random_num == 0)
+	if (getRandomIntInRange(1) == 0)
 		return 1;
 	else
 		return -1;

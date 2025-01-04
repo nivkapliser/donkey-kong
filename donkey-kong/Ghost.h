@@ -13,7 +13,7 @@ class Ghost
 
 	char ch = 'x';
 	int x;
-	int y = getRandomYpos();
+	int y;
 
 	char floor[5] = "<>=Q"; // to set the direction of the barrel
 	static constexpr size_t floorTypes = sizeof(floor) / sizeof(floor[0]); // to get the size of the floor array
@@ -38,38 +38,11 @@ class Ghost
 	}
 
 	// should be more general for multiple boards
-	const int getRandomYpos()
-	{
-		if (randomZeroOrOne() == 0)
-			return 11;
-		else
-			return 16;
-	}
-
-
-	const int getRandomXpos()
-	{
-		if (y == 11)
-		{
-			if (randomZeroOrOne() == 0)
-				return (abs(rand() % 100) / 5) + 3;
-			else
-				return (abs(rand() % 100) / 5) + 53;
-		}
-		else
-		{
-			if (randomZeroOrOne() == 0)
-				return (abs(rand() % 100) / 5) + 3;
-			else
-				return (abs(rand() % 100) / 6) + 50;
-		}
-
-	}
 
 
 
 public:
-	Ghost() : y(getRandomYpos()), x(getRandomXpos()) { isActive = false; }
+	Ghost() { isActive = false; }
 
 	int getX() const {
 		return x;
@@ -118,4 +91,5 @@ public:
 	bool checkEncounters(Mario& mario); //MAYBE WE CAN DELETE THIS
 	int getDirectionRandomly() const;
 	bool isFloorEnd() const;
+	void resetLocation(int start_x, int start_y) { x = start_x; y = start_y; }
 };
