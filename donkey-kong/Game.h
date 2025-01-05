@@ -42,7 +42,7 @@ class Game
 
 
 public:
-	Game() : currentState(GameState::MENU), ghostsManager(board, &menuGraphics), barrelsManager(board, &menuGraphics), mario(&menuGraphics), board(&menuGraphics), hammer(&board){
+	Game() : currentState(GameState::MENU), ghostsManager(board, &menuGraphics), barrelsManager(board, &menuGraphics), mario(&menuGraphics, &hammer), board(&menuGraphics), hammer(&board){
 		mario.setBoard(board);
 	}
 
@@ -62,5 +62,7 @@ public:
 	void checkEncounters(BarrelManager& bm, Mario& mario); // change name
 	void checkEncounters(GhostManager& gm, Mario& mario); // change name
 	void checkHammer(Mario& mario, Hammer& hammer);
+	void smashBarrel(BarrelManager& bm, Mario& mario);
+	void smashGhost(GhostManager& gm, Mario& mario);
 	//void updateLegend(); // will add lives and score update
 };

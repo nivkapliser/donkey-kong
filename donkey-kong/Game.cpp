@@ -30,6 +30,8 @@ void Game::resetStage() {
 	mario.resetMarioPosition();
 	mario.setBoard(board);
 	mario.drawLife();
+	hammer.setCollected(false);
+	//hammer.placeRandomly(board);
 	barrelsManager.resetBarrels(board);
 	ghostsManager.resetGhosts(board);
 }
@@ -144,7 +146,8 @@ void Game::runGame() {
 			mario.keyPressed(key);
 		}
 		Sleep(50); // for better visual effect
-
+		
+		
 		// erase and move mario and barrels
 		mario.erase();
 		mario.move();
@@ -159,6 +162,8 @@ void Game::runGame() {
 		checkEncounters(barrelsManager, mario);
 		checkEncounters(ghostsManager, mario);
 		checkHammer(mario, hammer);
+		smashBarrel(barrelsManager, mario);	
+		smashGhost(ghostsManager, mario);	
 
 		// check if mario has fallen 5 lines and reset the stage
 		if (mario.fellTooFar() && mario.isOnFloor())
@@ -227,7 +232,21 @@ void Game::checkEncounters(GhostManager& gm, Mario& mario) {
 }
 
 void Game::checkHammer(Mario& mario, Hammer& hammer) {
-	mario.checkIfMetHammer(&hammer);
+	mario.checkIfMetHammer();
+}
+
+void Game::smashBarrel(BarrelManager& bm, Mario& mario) {
+	if (mario.getSmash()) {
+		bm.smashBarrels(mario);	
+		mario.smashEnemies();
+	}
+}
+
+void Game::smashGhost(GhostManager& gm, Mario& mario) {
+	if (mario.getSmash()) {
+		gm.smashGhosts(mario);
+		mario.smashEnemies();
+	}
 }
 
 //void Game::updateLegend() {

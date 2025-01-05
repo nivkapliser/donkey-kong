@@ -3,6 +3,8 @@
   Game.cpp
   Ghost.cpp
   GhostManager.cpp
+  Hammer.cpp
+C:\Users\niv\Desktop\school\c++\Donkey-Kong-Ex2\donkey-kong\Hammer.cpp(11,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Mario.cpp
   main.cpp
   Generating Code...

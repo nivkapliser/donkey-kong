@@ -56,4 +56,16 @@ void GhostManager::moveGhosts(Mario& mario)
 	}
 }
 
+void GhostManager::smashGhosts(Mario& mario)
+{
+	for (int i = 1; i < MAX_GHOSTS; i++)
+	{
+		if (ghosts[i].getX() == mario.getX() + 1 || mario.getX() - 1 == ghosts[i].getX() && ghosts[i].getY() == mario.getY())
+		{
+			ghosts[i].erase();
+			ghosts[i] = Ghost() ; // try
+		}
+	}
+}
+
 

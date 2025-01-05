@@ -39,7 +39,8 @@ class Mario : public Entity
 	int isJump = false; 
 	int fallCounter = 0;  // to count the number of lines mario fell
 	int jumpCounter = 0; // to count the number of lines mario jumped
-	bool haveHammer = false; // to check if mario has a hammer
+	bool haveHammer = false; // to check if mario has a hammer --------------- delete?
+	bool smash = false;
 
 	Board* pBoard = nullptr;
 	MenuGraphics* menuGraphics;
@@ -51,12 +52,12 @@ class Mario : public Entity
 	}
 
 public:
-	Mario(MenuGraphics* mg) : Entity(START_X, START_Y, pBoard, '@'), menuGraphics(mg), lastPoint(' '), lives(MAX_LIVES) {}
+	Mario(MenuGraphics* mg, Hammer* hm) : Entity(START_X, START_Y, pBoard, '@'), menuGraphics(mg), lastPoint(' '), lives(MAX_LIVES), hammer(hm) {}
 
 	// Function to reset mario position to the starting point
 	void resetMarioPosition() {
-		x = START_X;
-		y = START_Y;
+		x = 23;//START_X;
+		y = 7;//START_Y;
 		dirX = dirY = 0;
 	}
 
@@ -145,15 +146,20 @@ public:
 	bool isOnFloor() const {
 		return (pBoard->isFloor(x, y + 1) || pBoard->isBoarder(x, y + 1));
 	}
+
+	bool getSmash() const {
+		return smash;
+	}
+
 	void changeDir(Direction dir);
 	void move();
 	void keyPressed(char key);
 	void jump();
 	void explode();
 	void ghosted();
-	void checkIfMetHammer(Hammer* h);
+	void checkIfMetHammer();
 	void setHammer(Hammer* h) {
 		hammer = h;
 	}
-	
+	void smashEnemies();
 };

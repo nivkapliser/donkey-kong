@@ -41,6 +41,7 @@ public:
 	void drawBarrels(Mario& mario); 
 	void moveBarrels(Mario& mario);
 	void barrelsActivation();
+	void smashBarrels(Mario& mario);
 
 };
 

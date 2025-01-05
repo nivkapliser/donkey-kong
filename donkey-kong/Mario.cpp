@@ -35,6 +35,10 @@ void Mario::keyPressed(char key) { // add 'p' for hammer
             break;
         }
     }
+	if (std::tolower(key) == 'p') { // should be const
+		if (hammer->isCollected())
+		    smashEnemies();
+	}
 }
 
 // Function to handle marios movement logic
@@ -45,10 +49,6 @@ void Mario::move() {
     int newY = y + dirY;
     bool gravity = false;
     
-    if (pBoard->getChar(x, y) == 'p') {
-		//haveHammer = true;
-		pBoard->setChar(x, y, ' ');
-    }
 
     // Ladder climbing logic
 	if (pBoard->isLadder(x, y) || pBoard->isLadder(x, y + 1)) { 
@@ -119,12 +119,18 @@ void Mario::move() {
     fallCounter = gravity ? ++fallCounter : 0; 
 }
 
-void Mario::checkIfMetHammer(Hammer* h) {
-	if (getX() == h->getX() && getY() == h->getY()) { // change to const char
-		haveHammer = true;
-		setHammer(h);
+void Mario::checkIfMetHammer() {
+	if (getX() == hammer->getX() && getY() == hammer->getY()) { // change to const char
+		//haveHammer = true;
         hammer->setCollected(true);
 	}
+}
+
+void Mario::smashEnemies() {
+    if (smash)
+        smash = false;
+    else
+        smash = true;
 }
 
 // Function to handle marios jump logic

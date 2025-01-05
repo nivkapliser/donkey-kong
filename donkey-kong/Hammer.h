@@ -15,7 +15,9 @@ class Hammer : public Entity
 
 public:
 	Hammer(Board* board) : Entity(board) {
-		placeRandomly(*board);
+		setX(22);
+		setY(7);
+		//placeRandomly(*board);
 	}
 	
 	//void activate();
@@ -40,18 +42,6 @@ public:
 	bool isCollected() const {
 		return collected;
 	}
-	/*bool isActive() const {
-		return active;
-	}*/
-
-	/*bool isPickedUp() const {
-		return pickedUp;
-	}*/
-
-	//void pickUp() {
-	//	pickedUp = true;
-	//	active = false; // so hammer don't show on board
-	//}
 
 	void placeRandomly(Board& board);
 };
