@@ -151,6 +151,10 @@ public:
 		return smash;
 	}
 
+	void setSmash(bool s) {
+		smash = s;
+	}
+
 	void changeDir(Direction dir);
 	void move();
 	void keyPressed(char key);
@@ -161,5 +165,6 @@ public:
 	void setHammer(Hammer* h) {
 		hammer = h;
 	}
+	void smashOnce() { smash = false; }
 	void smashEnemies();
 };

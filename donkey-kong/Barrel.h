@@ -92,6 +92,12 @@ public:
 	void explode();
 	bool barrelFallManager();
 	void barrelActivation();
+	void barrelDeactivation() {
+		isActive = false;
+		linesFallen = 0;
+		isExploding = false;
+		encountered = false;
+	}
 	void eraseBoom() const;
 	bool checkEncounters(Mario& mario);
 	int getDirectionRandomly() const;

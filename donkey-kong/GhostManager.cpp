@@ -18,10 +18,12 @@ void GhostManager::drawGhosts(Mario& mario)
 	menuGraphics->setCurrentColor(menuGraphics->getCyan());
 	for (int i = 1; i < MAX_GHOSTS; i++)
 	{
-		ghosts[i].draw();
+		if (ghosts[i].isActive()) {
+			ghosts[i].draw();
 
-		if (ghosts[i].checkEncounters(mario)) { // if barrel encounters mario
-			encounters = true;
+			if (ghosts[i].checkEncounters(mario)) { // if barrel encounters mario
+				encounters = true;
+			}
 		}
 	}
 
@@ -56,16 +58,34 @@ void GhostManager::moveGhosts(Mario& mario)
 	}
 }
 
-void GhostManager::smashGhosts(Mario& mario)
-{
-	for (int i = 1; i < MAX_GHOSTS; i++)
-	{
-		if (ghosts[i].getX() == mario.getX() + 1 || mario.getX() - 1 == ghosts[i].getX() && ghosts[i].getY() == mario.getY())
+void GhostManager::smashGhosts(Mario& mario) {
+	for (int i = 0; i < MAX_GHOSTS; i++) {
+		if ((ghosts[i].getY() == mario.getY()) &&
+			((ghosts[i].getX() == mario.getX() + 1) ||
+				(ghosts[i].getX() == mario.getX() - 1)))
 		{
+			// Erase ghost from screen
 			ghosts[i].erase();
-			ghosts[i] = Ghost() ; // try
+			// Either set ghost to inactive or re-init it
+			// For example:
+			ghosts[i].setActive(false);
+
+			// or you could do:
+			// ghosts[i] = Ghost();  // basically "kill" it
 		}
 	}
 }
+
+//void GhostManager::smashGhosts(Mario& mario)
+//{
+//	for (int i = 1; i < MAX_GHOSTS; i++)
+//	{
+//		if (ghosts[i].getX() == mario.getX() + 1 || mario.getX() - 1 == ghosts[i].getX() && ghosts[i].getY() == mario.getY())
+//		{
+//			ghosts[i].erase();
+//			ghosts[i] = Ghost() ; // try
+//		}
+//	}
+//}
 
 

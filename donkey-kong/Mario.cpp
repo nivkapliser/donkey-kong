@@ -36,8 +36,8 @@ void Mario::keyPressed(char key) { // add 'p' for hammer
         }
     }
 	if (std::tolower(key) == 'p') { // should be const
-		if (hammer->isCollected())
-		    smashEnemies();
+        if (hammer->isCollected())
+            smash = true;
 	}
 }
 

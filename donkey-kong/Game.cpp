@@ -157,13 +157,21 @@ void Game::runGame() {
 
 
 		barrelsManager.barrelsActivation();
+		checkHammer(mario, hammer);
+		if (mario.getSmash()) {
+			barrelsManager.smashBarrels(mario);
+			ghostsManager.smashGhosts(mario);
 
+			mario.smashOnce();
+		}
 		// if mario encounters a barrel, reset the stage or game over
 		checkEncounters(barrelsManager, mario);
 		checkEncounters(ghostsManager, mario);
-		checkHammer(mario, hammer);
-		smashBarrel(barrelsManager, mario);	
-		smashGhost(ghostsManager, mario);	
+		
+
+		
+		//smashBarrel(barrelsManager, mario);
+		//smashGhost(ghostsManager, mario);	
 
 		// check if mario has fallen 5 lines and reset the stage
 		if (mario.fellTooFar() && mario.isOnFloor())

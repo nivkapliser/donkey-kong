@@ -26,6 +26,7 @@ class Ghost
 
 	bool ghostsMeeting = false;
 	bool encountered = false; //MAYBE WE CAN DELETE THIS 
+	bool active = true;
 
 
 	Board* pBoard = nullptr;
@@ -73,6 +74,14 @@ public:
 	// Function to set the board for the barrel
 	void setBoard(Board& board) {
 		pBoard = &board;
+	}
+
+	void setActive(bool b) {
+		active = b;
+	}
+
+	bool isActive() const {
+		return active;
 	}
 
 	void switchGhostsMeeting();

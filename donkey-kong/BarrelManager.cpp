@@ -66,17 +66,39 @@ void BarrelManager::barrelsActivation() {
 	sleepCount += 50; // increment the sleep count
 }
 
+
 void BarrelManager::smashBarrels(Mario& mario) {
-	for (int i = 0; i <= MAX_BARRELS; i++)
-	{
-		if (barrels[i].checkActivationStatus() == true) // if barrel is active
-		{
-			if (mario.getSmash()) {
-				if (mario.getX() + 1 == barrels[i].getX() || mario.getX() - 1 == barrels[i].getX() && mario.getY() == barrels[i].getY()) {
-					barrels[i].erase();
-					barrels[i].explode();
-				}
+	for (int i = 0; i < MAX_BARRELS; i++) {
+		// Only consider active barrels
+		if (barrels[i].checkActivationStatus()) {
+			// if barrel is exactly 1 char left or right of Mario on the same row
+			// (Be careful with operator precedence when using || and &&)
+			if ((barrels[i].getY() == mario.getY()) &&
+				((barrels[i].getX() == mario.getX() + 1) ||
+					(barrels[i].getX() == mario.getX() - 1)))
+			{
+				// Erase from screen
+				barrels[i].erase();
+				// Optional: special effect
+				barrels[i].explode();
+				// Deactivate barrel so it won't be drawn or moved anymore
+				barrels[i].barrelDeactivation();
 			}
 		}
 	}
 }
+
+//void BarrelManager::smashBarrels(Mario& mario) {
+//	for (int i = 0; i <= MAX_BARRELS; i++)
+//	{
+//		if (barrels[i].checkActivationStatus() == true) // if barrel is active
+//		{
+//			if (mario.getSmash()) {
+//				if (mario.getX() + 1 == barrels[i].getX() || mario.getX() - 1 == barrels[i].getX() && mario.getY() == barrels[i].getY()) {
+//					barrels[i].erase();
+//					barrels[i].explode();
+//				}
+//			}
+//		}
+//	}
+//}
