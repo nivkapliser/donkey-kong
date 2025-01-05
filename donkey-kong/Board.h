@@ -61,6 +61,9 @@ public:
 	int readBoard();
 	bool isValidMove(int x, int y) const;
 	bool isFloor(int x, int y) const;
+	bool isBoarder(int x, int y) const {
+		return getChar(x, y) == WALL;
+	}
 	bool isLadder(int x, int y) const;
 	bool gravitation(int x, int y) const; 
 	bool isEmptySpace(int x, int y) const {

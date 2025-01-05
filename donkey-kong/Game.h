@@ -59,8 +59,8 @@ public:
 
 	void run();
 	void explodeMarioAndResetStage(Mario& mario);
-	void checkEncounters(BarrelManager& bm, Mario& mario);
-	void checkEncounters(GhostManager& gm, Mario& mario);
+	void checkEncounters(BarrelManager& bm, Mario& mario); // change name
+	void checkEncounters(GhostManager& gm, Mario& mario); // change name
 	void checkHammer(Mario& mario, Hammer& hammer);
 	//void updateLegend(); // will add lives and score update
 };

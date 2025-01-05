@@ -143,9 +143,8 @@ public:
 	
 	// Function to check if mario is on a ladder
 	bool isOnFloor() const {
-		return pBoard->isFloor(x, y + 1);
+		return (pBoard->isFloor(x, y + 1) || pBoard->isBoarder(x, y + 1));
 	}
-
 	void changeDir(Direction dir);
 	void move();
 	void keyPressed(char key);
