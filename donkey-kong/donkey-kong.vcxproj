@@ -130,7 +130,7 @@
     <ClCompile Include="Barrel.cpp" />
     <ClCompile Include="BarrelManager.cpp" />
     <ClCompile Include="Board.cpp" />
-    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="GhostManager.cpp" />
@@ -145,7 +145,7 @@
     <ClInclude Include="Barrel.h" />
     <ClInclude Include="BarrelManager.h" />
     <ClInclude Include="Board.h" />
-    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="GhostManager.h" />

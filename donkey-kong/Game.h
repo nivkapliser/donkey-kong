@@ -42,7 +42,7 @@ class Game
 
 
 public:
-	Game() : currentState(GameState::MENU), ghostsManager(board, &menuGraphics), barrelsManager(board, &menuGraphics), mario(&menuGraphics, &hammer), board(&menuGraphics), hammer(&board){
+	Game() : currentState(GameState::MENU), ghostsManager(board, &menuGraphics), barrelsManager(board, &menuGraphics), mario(&menuGraphics, &hammer), board(&menuGraphics), hammer(){
 		mario.setBoard(board);
 	}
 
