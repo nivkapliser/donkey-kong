@@ -21,10 +21,6 @@ void Enemy::changeDir(Direction dir) {
 	}
 }
 
-void Enemy::Activation() { //need to be Enemy activator
-	active = true;
-}
-
 bool Enemy::checkEncounters(Mario& mario) {
 	if (mario.getX() == getX() && mario.getY() == getY()) // direct encounter
 	{

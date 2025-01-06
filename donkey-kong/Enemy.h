@@ -37,11 +37,11 @@ class Enemy
 	}
 
 protected: // need to decide
-
 	
 
 public:
 	Enemy() {}
+	Enemy(int start_x, int start_y, char _c, bool _active) : x(start_x), y(start_y), ch(_c), active(_active) {}
 
 	int getX() const {
 		return x;
@@ -55,6 +55,21 @@ public:
 	void erase() {
 		setLastPoint();
 		draw(lastPoint);
+	}
+
+	int getDirX() const {
+		return dirX;
+	}
+	int getDirY() const {
+		return dirY;
+	}
+
+	void setDirX(int _dirX) {
+		dirX = _dirX;
+	}
+
+	void setDirY(int _dirY) {
+		dirY = _dirY;
 	}
 
 	// Function to set the last point of the barrel
@@ -76,6 +91,9 @@ public:
 		return active;
 	}
 
+	Board& getBoard() const {
+		return *pBoard;
+	}
 
 	void changeDir(Direction dir);
 	void move() {
@@ -83,7 +101,7 @@ public:
 		y += dirY;
 	}
 	void resetLocation(int start_x, int start_y) { x = start_x; y = start_y; }
-	void Activation(); //need to be Enemy activator
+	void activation(bool b) { active = b; }; //need to be Enemy activator
 	bool checkEncounters(Mario& mario);
 	int getDirectionRandomly() const;
 
