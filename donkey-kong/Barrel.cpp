@@ -1,13 +1,26 @@
 #include "Barrel.h"
 
+Barrel::Barrel() : Enemy('O', false, START_Y) {
+	int random_dir = Enemy::getDirectionRandomly();
+	if (random_dir == 1)
+		Enemy::setX(START_X_R);
+	else
+		Enemy::setX(START_X_R);
+	Enemy::setDirX(random_dir);
+
+
+	//x((getDirectionRandomly() == 1) ? START_X_R : START_X_L), y(START_Y) { isActive = false; }
+}
+
 // Function to set the barrel direction according to the floor type
 void Barrel::floorDirSync()
 {
-	char floor_type = pBoard->getChar(x, y + 1);
+	char floor_type = Enemy::getBoard().getChar(Enemy::getX(), Enemy::getY() + 1);
 
 	for (size_t i = 0; i < floorTypes; i++) {
 		if (floor_type == floor[i]) {
-			changeDir((Direction)i);
+			changeDir(Direction(i));  //was changeDir((Direction)i);
+
 			break;
 		}
 	}
@@ -16,49 +29,25 @@ void Barrel::floorDirSync()
 // Function to handle barrels movement logic
 void Barrel::move() {
 	
-	if (!pBoard->isValidMove(x + dirX, y + dirY)) {
+	if (!Enemy::getBoard().isValidMove(Enemy::getX() + Enemy::getDirX(), Enemy::getY() + Enemy::getDirY())) {
 		changeDir(STOP);
 	}
 
-	if (pBoard->gravitation(x, y)) {
-		dirY = 1;
+	if (Enemy::getBoard().gravitation(Enemy::getX(), Enemy::getY())) {
+		Enemy::setDirY(1);
 		linesFallen++;
 		isFalling = true;
 	}
 	else
 		isFalling = false;
-
-	x += dirX;
-	y += dirY;
-
-}
-
-// Function to change the direction of the barrels
-void Barrel::changeDir(Direction dir) {
-	switch (dir) {
-	case LEFT:
-		dirY = 0;
-		dirX = -1;
-		break;
-	case RIGHT:
-		dirY = 0;
-		dirX = 1;
-		break;
-	case STOP:
-		dirX = 0;
-		dirY = 0;
-		break;
-	case SAME:
-		dirY = 0;
-		break;
-	}
+	Enemy::move();
 }
 
 // Function to print the explosion effect
 void Barrel::printBoom() {
-	gotoxy(x - 2, y - 2);
+	gotoxy(Enemy::getX() - 2, Enemy::getY() - 2);
 	std::cout << "BOOM!";
-	gotoxy(x - 2, y);
+	gotoxy(Enemy::getX() - 2, Enemy::getY());
 	std::cout << "_\\|/_";
 }
 
@@ -66,10 +55,10 @@ void Barrel::printBoom() {
 void Barrel::explode()
 {
 	isExploding = true;
-	isActive = false;
+	Enemy::activation(false);
 	erase();
 	printBoom();
-	if(encountered == true)
+	if(isEncountered() == true)
 		Sleep(700); // longer Sleep time for visual effect
 	else
 		Sleep(25);
@@ -84,11 +73,11 @@ void Barrel::eraseBoom() const
 	char lastchar;
 	for (int i = 0; i <= 5; i++)
 	{
-		lastchar = pBoard->getChar(x - 2 + i, y - 2);
-		gotoxy(x - 2 + i, y - 2);
+		lastchar = getBoard().getChar(getX() - 2 + i, getY() - 2);
+		gotoxy(getX() - 2 + i, getY() - 2);
 		std::cout << lastchar;
-		lastchar = pBoard->getChar(x - 2 + i, y);
-		gotoxy(x - 2 + i, y);
+		lastchar = getBoard().getChar(getX() - 2 + i, getY());
+		gotoxy(getX() - 2 + i, getY());
 		std::cout << lastchar;
 	}
 }
@@ -109,11 +98,11 @@ bool Barrel::barrelFallManager()
 // Function to check if the barrel encounters mario
 bool Barrel::checkEncounters(Mario& mario)
 {
-	if (mario.getX() == getX() && mario.getY() == getY()) // direct encounter
+	if (Enemy::checkEncounters(mario)) // direct encounter
 	{
-		encountered = true;
+		Enemy::setEncountered(true);
 		explode();
-		encountered = false; 
+		Enemy::setEncountered(false);
 		return true;
 	}
 	else if ((abs(mario.getX() - getX()) <= EXPLODE_ZONE && mario.getY() == getY()) && isExploding) // indirect encounter (2 chars away)
@@ -124,23 +113,13 @@ bool Barrel::checkEncounters(Mario& mario)
 // Function to activate a barrel
 void Barrel::barrelActivation()
 {
-	if (isActive == false)
+	if (isActive() == false)
 	{
 		isExploding = false;
-		isActive = true;
-		x = ((getDirectionRandomly() == 1) ? START_X_L : START_X_R);
-		y = START_Y;
+		activation(true);
+		//x = ((getDirectionRandomly() == 1) ? START_X_L : START_X_R);
+		//y = START_Y;
 	}
 }
 
 // Function to get the starting direction of the barrel randomly (left or right)
-int Barrel::getDirectionRandomly() const
-{
-	int random_num = rand() % 2;
-
-	if (random_num == 0)
-		return 1;
-	else
-		return -1;
-
-}

@@ -10,8 +10,9 @@
 #include "utils.h"
 #include "Board.h"
 #include "Mario.h"
+#include "Enemy.h"
 
-class Barrel
+class Barrel : public Enemy
 {
 	static constexpr int START_X_R = 38; // for barrels that start from the right
 	static constexpr int START_X_L = 36; // for barrels that start from the left
@@ -19,88 +20,92 @@ class Barrel
 	static constexpr int FALL_LIMIT = 8; // how many lines can a barrel fall
 	static constexpr int EXPLODE_ZONE = 2; // for encountering with mario
 
-	
-	char ch = 'O';
-	int x;
-	int y;
 
-	char floor[5] = "<>=Q"; // to set the direction of the barrel
+	char floor[5] = "<>=Q";
 	static constexpr size_t floorTypes = sizeof(floor) / sizeof(floor[0]); // to get the size of the floor array
 
-	enum Direction { LEFT, RIGHT, SAME, STOP}; // to set the direction of the barrel
-	int dirX = 0; 
-	int dirY = 0;
+	
+	//char ch = 'O';
+	//int x;
+	//int y;
 
-	bool isActive; // for the barrelsManager to check if the barrel is active
-	char lastPoint; // to save the last point char for latter printing
+	//char floor[5] = "<>=Q"; // to set the direction of the barrel
+	//static constexpr size_t floorTypes = sizeof(floor) / sizeof(floor[0]); // to get the size of the floor array
+
+	//enum Direction { LEFT, RIGHT, SAME, STOP}; // to set the direction of the barrel
+	//int dirX = 0; 
+	//int dirY = 0;
+
+	//bool isActive; // for the barrelsManager to check if the barrel is active
+	//char lastPoint; // to save the last point char for latter printing
 
 	int linesFallen = 0;
-	bool encountered = false;
+	//bool encountered = false;
 	bool isFalling = false;
 	bool isExploding = false;
 
-	Board* pBoard = nullptr;
+	//Board* pBoard = nullptr;
 	
 
-	void draw(char c) const {
-		gotoxy(x, y);
-		std::cout << c;
-	}
-	
+	//void draw(char c) const {
+	//	gotoxy(x, y);
+	//	std::cout << c;
+	//}
+	//
 
 public:
-	Barrel() : x((getDirectionRandomly() == 1) ? START_X_R:START_X_L), y(START_Y) { isActive = false;}
+	Barrel();
 
-	int getX() const {
-		return x;
-	}
-	int getY() const {
-		return y;
-	}
-	void draw() const {
-		draw(ch);
-	}
-	void erase() {
-		setLastPoint();
-		draw(lastPoint);
-	}
+	//int getX() const {
+	//	return x;
+	//}
+	//int getY() const {
+	//	return y;
+	//}
+	//void draw() const {
+	//	draw(ch);
+	//}
+	//void erase() {
+	//	setLastPoint();
+	//	draw(lastPoint);
+	//}
 
 	// Function to set the last point of the barrel
-	void setLastPoint() {
-		lastPoint = pBoard->getChar(x, y);
-	}
+	//void setLastPoint() {
+	//	lastPoint = pBoard->getChar(x, y);
+	//}
 
 	// Function to set the board for the barrel
-	void setBoard(Board& board) {
-		pBoard = &board;
-	}
+	//void setBoard(Board& board) {
+	//	pBoard = &board;
+	//}
 
 	// Function to check if the barrel is active
-	bool checkActivationStatus() const {
-		return isActive;
-	}
+	//bool checkActivationStatus() const {
+	//	return isActive;
+	//}
 
 	// Function to check if the barrel is falling
 	bool fallingStatus() const {
 		return isFalling;
 	}
 
-	void changeDir(Direction dir);
+	//void changeDir(Direction dir);
 	void move();
 	void floorDirSync();
 	void printBoom();
 	void explode();
 	bool barrelFallManager();
-	void barrelActivation();
+	void barrelActivation(); 
 	void barrelDeactivation() {
-		isActive = false;
+		activation(false);
 		linesFallen = 0;
 		isExploding = false;
-		encountered = false;
+		setEncountered(false);
 	}
 	void eraseBoom() const;
 	bool checkEncounters(Mario& mario);
-	int getDirectionRandomly() const;
+	//int getDirectionRandomly() const;
 };
 
 

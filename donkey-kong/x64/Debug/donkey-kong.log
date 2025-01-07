@@ -1,8 +1,10 @@
-﻿  Enemy.cpp
+﻿  Barrel.cpp
+  BarrelManager.cpp
+  Enemy.cpp
   Game.cpp
   Ghost.cpp
-C:\Users\niv\Desktop\school\c++\Donkey-Kong-Ex2\donkey-kong\Ghost.cpp(49,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\shtru\source\repos\donkey-kong-horasha1\donkey-kong\Ghost.cpp(49,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   GhostManager.cpp
   main.cpp
   Generating Code...
-  donkey-kong.vcxproj -> C:\Users\niv\Desktop\school\c++\Donkey-Kong-Ex2\x64\Debug\donkey-kong.exe
+  donkey-kong.vcxproj -> C:\Users\shtru\source\repos\donkey-kong-horasha1\x64\Debug\donkey-kong.exe

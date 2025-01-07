@@ -16,10 +16,6 @@ class Enemy
 	int x;
 	int y;
 
-	char floor[5] = "<>=Q";
-	static constexpr size_t floorTypes = sizeof(floor) / sizeof(floor[0]); // to get the size of the floor array
-
-	enum Direction { LEFT, RIGHT, SAME, STOP }; // to set the direction of the barrel
 	int dirX = 0;
 	int dirY = 0;
 
@@ -40,8 +36,9 @@ protected: // need to decide
 	
 
 public:
-	Enemy() {}
-	Enemy(int start_x, int start_y, char _c, bool _active) : x(start_x), y(start_y), ch(_c), active(_active) {}
+	Enemy(char _c, bool _active, int start_y = 0, int start_x = 0 ) : ch(_c), active(_active), x(start_x), y(start_y) {}
+
+	enum Direction { LEFT, RIGHT, SAME, STOP }; //very helps when in public, need to check if its ok.
 
 	int getX() const {
 		return x;
@@ -117,6 +114,8 @@ public:
 	void activation(bool b) { active = b; }; //need to be Enemy activator
 	bool checkEncounters(Mario& mario);
 	int getDirectionRandomly() const;
+	void setEncountered(bool b) { encountered = b; }
+	bool isEncountered() { return encountered; }
 
 };
 
