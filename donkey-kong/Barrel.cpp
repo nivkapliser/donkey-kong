@@ -112,5 +112,11 @@ void Barrel::barrelActivation()
 			setX(START_X_R);
 	}
 }
+void Barrel::barrelDeactivation() {
+	activation(false);
+	linesFallen = 0;
+	isExploding = false;
+	setEncountered(false);
+}
 
 // Function to get the starting direction of the barrel randomly (left or right)

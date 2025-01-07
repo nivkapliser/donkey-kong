@@ -3,21 +3,21 @@
 
 void Ghost::move() {
 
-	int dirX = Enemy::getDirX();
-	int dirY = Enemy::getDirY();
+	int dirX = getDirX();
+	int dirY = getDirY();
 
 	if (isFloorEnd()) {
-		Enemy::setDirX(-dirX);
-		Enemy::setDirY(0);
+		setDirX(-dirX);
+		setDirY(0);
 	}
 	else if (ghostsMeeting == true)
 	{
-		Enemy::setDirX(-dirX);
+		setDirX(-dirX);
 		switchGhostsMeeting();
 	}
 	else if (getRandomIntInRange(100) >= 95)
 	{
-		Enemy::setDirX(-dirX);
+		setDirX(-dirX);
 	}
 
 	Enemy::move();
@@ -25,12 +25,12 @@ void Ghost::move() {
 
 bool Ghost::isFloorEnd() const
 {
-	int x = Enemy::getX();
-	int dirX = Enemy::getDirX();
-	int y = Enemy::getY();
-	int dirY = Enemy::getDirY();
+	int x = getX();
+	int dirX = getDirX();
+	int y = getY();
+	int dirY = getDirY();
 
-	if (Enemy::getBoard().getChar(x + dirX, y + 1) == ' ' || Enemy::getBoard().getChar(x + dirX, y + dirY) == 'Q')
+	if (getBoard().getChar(x + dirX, y + 1) == ' ' || getBoard().getChar(x + dirX, y + dirY) == 'Q')
 		return true;
 	return false;
 }
@@ -43,15 +43,15 @@ void Ghost::switchGhostsMeeting() {
 		ghostsMeeting = true;
 }
 
-void Ghost::placeRandomly(Board& board) {
-	int x, y;
-
-	srand(time(0));
-	do {
-		x = rand() % Board::getMaxX();
-		y = rand() % Board::getMaxY();
-	} while (!board.isFloor(x, y + 1) || board.getChar(x, y) != ' ');  // Place on floor space
-
-	setX(x);
-	setY(y);
-}
+//void Ghost::placeRandomly(Board& board) {
+//	int x, y;
+//
+//	srand(time(0));
+//	do {
+//		x = rand() % Board::getMaxX();
+//		y = rand() % Board::getMaxY();
+//	} while (!board.isFloor(x, y + 1) || board.getChar(x, y) != ' ');  // Place on floor space
+//
+//	setX(x);
+//	setY(y);
+//}
