@@ -54,7 +54,7 @@ class Barrel : public Enemy
 	//
 
 public:
-	Barrel();
+	Barrel() : Enemy('O', false, START_Y) {}
 
 	//int getX() const {
 	//	return x;

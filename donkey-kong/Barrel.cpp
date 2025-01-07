@@ -1,21 +1,10 @@
 #include "Barrel.h"
 
-Barrel::Barrel() : Enemy('O', false, START_Y) {
-	int random_dir = Enemy::getDirectionRandomly();
-	if (random_dir == 1)
-		Enemy::setX(START_X_R);
-	else
-		Enemy::setX(START_X_R);
-	Enemy::setDirX(random_dir);
-
-
-	//x((getDirectionRandomly() == 1) ? START_X_R : START_X_L), y(START_Y) { isActive = false; }
-}
 
 // Function to set the barrel direction according to the floor type
 void Barrel::floorDirSync()
 {
-	char floor_type = Enemy::getBoard().getChar(Enemy::getX(), Enemy::getY() + 1);
+	char floor_type = getBoard().getChar(getX(), getY() + 1);
 
 	for (size_t i = 0; i < floorTypes; i++) {
 		if (floor_type == floor[i]) {
@@ -29,12 +18,12 @@ void Barrel::floorDirSync()
 // Function to handle barrels movement logic
 void Barrel::move() {
 	
-	if (!Enemy::getBoard().isValidMove(Enemy::getX() + Enemy::getDirX(), Enemy::getY() + Enemy::getDirY())) {
+	if (!getBoard().isValidMove(getX() + getDirX(), getY() + getDirY())) {
 		changeDir(STOP);
 	}
 
-	if (Enemy::getBoard().gravitation(Enemy::getX(), Enemy::getY())) {
-		Enemy::setDirY(1);
+	if (getBoard().gravitation(getX(), getY())) {
+		setDirY(1);
 		linesFallen++;
 		isFalling = true;
 	}
@@ -45,9 +34,9 @@ void Barrel::move() {
 
 // Function to print the explosion effect
 void Barrel::printBoom() {
-	gotoxy(Enemy::getX() - 2, Enemy::getY() - 2);
+	gotoxy(getX() - 2, getY() - 2);
 	std::cout << "BOOM!";
-	gotoxy(Enemy::getX() - 2, Enemy::getY());
+	gotoxy(getX() - 2, getY());
 	std::cout << "_\\|/_";
 }
 
@@ -55,7 +44,7 @@ void Barrel::printBoom() {
 void Barrel::explode()
 {
 	isExploding = true;
-	Enemy::activation(false);
+	activation(false);
 	erase();
 	printBoom();
 	if(isEncountered() == true)
@@ -100,9 +89,9 @@ bool Barrel::checkEncounters(Mario& mario)
 {
 	if (Enemy::checkEncounters(mario)) // direct encounter
 	{
-		Enemy::setEncountered(true);
+		setEncountered(true);
 		explode();
-		Enemy::setEncountered(false);
+		setEncountered(false);
 		return true;
 	}
 	else if ((abs(mario.getX() - getX()) <= EXPLODE_ZONE && mario.getY() == getY()) && isExploding) // indirect encounter (2 chars away)
@@ -117,8 +106,10 @@ void Barrel::barrelActivation()
 	{
 		isExploding = false;
 		activation(true);
-		//x = ((getDirectionRandomly() == 1) ? START_X_L : START_X_R);
-		//y = START_Y;
+		if (getDirectionRandomly() == 1)
+			setX(START_X_L);
+		else
+			setX(START_X_R);
 	}
 }
 
