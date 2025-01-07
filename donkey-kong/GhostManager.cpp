@@ -68,9 +68,9 @@ void GhostManager::smashGhosts(Mario& mario) {
 			ghosts[i].erase();
 			// Either set ghost to inactive or re-init it
 			// For example:
-			ghosts[i].setActive(false);
+			ghosts[i].activation(false);
 
-			// or you could do:
+			// or could do:
 			// ghosts[i] = Ghost();  // basically "kill" it
 		}
 	}
