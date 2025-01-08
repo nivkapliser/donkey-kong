@@ -16,7 +16,8 @@ class BarrelManager
 	static constexpr int MAX_BARRELS = 20; // max number of barrels in a game
 	static constexpr int BARRELS_PACE = 700; // pace at which barrels are activated
 
-	Barrel barrels[MAX_BARRELS] = { Barrel() };
+	std::vector<Barrel> barrels;
+	//Barrel barrels[MAX_BARRELS] = { Barrel() };
 	MenuGraphics* menuGraphics;
 	Board board;
 
@@ -25,7 +26,7 @@ class BarrelManager
 	bool encounters = false; // flag to indicate if mario has encountered a barrel
 
 public:
-	BarrelManager(Board b, MenuGraphics* mg) : board(b), menuGraphics(mg) {}
+	BarrelManager(Board b, MenuGraphics* mg) : board(b), menuGraphics(mg) { barrels.resize(MAX_BARRELS); }
 
 	// get the encouters value
 	bool getEncounters() const {

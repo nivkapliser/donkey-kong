@@ -20,13 +20,6 @@ void GhostManager::resetGhosts(Board& board)
 	for (auto& ghost : ghosts) {
 		ghost.setBoard(board);
 	}
-	//for (size_t i = 0; i < ghosts.size(); i++)
-	//{
-	//	ghostsLocationsMap[ghosts[i].getY()][ghosts[i].getX()] = 0; //init the locations table
-	//	ghosts[i] = Ghost();  //we will delete it soon when we will put the ghosts locations on the screen file, its just for now.
-	//	ghosts[i].setBoard(board);
-	//	ghosts[i].resetLocation(board.getGhostX(static_cast<int>(i)), board.getGhostY(static_cast<int>(i)));
-	//}
 }
 
 // Function to draw all the active barrels on the board 

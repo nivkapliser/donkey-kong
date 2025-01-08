@@ -85,6 +85,12 @@ public:
 	int getGhostY(int index) {
 		return ghostsY[index];
 	}
+	int getDonkeyKongX() const {
+		return donkeyX;
+	}
+	int getDonkeyKongY() const {
+		return donkeyY;
+	}
 	size_t getNumGhosts() const { return ghostsX.size(); } // need?
 	int readBoard(const std::string& filename, Mario& mario, Hammer& hammer);	
 };

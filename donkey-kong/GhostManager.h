@@ -13,7 +13,6 @@ class GhostManager
 	static constexpr int GHOSTS_PACE = 1300; // pace at which barrels are activated
 
 	std::vector<Ghost> ghosts;
-	//Ghost ghosts[MAX_GHOSTS] = { Ghost() };// move to vectors
 
 	MenuGraphics* menuGraphics;
 	Board board;

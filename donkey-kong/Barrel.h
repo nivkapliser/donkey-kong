@@ -31,7 +31,7 @@ class Barrel : public Enemy
 	bool isExploding = false;
 
 public:
-	Barrel() : Enemy('O', false, START_Y) {}
+	Barrel() : Enemy('O', false, START_Y) {}//????
 
 	// Function to check if the barrel is falling
 	bool fallingStatus() const {
@@ -46,7 +46,7 @@ public:
 	void barrelActivation(); 
 	void barrelDeactivation();
 	void eraseBoom() const;
-	bool checkEncounters(Mario& mario);
+	bool checkEncounters(Mario& mario); // should be virtual 
 };
 
 

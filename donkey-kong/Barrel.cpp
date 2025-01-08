@@ -100,7 +100,7 @@ bool Barrel::checkEncounters(Mario& mario)
 }
 
 // Function to activate a barrel
-void Barrel::barrelActivation()
+void Barrel::barrelActivation() // need to make more generic
 {
 	if (isActive() == false)
 	{

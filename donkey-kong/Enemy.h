@@ -36,7 +36,7 @@ protected: // need to decide
 	
 
 public:
-	Enemy(char _c, bool _active, int start_y = 0, int start_x = 0 ) : ch(_c), active(_active), x(start_x), y(start_y) {}
+	Enemy(char _c, bool _active, int start_y = 0, int start_x = 0) : ch(_c), active(_active), x(start_x), y(start_y) {} // need to change to no default values
 
 	enum Direction { LEFT, RIGHT, SAME, STOP }; //very helps when in public, need to check if its ok.
 
@@ -97,7 +97,7 @@ public:
 		return active;
 	}
 
-	bool isActive() const {
+	bool isActive() const { // delete?
 		return active;
 	}
 

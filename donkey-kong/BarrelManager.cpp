@@ -3,10 +3,9 @@
 // Function to reset the barrels array and set the board for each barrel
 void BarrelManager::resetBarrels(Board& board)
 {
-	for (int i = 0; i < MAX_BARRELS; i++)
-	{
-		barrels[i] = Barrel();
-		barrels[i].setBoard(board);
+	for (auto& barrel : barrels) {
+		barrel = Barrel();
+		barrel.setBoard(board);
 	}
 }
 
@@ -14,17 +13,17 @@ void BarrelManager::resetBarrels(Board& board)
 void BarrelManager::drawBarrels(Mario& mario)
 {
 	menuGraphics->setCurrentColor(menuGraphics->getBrown());
-	for (int i = 0; i <= MAX_BARRELS; i++)
-	{
-		if (barrels[i].checkActivationStatus() == true)
-		{
-			barrels[i].draw();
-			barrels[i].floorDirSync();
-			if (barrels[i].barrelFallManager() == true) // if barrel fell 8 lines
-				barrels[i].explode();
-
-			if (barrels[i].checkEncounters(mario)) { // if barrel encounters mario
-				encounters = true; 
+	for (auto& barrel : barrels) {
+		if (barrel.checkActivationStatus()) {
+			barrel.draw();
+			barrel.floorDirSync();
+			if (barrel.barrelFallManager()) {
+				barrel.explode();
+				//barrel.setY(board.getDonkeyKongY());
+				//barrel.setX(board.getDonkeyKongX());
+			}
+			if (barrel.checkEncounters(mario)) {
+				encounters = true;
 			}
 		}
 	}
@@ -34,55 +33,43 @@ void BarrelManager::drawBarrels(Mario& mario)
 // Function to move all the active barrels on the board
 void BarrelManager::moveBarrels(Mario& mario)
 {
-	for (int i = 0; i <= MAX_BARRELS; i++)
-	{
-		if (barrels[i].checkActivationStatus() == true) // if barrel is active
-		{
-			if (barrels[i].checkEncounters(mario)) { // if barrel encounters mario
-				encounters = true; 
+	for (auto& barrel : barrels) {
+		if (barrel.checkActivationStatus()) {
+			if (barrel.checkEncounters(mario)) {	
+				encounters = true;
 			}
-			barrels[i].erase();
-			barrels[i].move();
-		}
-
+			barrel.erase();	
+			barrel.move();	
+		}	
 	}
 }
 
 // Function to activate the barrels at a certain pace (BARRELS_PACE)
 void BarrelManager::barrelsActivation() {
-
-	if (sleepCount == BARRELS_PACE) 
-	{
-		if (barrels[activatedBarrel].checkActivationStatus() == false) // if barrel is not active
-		{
+	if (sleepCount == BARRELS_PACE) {
+		if (!barrels[activatedBarrel].checkActivationStatus()) {
+			//barrels[activatedBarrel] = Barrel();
+			//barrels[activatedBarrel].setBoard(board);
 			barrels[activatedBarrel].barrelActivation();
 			activatedBarrel++;
 		}
-		if (activatedBarrel == MAX_BARRELS)
-			activatedBarrel = 0; // reset the activated barrel index
-		sleepCount = 0; // reset the sleep count
-
+		if (activatedBarrel >= barrels.size()) {
+			activatedBarrel = 0;
+		}
+		sleepCount = 0;
 	}
-	sleepCount += 50; // increment the sleep count
+	sleepCount += 50;
 }
 
 
 void BarrelManager::smashBarrels(Mario& mario) {
-	for (int i = 0; i < MAX_BARRELS; i++) {
-		// Only consider active barrels
-		if (barrels[i].checkActivationStatus()) {
-			// if barrel is exactly 1 char left or right of Mario on the same row
-			// (Be careful with operator precedence when using || and &&)
-			if ((barrels[i].getY() == mario.getY()) &&
-				((barrels[i].getX() == mario.getX() + 1) ||
-					(barrels[i].getX() == mario.getX() - 1)))
-			{
-				// Erase from screen
-				barrels[i].erase();
-				// Optional: special effect
-				barrels[i].explode();
-				// Deactivate barrel so it won't be drawn or moved anymore
-				barrels[i].barrelDeactivation();
+	for (auto& barrel : barrels) {
+		if (barrel.checkActivationStatus()) {
+			if ((barrel.getY() == mario.getY()) &&
+				((barrel.getX() == mario.getX() + 1) || (barrel.getX() == mario.getX() - 1))) {
+				barrel.erase();
+				barrel.explode();
+				barrel.barrelDeactivation();
 			}
 		}
 	}

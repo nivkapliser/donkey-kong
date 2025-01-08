@@ -12,9 +12,16 @@
 	1. add update design pattern for better readability and entity management
 	2. split the game loop into smaller functions for better readability
 	3. add more State design pattern to the entities for better game state management
-	4. add Point?
+	4. change Enemy ctor to have no default values
 	5. create a manager class for all entities?
 	6. change iteration i to size_t
+	7. need to make sure mario can't get out of the board if no walls
+	8. pad with spaces if board too small
+	9. if mario wins, move to next board
+	10. show legend with score + count score
+	11. polymorphism for entities
+	12. many functions duplications in Enemy
+	13. check the barrels activations in other boards
 */
 
 
