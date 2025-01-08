@@ -6,7 +6,8 @@
 #include <string>
 #include <vector>
 
-
+class Mario; // forward declaration
+class Hammer; // forward declaration
 
 class Board
 {
@@ -27,8 +28,11 @@ class Board
 	int legendY;
 	int donkeyX;
 	int donkeyY;
-	int ghostsX[7];
-	int ghostsY[7];
+
+	std::vector<int> ghostsX;
+	std::vector<int> ghostsY;
+	//int ghostsX[7]; // change to vector
+	//int ghostsY[7]; // change to vector
 
 	char boardFile[MAX_Y][MAX_X + 1];
 	char currentBoard[MAX_Y][MAX_X + 1]; // +1 for null terminator
@@ -36,7 +40,6 @@ class Board
 public:
 	//Board() {}
 	Board(MenuGraphics* mg) : menuGraphics(mg) { 
-		readBoard();
 		reset();
 	}
 	void reset();
@@ -58,7 +61,7 @@ public:
 	int getLegendY() const {
 		return legendY;
 	}
-	int readBoard();
+	
 	bool isValidMove(int x, int y) const;
 	bool isFloor(int x, int y) const;
 	bool isBoarder(int x, int y) const {
@@ -82,7 +85,8 @@ public:
 	int getGhostY(int index) {
 		return ghostsY[index];
 	}
-
+	size_t getNumGhosts() const { return ghostsX.size(); } // need?
+	int readBoard(const std::string& filename, Mario& mario, Hammer& hammer);	
 };
 
 

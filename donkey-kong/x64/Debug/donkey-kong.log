@@ -1,6 +1,5 @@
-﻿  Game.cpp
-  Ghost.cpp
-  GhostManager.cpp
-  main.cpp
-  Generating Code...
-  donkey-kong.vcxproj -> C:\Users\shtru\source\repos\donkey-kong-horasha1\x64\Debug\donkey-kong.exe
+﻿  GhostManager.cpp
+C:\Users\niv\Desktop\donkey-kong\donkey-kong\GhostManager.cpp(9,30): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\niv\Desktop\donkey-kong\donkey-kong\GhostManager.cpp(10,30): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\niv\Desktop\donkey-kong\donkey-kong\GhostManager.cpp(73,60): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  donkey-kong.vcxproj -> C:\Users\niv\Desktop\donkey-kong\x64\Debug\donkey-kong.exe

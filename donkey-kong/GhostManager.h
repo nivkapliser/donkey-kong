@@ -4,6 +4,7 @@
 #include "Barrel.h"
 #include "MenuGraphics.h"
 #include "Ghost.h"
+#include <vector>
 
 
 class GhostManager
@@ -11,17 +12,21 @@ class GhostManager
 	static constexpr int MAX_GHOSTS = 7; // max number of barrels in a game
 	static constexpr int GHOSTS_PACE = 1300; // pace at which barrels are activated
 
-	Ghost ghosts[MAX_GHOSTS] = { Ghost() };
+	std::vector<Ghost> ghosts;
+	//Ghost ghosts[MAX_GHOSTS] = { Ghost() };// move to vectors
+
 	MenuGraphics* menuGraphics;
 	Board board;
 
 	int sleepCount = 0; // counter to keep track of the pace of the barrels activation
 	int activatedGhost = 1; // index of the next barrel to be activated
 	bool encounters = false; // flag to indicate if mario has encountered a barrel
-	int ghostsLocationsMap[25][80];
+	int ghostsLocationsMap[25][80]; // what is this???
 
 public:
 	GhostManager(Board b, MenuGraphics* mg) : board(b), menuGraphics(mg) {}
+
+	void initGhosts(Board& board);
 
 	// get the encouters value
 	bool getEncounters() const {

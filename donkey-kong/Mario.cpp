@@ -120,7 +120,7 @@ void Mario::move() {
 }
 
 void Mario::checkIfMetHammer() {
-	if (getX() == hammer->getX() && getY() == hammer->getY()) { // change to const char
+    if (hammer && !hammer->isCollected() && x == hammer->getX() && y == hammer->getY()) { // change to const char
 		//haveHammer = true;
         hammer->setCollected(true);
 	}

@@ -3,7 +3,9 @@
 #include <conio.h>
 #include <Windows.h>
 #include <string>
-
+#include <filesystem>
+#include <fstream>
+#include <vector>
 
 /*
 	TODO:
@@ -12,6 +14,7 @@
 	3. add more State design pattern to the entities for better game state management
 	4. add Point?
 	5. create a manager class for all entities?
+	6. change iteration i to size_t
 */
 
 
@@ -31,13 +34,16 @@ void Game::resetStage() {
 	mario.setBoard(board);
 	mario.drawLife();
 	hammer.setCollected(false);
-	//hammer.placeRandomly(board);
+	hammer.resetPosition();
+	hammer.setBoard(board);
 	barrelsManager.resetBarrels(board);
-	ghostsManager.resetGhosts(board);
+	ghostsManager.initGhosts(board);
+	//ghostsManager.resetGhosts(board);
 }
 
 // Displays the main menu and handles user input for menu selection
 void Game::showMenu() {
+
 	char choice;
 	bool run = true;
 	std::string input; // to clear the buffer
@@ -52,6 +58,7 @@ void Game::showMenu() {
 			choice = input[0];
 			switch (choice) {
 			case '1':
+				showAndLoadBoards(); 
 				currentState = GameState::RUNNING;
 				run = false;
 				break;
@@ -71,7 +78,7 @@ void Game::showMenu() {
 				std::cout << "Invalid Choice. Please try again.\n";
 			}
 		}
-		else {
+		else { // need to fix after choosing a board
 			system("cls"); // for printing in the screen size
 			menuGraphics.displayMenu();
 			std::cout << "Invalid Choice. Please try again.\n";
@@ -79,6 +86,38 @@ void Game::showMenu() {
 	}
 	system("cls");
 
+}
+
+void Game::showAndLoadBoards() {
+	system("cls");
+	namespace fs = std::filesystem;
+	std::vector<std::string> boardFiles;
+
+	// Scan directory for board files - taken from chatGpt
+	for (const auto& entry : fs::directory_iterator(".")) {
+		if (entry.path().string().find("dkong_") != std::string::npos &&
+			entry.path().string().find(".screen.txt") != std::string::npos) {
+			boardFiles.push_back(entry.path().string());
+		}
+	}
+
+	if (boardFiles.empty()) {
+		std::cout << "No board files found. Exiting game.\n";
+		return; // should be State change
+	}
+
+	std::cout << "Select a board to load:\n";
+	for (size_t i = 0; i < boardFiles.size(); ++i) {
+		std::cout << i + 1 << ". " << boardFiles[i] << "\n";
+	}
+
+	int choice1;// change name
+	std::cin >> choice1;
+
+	if (choice1 > 0 && choice1 <= boardFiles.size()) {
+
+		board.readBoard(boardFiles[choice1 - 1], mario, hammer);
+	}
 }
 
 // Main game loop to handle different game states
@@ -157,7 +196,7 @@ void Game::runGame() {
 
 
 		barrelsManager.barrelsActivation();
-		checkHammer(mario, hammer);
+		checkHammer(mario, hammer); // to function
 		if (mario.getSmash()) {
 			barrelsManager.smashBarrels(mario);
 			ghostsManager.smashGhosts(mario);

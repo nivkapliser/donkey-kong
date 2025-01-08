@@ -29,6 +29,8 @@ class Mario
 	int x = START_X;
 	int y = START_Y;
 	int lives;
+	int startX;
+	int startY;
 
 	Direction currentDirection = Direction::STAY; // the default starting direction
 	int dirX = 0;
@@ -55,9 +57,17 @@ public:
 
 	// Function to reset mario position to the starting point
 	void resetMarioPosition() {
-		x = 23;//START_X;
-		y = 7;//START_Y;
+		x = startX;//START_X;
+		y = startY;//START_Y;
 		dirX = dirY = 0;
+	}
+
+	void setStartX(int x) {
+		startX = x;
+	}
+
+	void setStartY(int y) {
+		startY = y;
 	}
 
 	// Function to reset mario lives 

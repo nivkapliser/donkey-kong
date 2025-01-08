@@ -9,9 +9,11 @@ class Hammer
 	static constexpr int SLEEP_STEP = 50;
 
 	char c = HAMMER_CHAR;
-	int x = 1;
-	int y = 1;
+	int x;
+	int y;
 	char lastPoint;
+	int startX;
+	int startY;
 
 	bool active = true; // if is active mario can pick it up and smash barrels
 	bool collected = false;
@@ -43,9 +45,27 @@ public:
 		y = newY;
 	}
 
+	void setStartX(int x) {
+		startX = x;
+	}
+
+	void setStartY(int y) {
+		startY = y;
+	}
+
+	void resetPosition() {
+		x = startX;
+		y = startY;
+	}
+
 	void draw() const {
 		if (!collected)
 			draw(c);	
+	}
+
+	// Function to set the board for mario
+	void setBoard(Board& board) {
+		pBoard = &board;
 	}
 
 	void setLastPoint() {
@@ -67,6 +87,6 @@ public:
 		return collected;
 	}
 
-	void placeRandomly(Board& board);
+	void placeRandomly(Board& board); // need to delete?
 };
 

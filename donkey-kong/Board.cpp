@@ -1,4 +1,6 @@
 #include "Board.h"
+#include "Mario.h"
+#include "Hammer.h"
 
 // Function to reset the board to its original state
 // Based on lab code
@@ -53,13 +55,16 @@ bool Board::gravitation(int x, int y) const {
 	return getChar(x, y + 1) == EMPTY_SPACE; 
 }
 
-int Board::readBoard() {
+int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) { // handle not found cases
 	int g_ind = 1;
-	std::ifstream myFile("dkong_01.screen.txt");
+	std::ifstream myFile(filename);
 	if (!myFile.is_open()) {
 		std::cout << "Error opening file\n";
 		return 0;
 	}
+
+	ghostsX.clear();
+	ghostsY.clear();
 
 	std::string line;
 	for (int i = 0; i < MAX_Y && std::getline(myFile, line); i++) {
@@ -69,22 +74,18 @@ int Board::readBoard() {
 		std::copy(line.begin(), line.end(), boardFile[i]);
 		boardFile[i][line.length()] = '\0'; // Null-terminate the string
 
+
 		// Scan the line for special characters
 		for (int j = 0; j < line.length(); j++) {
 			if (line[j] == '@') {
 				boardFile[i][j] = ' ';	
-				marioX = j;
-				marioY = i;
+				mario.setStartX(j);
+				mario.setStartY(i);
 			}
-			/*else if (line[j] == '$') { // can delete?
+			else if (line[j] == 'p') {
 				boardFile[i][j] = ' ';
-				paulineX = j;
-				paulineY = i;
-			}*/
-			else if (line[j] == 'L') {
-				boardFile[i][j] = ' ';
-				legendX = j;
-				legendY = i;
+				hammer.setStartX(j);
+				hammer.setStartY(i);
 			}
 			else if (line[j] == '&') { // so we can set the barrels starting position
 				donkeyX = j;
@@ -92,9 +93,16 @@ int Board::readBoard() {
 			}
 			else if (line[j] == 'x') { // so we can set the ghosts starting position
 				boardFile[i][j] = ' ';
-				ghostsX[g_ind] = j;
-				ghostsY[g_ind] = i;
-				g_ind++;
+				ghostsX.push_back(j);
+				ghostsY.push_back(i);
+				//ghostsX[g_ind] = j;
+				//ghostsY[g_ind] = i;
+				//g_ind++;
+			}
+			else if (line[j] == 'L') {
+				boardFile[i][j] = ' ';
+				legendX = j;
+				legendY = i;
 			}
 		}
 	}
