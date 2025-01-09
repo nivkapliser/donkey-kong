@@ -42,6 +42,7 @@ class Mario
 	int jumpCounter = 0; // to count the number of lines mario jumped
 	bool haveHammer = false; // to check if mario has a hammer --------------- delete?
 	bool smash = false;
+	int score;
 
 	Board* pBoard = nullptr;
 	MenuGraphics* menuGraphics;
@@ -145,6 +146,12 @@ public:
 		gotoxy(pBoard->getLegendX() + 7, pBoard->getLegendY()); // should be const.. 
 		std::cout << lives;	
 	}
+	void resetScore() { score = 0; }
+	// Function to draw the number of mario's lives
+	void drawScore() const {
+		gotoxy(pBoard->getLegendX() + 18, pBoard->getLegendY()); // should be const.. 
+		std::cout << score;
+	}
 
 	// Function to check if mario met Pauline
 	bool metPauline() const {
@@ -176,4 +183,5 @@ public:
 	}
 	void smashOnce() { smash = false; }
 	void smashEnemies();
+	void increaseScore(int increase) { score += increase; }
 };

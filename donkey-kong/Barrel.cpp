@@ -44,7 +44,7 @@ void Barrel::printBoom() {
 void Barrel::explode()
 {
 	isExploding = true;
-	activation(false);
+	barrelDeactivation();
 	erase();
 	printBoom();
 	if(isEncountered() == true)
@@ -95,7 +95,9 @@ bool Barrel::checkEncounters(Mario& mario)
 		return true;
 	}
 	else if ((abs(mario.getX() - getX()) <= EXPLODE_ZONE && mario.getY() == getY()) && isExploding) // indirect encounter (2 chars away)
+	{
 		return true;
+	}
 	return false;
 }
 
@@ -110,12 +112,14 @@ void Barrel::barrelActivation() // need to make more generic
 			setX(START_X_L);
 		else
 			setX(START_X_R);
+		setY(START_Y);
+
 	}
 }
 void Barrel::barrelDeactivation() {
 	activation(false);
 	linesFallen = 0;
-	isExploding = false;
+	//isExploding = false;
 	setEncountered(false);
 }
 

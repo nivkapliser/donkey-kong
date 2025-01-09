@@ -28,6 +28,7 @@
 // Initializes the game by resetting the board and setting up mario and barrels
 void Game::initGame() {
 	mario.resetLives();
+	mario.resetScore();
 	mario.resetFallCounter();
 	resetStage();
 }
@@ -40,6 +41,7 @@ void Game::resetStage() {
 	mario.resetMarioPosition();
 	mario.setBoard(board);
 	mario.drawLife();
+	mario.drawScore();
 	hammer.setCollected(false);
 	hammer.resetPosition();
 	hammer.setBoard(board);
@@ -210,6 +212,7 @@ void Game::runGame() {
 
 			mario.smashOnce();
 		}
+		mario.drawScore();
 		// if mario encounters a barrel, reset the stage or game over
 		checkEncounters(barrelsManager, mario);
 		checkEncounters(ghostsManager, mario);

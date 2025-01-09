@@ -6,15 +6,17 @@ void Ghost::move() {
 	int dirX = getDirX();
 	int dirY = getDirY();
 
-	if (isFloorEnd()) {
+	if (isFloorEnd() || ghostsMeeting == true) {
 		setDirX(-dirX);
 		setDirY(0);
+		if (ghostsMeeting == true)
+			switchGhostsMeeting();
 	}
-	else if (ghostsMeeting == true)
-	{
-		setDirX(-dirX);
-		switchGhostsMeeting();
-	}
+	//if (ghostsMeeting == true)
+	//{
+	//	setDirX(-dirX);
+	//	switchGhostsMeeting();
+	//}
 	else if (getRandomIntInRange(100) >= 95)
 	{
 		setDirX(-dirX);

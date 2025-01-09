@@ -3,12 +3,13 @@
 
 void GhostManager::initGhosts(Board& board) {
 	ghosts.clear();
+	ghosts.push_back(Ghost()); //dummy ghost to keep index 0 free.
 	for (size_t i = 0; i < board.getNumGhosts(); i++) {
 		Ghost ghost;
 		ghost.setBoard(board);
 		ghost.setX(board.getGhostX(i));
 		ghost.setY(board.getGhostY(i));
-		ghost.activation(true);
+		//ghost.activation(true);
 		ghosts.push_back(ghost);
 	}
 }
@@ -17,8 +18,8 @@ void GhostManager::initGhosts(Board& board) {
 // Function to reset the barrels array and set the board for each barrel
 void GhostManager::resetGhosts(Board& board)
 {
-	for (auto& ghost : ghosts) {
-		ghost.setBoard(board);
+	for (int i = 1; i < ghosts.size(); i++) {
+		ghosts[i].setBoard(board);
 	}
 }
 
@@ -26,12 +27,12 @@ void GhostManager::resetGhosts(Board& board)
 void GhostManager::drawGhosts(Mario& mario)
 {
 	menuGraphics->setCurrentColor(menuGraphics->getCyan());
-	for (auto& ghost : ghosts)
+	for (int i = 1; i < ghosts.size(); i++)
 	{
-		if (ghost.isActive()) {
-			ghost.draw();
+		if (ghosts[i].isActive()) {
+			ghosts[i].draw();
 
-			if (ghost.checkEncounters(mario)) { // if barrel encounters mario
+			if (ghosts[i].checkEncounters(mario)) { // if barrel encounters mario
 				encounters = true;
 			}
 		}
@@ -45,7 +46,7 @@ void GhostManager::moveGhosts(Mario& mario)
 {
 	int next_location;
 
-	for (size_t i = 0; i < ghosts.size(); i++)
+	for (size_t i = 1; i < ghosts.size(); i++)
 	{
 		if (ghosts[i].checkEncounters(mario)) {
 			encounters = true;
@@ -69,7 +70,7 @@ void GhostManager::moveGhosts(Mario& mario)
 }
 
 void GhostManager::smashGhosts(Mario& mario) {
-	for (size_t i = 0; i < ghosts.size(); i++) {
+	for (size_t i = 1; i < ghosts.size(); i++) {
 		if ((ghosts[i].getY() == mario.getY()) &&
 			((ghosts[i].getX() == mario.getX() + 1) ||
 				(ghosts[i].getX() == mario.getX() - 1)))
@@ -79,8 +80,8 @@ void GhostManager::smashGhosts(Mario& mario) {
 
 			ghosts[i].activation(false);
 			// earase ghost from vector
-			ghosts.erase(ghosts.begin() + i);
-
+			ghosts.erase(ghosts.begin() + i);  
+			mario.increaseScore(125);
 			// or could do:
 			//ghosts[i] = Ghost();  // basically "kill" it
 		}
