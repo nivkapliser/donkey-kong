@@ -46,8 +46,8 @@ void Game::resetStage() {
 	hammer.resetPosition();
 	hammer.setBoard(board);
 	barrelsManager.reset(board);
-	ghostsManager.initGhosts(board);
-	//ghostsManager.resetGhosts(board);
+	ghostsManager.reset(board);
+	//ghostsManager.initGhosts(board);
 }
 
 // Displays the main menu and handles user input for menu selection

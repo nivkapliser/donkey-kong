@@ -1,7 +1,7 @@
 #include "GhostManager.h"
 
 
-void GhostManager::initGhosts(Board& board) {
+void GhostManager::reset(Board& board) {
 	ghosts.clear();
 	ghosts.push_back(Ghost()); //dummy ghost to keep index 0 free.
 	for (size_t i = 0; i < board.getNumGhosts(); i++) {
@@ -9,19 +9,18 @@ void GhostManager::initGhosts(Board& board) {
 		ghost.setBoard(board);
 		ghost.setX(board.getGhostX(i));
 		ghost.setY(board.getGhostY(i));
-		//ghost.activation(true);
 		ghosts.push_back(ghost);
 	}
 }
 
 
-// Function to reset the barrels array and set the board for each barrel
-void GhostManager::reset(Board& board)
-{
-	for (int i = 1; i < ghosts.size(); i++) {
-		ghosts[i].setBoard(board);
-	}
-}
+//// Function to reset the barrels array and set the board for each barrel
+//void GhostManager::reset(Board& board)
+//{
+//	for (int i = 1; i < ghosts.size(); i++) {
+//		ghosts[i].setBoard(board);
+//	}
+//}
 
 // Function to draw all the active barrels on the board 
 void GhostManager::draw(Mario& mario)

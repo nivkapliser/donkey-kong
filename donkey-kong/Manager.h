@@ -9,9 +9,6 @@
 
 class Manager
 {
-
-	//std::vector<Enemy> enemys;
-
 	MenuGraphics* menuGraphics;
 	Board board;
 

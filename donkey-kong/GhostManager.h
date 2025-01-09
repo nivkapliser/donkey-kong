@@ -10,8 +10,7 @@
 
 class GhostManager : public Manager
 {
-	static constexpr int MAX_GHOSTS = 7; // max number of barrels in a game
-	static constexpr int GHOSTS_PACE = 1300; // pace at which barrels are activated
+	static constexpr int MAX_GHOSTS = 7; // max number of ghosts in a game
 
 	std::vector<Ghost> ghosts;
 
@@ -20,7 +19,7 @@ class GhostManager : public Manager
 public:
 	GhostManager(Board b, MenuGraphics* mg) : Manager(b, mg) {}
 
-	void initGhosts(Board& board);
+	//void initGhosts(Board& board);
 	void reset(Board& board) override;
 	void draw(Mario& mario) override;
 	void move(Mario& mario) override;
