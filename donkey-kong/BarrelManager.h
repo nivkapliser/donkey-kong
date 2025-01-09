@@ -10,39 +10,23 @@
 #include "Mario.h"
 #include "Barrel.h"
 #include "MenuGraphics.h"
+#include "Manager.h"
 
-class BarrelManager
+class BarrelManager : public Manager
 {
 	static constexpr int MAX_BARRELS = 20; // max number of barrels in a game
 	static constexpr int BARRELS_PACE = 700; // pace at which barrels are activated
 
 	std::vector<Barrel> barrels;
-	//Barrel barrels[MAX_BARRELS] = { Barrel() };
-	MenuGraphics* menuGraphics;
-	Board board;
 
-	int sleepCount = 0; // counter to keep track of the pace of the barrels activation
-	int activatedBarrel = 1; // index of the next barrel to be activated
-	bool encounters = false; // flag to indicate if mario has encountered a barrel
 
 public:
-	BarrelManager(Board b, MenuGraphics* mg) : board(b), menuGraphics(mg) { barrels.resize(MAX_BARRELS); }
+	BarrelManager(Board b, MenuGraphics* mg) : Manager(b,mg) { barrels.resize(MAX_BARRELS); }
 
-	// get the encouters value
-	bool getEncounters() const {
-		return encounters;
-	}
-
-	// set the encouters value
-	void setEncounters(bool value) {
-		encounters = value;
-	}
-
-	void resetBarrels(Board& board);
-	void drawBarrels(Mario& mario); 
-	void moveBarrels(Mario& mario);
+	void reset(Board& board) override;
+	void draw(Mario& mario) override; 
+	void move(Mario& mario) override;
 	void barrelsActivation();
 	void smashBarrels(Mario& mario);
-
 };
 

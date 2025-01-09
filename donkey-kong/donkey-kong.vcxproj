@@ -137,6 +137,7 @@
     <ClCompile Include="GhostManager.cpp" />
     <ClCompile Include="Hammer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MenuGraphics.cpp" />
     <ClCompile Include="Point.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="GhostManager.h" />
     <ClInclude Include="Hammer.h" />
+    <ClInclude Include="Manager.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MenuGraphics.h" />
     <ClInclude Include="Point.h" />

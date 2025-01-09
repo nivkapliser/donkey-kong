@@ -45,7 +45,7 @@ void Game::resetStage() {
 	hammer.setCollected(false);
 	hammer.resetPosition();
 	hammer.setBoard(board);
-	barrelsManager.resetBarrels(board);
+	barrelsManager.reset(board);
 	ghostsManager.initGhosts(board);
 	//ghostsManager.resetGhosts(board);
 }
@@ -180,7 +180,7 @@ void Game::runGame() {
 	while (currentState == GameState::RUNNING) {
 
 		mario.draw();
-		barrelsManager.drawBarrels(mario); // draw all active barrels
+		barrelsManager.draw(mario); // draw all active barrels
 		ghostsManager.drawGhosts(mario);
 		hammer.draw();
 
@@ -200,7 +200,7 @@ void Game::runGame() {
 		mario.erase();
 		mario.move();
 		hammer.erase();
-		barrelsManager.moveBarrels(mario);
+		barrelsManager.move(mario);
 		ghostsManager.moveGhosts(mario);
 
 
