@@ -181,7 +181,7 @@ void Game::runGame() {
 
 		mario.draw();
 		barrelsManager.draw(mario); // draw all active barrels
-		ghostsManager.drawGhosts(mario);
+		ghostsManager.draw(mario);
 		hammer.draw();
 
 		// check for user input
@@ -201,7 +201,7 @@ void Game::runGame() {
 		mario.move();
 		hammer.erase();
 		barrelsManager.move(mario);
-		ghostsManager.moveGhosts(mario);
+		ghostsManager.move(mario);
 
 
 		barrelsManager.barrelsActivation();

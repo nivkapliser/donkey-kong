@@ -16,7 +16,7 @@ void GhostManager::initGhosts(Board& board) {
 
 
 // Function to reset the barrels array and set the board for each barrel
-void GhostManager::resetGhosts(Board& board)
+void GhostManager::reset(Board& board)
 {
 	for (int i = 1; i < ghosts.size(); i++) {
 		ghosts[i].setBoard(board);
@@ -24,32 +24,32 @@ void GhostManager::resetGhosts(Board& board)
 }
 
 // Function to draw all the active barrels on the board 
-void GhostManager::drawGhosts(Mario& mario)
+void GhostManager::draw(Mario& mario)
 {
-	menuGraphics->setCurrentColor(menuGraphics->getCyan());
+	getMG()->setCurrentColor(getMG()->getCyan());
 	for (int i = 1; i < ghosts.size(); i++)
 	{
 		if (ghosts[i].isActive()) {
 			ghosts[i].draw();
 
 			if (ghosts[i].checkEncounters(mario)) { // if barrel encounters mario
-				encounters = true;
+				setEncounters(true);
 			}
 		}
 	}
 
-	menuGraphics->setCurrentColor(menuGraphics->getLightRed());
+	getMG()->setCurrentColor(getMG()->getLightRed());
 }
 
 // Function to move all the active barrels on the board
-void GhostManager::moveGhosts(Mario& mario)
+void GhostManager::move(Mario& mario)
 {
 	int next_location;
 
 	for (size_t i = 1; i < ghosts.size(); i++)
 	{
 		if (ghosts[i].checkEncounters(mario)) {
-			encounters = true;
+			setEncounters(true);
 		}
 
 		next_location = ghostsLocationsMap[ghosts[i].getY() + ghosts[i].getDirY()][ghosts[i].getX() + ghosts[i].getDirX()]; // change

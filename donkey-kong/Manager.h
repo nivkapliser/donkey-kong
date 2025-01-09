@@ -34,7 +34,8 @@ public:
 	virtual void draw(Mario& mario) = 0;
 	virtual void move(Mario& mario) = 0;
 
-	void smashBarrels(Mario& mario);
+	//void smashBarrels(Mario& mario);
+
 	MenuGraphics* getMG() { return menuGraphics; }
 	int getSleepCount() { return sleepCount; }
 	void setSleepCount(int count) { sleepCount = count; }
