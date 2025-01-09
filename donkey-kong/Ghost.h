@@ -12,13 +12,7 @@ class Ghost : public Enemy
 	bool ghostsMeeting = false;
 
 public:
-	Ghost() : Enemy('x', true) { Enemy::setDirX(Enemy::getDirectionRandomly()); }
-
-
-	//Ghost(int _x, int _y, char _c, bool _active) : Enemy(_x, _y, _c, _active) { 
-	//	placeRandomly(Enemy::getBoard()); //?
-	//	setDirX(-1);
-	//}
+	Ghost() : Enemy(GHOST, true) { Enemy::setDirX(Enemy::getDirectionRandomly()); }
 
 	void switchGhostsMeeting();
 	void move();

@@ -74,18 +74,3 @@ void BarrelManager::smashBarrels(Mario& mario) {
 		}
 	}
 }
-
-//void BarrelManager::smashBarrels(Mario& mario) {
-//	for (int i = 0; i <= MAX_BARRELS; i++)
-//	{
-//		if (barrels[i].checkActivationStatus() == true) // if barrel is active
-//		{
-//			if (mario.getSmash()) {
-//				if (mario.getX() + 1 == barrels[i].getX() || mario.getX() - 1 == barrels[i].getX() && mario.getY() == barrels[i].getY()) {
-//					barrels[i].erase();
-//					barrels[i].explode();
-//				}
-//			}
-//		}
-//	}
-//}
