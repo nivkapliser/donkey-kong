@@ -2,6 +2,7 @@
 
 
 void GhostManager::reset(Board& board) {
+	resetLocationMap(); //very very important!! 
 	ghosts.clear();
 	ghosts.push_back(Ghost()); //dummy ghost to keep index 0 free.
 	for (size_t i = 0; i < board.getNumGhosts(); i++) {
@@ -84,6 +85,13 @@ void GhostManager::smashGhosts(Mario& mario) {
 			// or could do:
 			//ghosts[i] = Ghost();  // basically "kill" it
 		}
+	}
+}
+void GhostManager::resetLocationMap()
+{
+	for (size_t i = 1; i < ghosts.size(); i++)
+	{
+		ghostsLocationsMap[ghosts[i].getY()][ghosts[i].getX()] = 0;
 	}
 }
 

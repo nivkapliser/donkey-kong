@@ -24,4 +24,5 @@ public:
 	void draw(Mario& mario) override;
 	void move(Mario& mario) override;
 	void smashGhosts(Mario& mario);
+	void resetLocationMap();
 };
