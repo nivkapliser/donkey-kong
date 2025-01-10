@@ -24,6 +24,9 @@ class Mario
 	static constexpr int START_Y = 23;
 	static constexpr int MAX_LIVES = 3;
 	static constexpr int MAX_FALL = 5; // max number of lines mario can fall
+	static constexpr int BARREL_POINTS = 200;
+	static constexpr int GHOST_POINTS = 125;
+	static constexpr int PAULINE_POINTS = 1000;
 	
 	char ch = '@';
 	int x = START_X;
@@ -63,49 +66,29 @@ public:
 		dirX = dirY = 0;
 	}
 
-	void setStartX(int x) {
-		startX = x;
-	}
+	void setStartX(int x) { startX = x; }
 
-	void setStartY(int y) {
-		startY = y;
-	}
+	void setStartY(int y) { startY = y; }
 
 	// Function to reset mario lives 
-	void resetLives() {
-		setLives(MAX_LIVES);
-	}
+	void resetLives() { setLives(MAX_LIVES); }
 
-	int getX() const {
-		return x;
-	}
-	int getY() const {
-		return y;
-	}
+	int getX() const { return x; }
+	int getY() const { return y; }
 
 	// Function to set the number of mario's lives
-	void setLives(int l) { 
-		lives = l;
-	}
+	void setLives(int l) { lives = l; }
 
 	// Function to get the number of mario's lives
-	int getLives() const {
-		return lives;
-	}
+	int getLives() const { return lives; }
 
 	// Function to get the number of lines mario fell
-	int getFallCounter() const {
-		return fallCounter;
-	}
+	int getFallCounter() const { return fallCounter; }
 
-	void  resetFallCounter() {
-		fallCounter = 0;
-	}
+	void  resetFallCounter() { fallCounter = 0; }
 
 	// Function to check if mario fell too far (more than 5 lines)
-	bool fellTooFar() const {
-		return fallCounter >= MAX_FALL;
-	}
+	bool fellTooFar() const { return fallCounter >= MAX_FALL; }
 
 	// Function to reduce mario lives by 1 and update the lives display
 	void downLives() {
@@ -163,13 +146,13 @@ public:
 		return (pBoard->isFloor(x, y + 1) || pBoard->isBoarder(x, y + 1));
 	}
 
-	bool getSmash() const {
-		return smash;
-	}
+	bool getSmash() const { return smash; }
 
-	void setSmash(bool s) {
-		smash = s;
-	}
+	void setSmash(bool s) { smash = s; }
+	
+	int getBarrelPoints() const { return BARREL_POINTS; }
+	int getGhostPoints() const { return GHOST_POINTS; }
+	int getPaulinePoints() const { return PAULINE_POINTS; }
 
 	void changeDir(Direction dir);
 	void move();

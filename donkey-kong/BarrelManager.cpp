@@ -70,7 +70,7 @@ void BarrelManager::smashBarrels(Mario& mario) {
 				barrel.erase();
 				barrel.explode();
 				barrel.barrelDeactivation();
-				mario.increaseScore(200);
+				mario.increaseScore(mario.getBarrelPoints());
 			}
 		}
 	}

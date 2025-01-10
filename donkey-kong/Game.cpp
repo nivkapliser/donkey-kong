@@ -10,8 +10,6 @@
 /*
 	TODO:
 	1. add update design pattern for better readability and entity management
-	2. split the game loop into smaller functions for better readability
-	3. add more State design pattern to the entities for better game state management
 	4. change Enemy ctor to have no default values
 	5. create a manager class for all entities?
 	6. change iteration i to size_t
@@ -47,7 +45,6 @@ void Game::resetStage() {
 	hammer.setBoard(board);
 	barrelsManager.reset(board);
 	ghostsManager.reset(board);
-	//ghostsManager.initGhosts(board);
 }
 
 // Displays the main menu and handles user input for menu selection

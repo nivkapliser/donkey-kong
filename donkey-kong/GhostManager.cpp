@@ -73,7 +73,9 @@ void GhostManager::smashGhosts(Mario& mario) {
 	for (size_t i = 1; i < ghosts.size(); i++) {
 		if ((ghosts[i].getY() == mario.getY()) &&
 			((ghosts[i].getX() == mario.getX() + 1) ||
-				(ghosts[i].getX() == mario.getX() - 1)))
+				(ghosts[i].getX() == mario.getX() - 1) ||
+					(ghosts[i].getX() == mario.getX() + 2) || 
+						(ghosts[i].getX() == mario.getX() - 2)))
 		{
 			// Erase ghost from screen
 			ghosts[i].erase();
@@ -81,7 +83,7 @@ void GhostManager::smashGhosts(Mario& mario) {
 			ghosts[i].activation(false);
 			// earase ghost from vector
 			ghosts.erase(ghosts.begin() + i);  
-			mario.increaseScore(125);
+			mario.increaseScore(mario.getGhostPoints());
 			// or could do:
 			//ghosts[i] = Ghost();  // basically "kill" it
 		}
