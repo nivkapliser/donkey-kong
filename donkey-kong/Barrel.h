@@ -19,7 +19,8 @@ class Barrel : public Enemy
 	static constexpr int START_Y = 7; 
 	static constexpr int FALL_LIMIT = 8; // how many lines can a barrel fall
 	static constexpr int EXPLODE_ZONE = 2; // for encountering with mario
-
+	int dk_X;
+	int dk_Y;
 
 	char floor[5] = "<>=Q";
 	static constexpr size_t floorTypes = sizeof(floor) / sizeof(floor[0]); // to get the size of the floor array
@@ -37,7 +38,7 @@ public:
 	bool fallingStatus() const {
 		return isFalling;
 	}
-
+	
 	void move();
 	void floorDirSync();
 	void printBoom();

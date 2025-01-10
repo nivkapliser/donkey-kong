@@ -109,11 +109,10 @@ void Barrel::barrelActivation() // need to make more generic
 		isExploding = false;
 		activation(true);
 		if (getDirectionRandomly() == 1)
-			setX(START_X_L);
+			setX(getBoard().getDonkeyKongX() + 1);
 		else
-			setX(START_X_R);
-		setY(START_Y);
-
+			setX(getBoard().getDonkeyKongX() - 1);
+		setY(getBoard().getDonkeyKongY());
 	}
 }
 void Barrel::barrelDeactivation() {
