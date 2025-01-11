@@ -106,10 +106,13 @@ public:
 	}
 
 	void changeDir(Direction dir);
-	void move() {
-		x += dirX;
-		y += dirY;
-	}
+	//void move() {
+	//	x += dirX;
+	//	y += dirY;
+	//}
+	virtual void move() = 0;
+
+
 	void resetLocation(int start_x, int start_y) { x = start_x; y = start_y; }
 	void activation(bool b) { active = b; }; //need to be Enemy activator
 	bool checkEncounters(Mario& mario);

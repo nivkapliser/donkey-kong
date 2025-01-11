@@ -3,6 +3,7 @@
 
 void Ghost::move() {
 
+	int x, y;
 	int dirX = getDirX();
 	int dirY = getDirY();
 
@@ -12,17 +13,17 @@ void Ghost::move() {
 		if (ghostsMeeting == true)
 			switchGhostsMeeting();
 	}
-	//if (ghostsMeeting == true)
-	//{
-	//	setDirX(-dirX);
-	//	switchGhostsMeeting();
-	//}
 	else if (getRandomIntInRange(100) >= 95)
 	{
 		setDirX(-dirX);
 	}
 
-	Enemy::move();
+	dirX = getDirX();
+	dirY = getDirY();
+	x = getX();
+	y = getY();
+	setX(x + dirX);
+	setY(y + dirY);
 }
 
 bool Ghost::isFloorEnd() const

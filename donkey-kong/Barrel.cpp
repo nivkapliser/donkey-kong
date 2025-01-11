@@ -16,19 +16,25 @@ void Barrel::floorDirSync()
 
 // Function to handle barrels movement logic
 void Barrel::move() {
-	
-	if (!getBoard().isValidMove(getX() + getDirX(), getY() + getDirY())) {
+	int x = getX();
+	int y = getY();
+	int dirX = getDirX();
+	int dirY = getDirY();
+
+	if (!getBoard().isValidMove(x + dirX, y + dirY)) {
 		changeDir(STOP);
 	}
 
-	if (getBoard().gravitation(getX(), getY())) {
+	if (getBoard().gravitation(x, y)) {
 		setDirY(1);
 		linesFallen++;
 		isFalling = true;
 	}
 	else
 		isFalling = false;
-	Enemy::move();
+
+	setX(x + dirX);
+	setY(y + dirY);
 }
 
 // Function to print the explosion effect
