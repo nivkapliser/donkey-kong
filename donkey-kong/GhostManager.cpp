@@ -29,7 +29,7 @@ void GhostManager::draw(Mario& mario)
 	getMG()->setCurrentColor(getMG()->getCyan());
 	for (int i = 1; i < ghosts.size(); i++)
 	{
-		if (ghosts[i].isActive()) {
+		if (ghosts[i].checkActivationStatus()) {
 			ghosts[i].draw();
 
 			if (ghosts[i].checkEncounters(mario)) { // if barrel encounters mario
@@ -84,8 +84,6 @@ void GhostManager::smashGhosts(Mario& mario) {
 			// earase ghost from vector
 			ghosts.erase(ghosts.begin() + i);  
 			mario.increaseScore(mario.getGhostPoints());
-			// or could do:
-			//ghosts[i] = Ghost();  // basically "kill" it
 		}
 	}
 }

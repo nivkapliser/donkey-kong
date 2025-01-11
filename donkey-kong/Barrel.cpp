@@ -9,7 +9,6 @@ void Barrel::floorDirSync()
 	for (size_t i = 0; i < floorTypes; i++) {
 		if (floor_type == floor[i]) {
 			changeDir(Direction(i));  //was changeDir((Direction)i);
-
 			break;
 		}
 	}
@@ -104,7 +103,7 @@ bool Barrel::checkEncounters(Mario& mario)
 // Function to activate a barrel
 void Barrel::barrelActivation() // need to make more generic
 {
-	if (!isActive())
+	if (!checkActivationStatus())
 	{
 		isExploding = false;
 		activation(true);

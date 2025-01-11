@@ -97,9 +97,9 @@ public:
 		return active;
 	}
 
-	bool isActive() const { // delete?
-		return active;
-	}
+	//bool isActive() const { // delete?
+	//	return active;
+	//}
 
 	Board& getBoard() const {
 		return *pBoard;

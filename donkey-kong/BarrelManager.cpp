@@ -66,7 +66,8 @@ void BarrelManager::smashBarrels(Mario& mario) {
 	for (auto& barrel : barrels) {
 		if (barrel.checkActivationStatus()) {
 			if ((barrel.getY() == mario.getY()) &&
-				((barrel.getX() == mario.getX() + 1) || (barrel.getX() == mario.getX() - 1))) {
+				((barrel.getX() == mario.getX() + 1) || (barrel.getX() == mario.getX() - 1) ||
+					(barrel.getX() == mario.getX() + 2) || barrel.getX() == mario.getX() - 2)) {
 				barrel.erase();
 				barrel.explode();
 				barrel.barrelDeactivation();

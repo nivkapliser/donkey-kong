@@ -75,6 +75,7 @@ public:
 
 	int getX() const { return x; }
 	int getY() const { return y; }
+	int getDirX() const { return dirX; }
 
 	// Function to set the number of mario's lives
 	void setLives(int l) { lives = l; }

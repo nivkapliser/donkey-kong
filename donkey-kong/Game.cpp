@@ -19,7 +19,6 @@
 	10. show legend with score + count score
 	11. polymorphism for entities
 	12. many functions duplications in Enemy
-	13. check the barrels activations in other boards
 */
 
 
@@ -197,27 +196,28 @@ void Game::runGame() {
 		mario.erase();
 		mario.move();
 		hammer.erase();
-		barrelsManager.move(mario);
-		ghostsManager.move(mario);
 
-
-		barrelsManager.barrelsActivation();
-		checkHammer(mario, hammer); // to function
+		checkHammer(mario, hammer); // works better
 		if (mario.getSmash()) {
 			barrelsManager.smashBarrels(mario);
 			ghostsManager.smashGhosts(mario);
 
 			mario.smashOnce();
 		}
-		mario.drawScore();
+
+		barrelsManager.move(mario);
+		ghostsManager.move(mario);
+
+
+		barrelsManager.barrelsActivation();
+		
+		
 		// if mario encounters a barrel, reset the stage or game over
 		checkEncounters(barrelsManager, mario);
 		checkEncounters(ghostsManager, mario);
 		
-
-		
-		//smashBarrel(barrelsManager, mario);
-		//smashGhost(ghostsManager, mario);	
+		if (!ghostsManager.getEncounters() && !barrelsManager.getEncounters())
+			mario.drawScore();
 
 		// check if mario has fallen 5 lines and reset the stage
 		if (mario.fellTooFar() && mario.isOnFloor())
