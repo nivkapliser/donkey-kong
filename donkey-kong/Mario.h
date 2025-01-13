@@ -86,7 +86,7 @@ public:
 	// Function to get the number of lines mario fell
 	int getFallCounter() const { return fallCounter; }
 
-	void  resetFallCounter() { fallCounter = 0; }
+	void resetFallCounter() { fallCounter = 0; }
 
 	// Function to check if mario fell too far (more than 5 lines)
 	bool fellTooFar() const { return fallCounter >= MAX_FALL; }

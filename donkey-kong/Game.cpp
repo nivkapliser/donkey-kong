@@ -8,17 +8,16 @@
 #include <vector>
 
 /*
-	TODO:
-	1. add update design pattern for better readability and entity management
-	4. change Enemy ctor to have no default values
-	5. create a manager class for all entities?
-	6. change iteration i to size_t
-	7. need to make sure mario can't get out of the board if no walls
-	8. pad with spaces if board too small
-	9. if mario wins, move to next board
-	10. show legend with score + count score
-	11. polymorphism for entities
-	12. many functions duplications in Enemy
+	TODO
+	4. change Enemy ctor to have no default values - check if can remove - Niv
+	5. create a manager class for all entities - Niv
+	8. pad with spaces if board too small - Niv
+	9. if mario wins, move to next board - Omri
+	10. show hammer in legend - Niv
+	11. polymorphism for entities - Niv
+	13. mario hits in the moving dir - Niv
+	15. fix barrels in screen 2. wall and floor (gravitation) - Omri
+	16. check for bugs - Omri
 */
 
 
@@ -26,7 +25,7 @@
 void Game::initGame() {
 	mario.resetLives();
 	mario.resetScore();
-	mario.resetFallCounter();
+	//mario.resetFallCounter();
 	resetStage();
 }
 
@@ -39,6 +38,7 @@ void Game::resetStage() {
 	mario.setBoard(board);
 	mario.drawLife();
 	mario.drawScore();
+	mario.resetFallCounter();
 	hammer.setCollected(false);
 	hammer.resetPosition();
 	hammer.setBoard(board);
@@ -96,12 +96,14 @@ void Game::showMenu() {
 void Game::showAndLoadBoards() {
 	system("cls");
 	namespace fs = std::filesystem;
-	std::vector<std::string> boardFiles;
+	boardFiles.clear();
+	//std::vector<std::string> boardFiles;
+	std::string input; // to clear the buffer
 
 	// Scan directory for board files - taken from chatGpt
 	for (const auto& entry : fs::directory_iterator(".")) {
 		if (entry.path().string().find("dkong_") != std::string::npos &&
-			entry.path().string().find(".screen.txt") != std::string::npos) {
+			entry.path().string().find(".screen") != std::string::npos) {
 			boardFiles.push_back(entry.path().string());
 		}
 	}
@@ -116,13 +118,19 @@ void Game::showAndLoadBoards() {
 		std::cout << i + 1 << ". " << boardFiles[i] << "\n";
 	}
 
-	int choice1;// change name
-	std::cin >> choice1;
-
-	if (choice1 > 0 && choice1 <= boardFiles.size()) {
-
-		board.readBoard(boardFiles[choice1 - 1], mario, hammer);
+	std::cin >> currentBoardIndex;
+	while (!(currentBoardIndex > 0 && currentBoardIndex <= boardFiles.size())) {
+		system("cls");
+		std::cout << "Select a board to load:\n";
+		for (size_t i = 0; i < boardFiles.size(); ++i) {
+			std::cout << i + 1 << ". " << boardFiles[i] << "\n";
+		}
+		std::cout << "Invalid choice. Try again.\n";
+		std::cin >> currentBoardIndex;
 	}
+
+	board.readBoard(boardFiles[currentBoardIndex - 1], mario, hammer);
+	std::getline(std::cin, input);
 }
 
 // Main game loop to handle different game states
@@ -154,7 +162,11 @@ void Game::run() {
 			break;
 		case GameState::GAME_WON: // to display game won screen and return to menu
 			menuGraphics.displayGameWon();
-			currentState = GameState::MENU;
+			checkNextStage();
+			break;
+		case GameState::NEXT_STAGE:
+			resetStage();
+			runGame();
 			break;
 		case GameState::FINISH: // to exit the game loop
 			run = false;
@@ -173,7 +185,7 @@ void Game::run() {
 void Game::runGame() {
 
 	// moving loop for mario and barrels
-	while (currentState == GameState::RUNNING) {
+	while (currentState == GameState::RUNNING || currentState == GameState::NEXT_STAGE) {
 
 		mario.draw();
 		barrelsManager.draw(mario); // draw all active barrels
@@ -301,6 +313,16 @@ void Game::smashGhost(GhostManager& gm, Mario& mario) {
 		gm.smashGhosts(mario);
 		mario.smashEnemies();
 	}
+}
+
+void Game::checkNextStage() {
+	if (currentBoardIndex < boardFiles.size()) {
+		currentBoardIndex++;
+		board.readBoard(boardFiles[currentBoardIndex - 1], mario, hammer);
+		currentState = GameState::NEXT_STAGE;
+	}
+	else
+		currentState = GameState::MENU;
 }
 
 //void Game::updateLegend() {

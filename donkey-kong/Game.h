@@ -19,7 +19,7 @@ class Game
 {
 	static constexpr int ESC = 27; // ASCII value for the escape key
 	static constexpr char PAULINE = '$';
-	enum class GameState { MENU, RUNNING, PAUSED, RESUME, GAME_OVER, GAME_WON, FINISH }; // To manage game state for better game control
+	enum class GameState { MENU, RUNNING, PAUSED, RESUME, GAME_OVER, GAME_WON, NEXT_STAGE, FINISH }; // To manage game state for better game control
 
 
 	MenuGraphics menuGraphics;
@@ -28,7 +28,8 @@ class Game
 	BarrelManager barrelsManager;
 	GhostManager ghostsManager;
 	Hammer hammer;
-
+	std::vector<std::string> boardFiles;
+	int currentBoardIndex = 0;
 
 
 	GameState currentState = GameState::MENU;
@@ -67,4 +68,5 @@ public:
 	//void updateLegend(); // will add lives and score update
 	//void loadBoardFromFile(const std::string& fileName); // should be in board?
 	void showAndLoadBoards();
+	void checkNextStage();
 };

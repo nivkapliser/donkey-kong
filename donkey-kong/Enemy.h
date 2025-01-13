@@ -97,19 +97,11 @@ public:
 		return active;
 	}
 
-	//bool isActive() const { // delete?
-	//	return active;
-	//}
-
 	Board& getBoard() const {
 		return *pBoard;
 	}
 
 	void changeDir(Direction dir);
-	//void move() {
-	//	x += dirX;
-	//	y += dirY;
-	//}
 	virtual void move() = 0;
 
 

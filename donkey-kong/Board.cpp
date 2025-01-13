@@ -24,6 +24,11 @@ void Board::print() const
 
 // Function to check if a move is valid (i.e. not on a forbidden character)
 bool Board::isValidMove(int x, int y) const {
+
+	if (x < 0 || x >= MAX_X || y < 0 || y >= MAX_Y) {
+		return false;
+	}
+
 	char nextChar = getChar(x, y);
 	for (auto ch : FORBIDDEN_CHARS) {
 		if (nextChar == ch || nextChar == WALL) {
