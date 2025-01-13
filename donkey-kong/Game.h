@@ -67,6 +67,6 @@ public:
 	void smashGhost(GhostManager& gm, Mario& mario);
 	//void updateLegend(); // will add lives and score update
 	//void loadBoardFromFile(const std::string& fileName); // should be in board?
-	void showAndLoadBoards();
+	bool showAndLoadBoards();
 	void checkNextStage();
 };

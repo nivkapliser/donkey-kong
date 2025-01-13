@@ -61,11 +61,12 @@ bool Board::gravitation(int x, int y) const {
 }
 
 int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) { // handle not found cases
-	int g_ind = 1;
+	int g_ind = 1; // needed?
+	int returnVal = 0;
 	std::ifstream myFile(filename);
 	if (!myFile.is_open()) {
 		std::cout << "Error opening file\n";
-		return 0;
+		return returnVal;
 	}
 
 	ghostsX.clear();
@@ -86,6 +87,7 @@ int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) 
 				boardFile[i][j] = ' ';	
 				mario.setStartX(j);
 				mario.setStartY(i);
+				marioX = 1;
 			}
 			else if (line[j] == 'p') {
 				boardFile[i][j] = ' ';
@@ -100,9 +102,6 @@ int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) 
 				boardFile[i][j] = ' ';
 				ghostsX.push_back(j);
 				ghostsY.push_back(i);
-				//ghostsX[g_ind] = j;
-				//ghostsY[g_ind] = i;
-				//g_ind++;
 			}
 			else if (line[j] == 'L') {
 				boardFile[i][j] = ' ';
@@ -111,7 +110,13 @@ int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) 
 			}
 		}
 	}
+	if (ghostsX.size() == 0 || legendX == -1 || donkeyX == -1 || marioX == -1) {
+		returnVal = -1;
+	}
+	else {
+		returnVal = 1;
+	}
 
 	myFile.close();
-	return 1;
+	return returnVal;
 }

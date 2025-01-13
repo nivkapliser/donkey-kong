@@ -14,15 +14,6 @@ void GhostManager::reset(Board& board) {
 	}
 }
 
-
-//// Function to reset the barrels array and set the board for each barrel
-//void GhostManager::reset(Board& board)
-//{
-//	for (int i = 1; i < ghosts.size(); i++) {
-//		ghosts[i].setBoard(board);
-//	}
-//}
-
 // Function to draw all the active barrels on the board 
 void GhostManager::draw(Mario& mario)
 {
@@ -71,19 +62,34 @@ void GhostManager::move(Mario& mario)
 
 void GhostManager::smashGhosts(Mario& mario) {
 	for (size_t i = 1; i < ghosts.size(); i++) {
-		if ((ghosts[i].getY() == mario.getY()) &&
-			((ghosts[i].getX() == mario.getX() + 1) ||
-				(ghosts[i].getX() == mario.getX() - 1) ||
-					(ghosts[i].getX() == mario.getX() + 2) || 
-						(ghosts[i].getX() == mario.getX() - 2)))
-		{
-			// Erase ghost from screen
-			ghosts[i].erase();
-
-			ghosts[i].activation(false);
-			// earase ghost from vector
-			ghosts.erase(ghosts.begin() + i);  
-			mario.increaseScore(mario.getGhostPoints());
+		if (mario.getDirX() == -1) {
+			if ((ghosts[i].getY() == mario.getY()) &&
+				((ghosts[i].getX() == mario.getX() - 1) ||
+					(ghosts[i].getX() == mario.getX() - 2)))
+			{
+				// Erase ghost from screen
+				ghosts[i].erase();
+				ghosts[i].activation(false);
+				// earase ghost from vector
+				ghosts.erase(ghosts.begin() + i);
+				mario.increaseScore(mario.getGhostPoints());
+			}
+		}
+		else if (mario.getDirX() == 1) {
+			if ((ghosts[i].getY() == mario.getY()) &&
+				((ghosts[i].getX() == mario.getX() + 1) ||
+					(ghosts[i].getX() == mario.getX() + 2)))
+			{
+				// Erase ghost from screen
+				ghosts[i].erase();
+				ghosts[i].activation(false);
+				// earase ghost from vector
+				ghosts.erase(ghosts.begin() + i);
+				mario.increaseScore(mario.getGhostPoints());
+			}
+		}
+		else {
+			continue;
 		}
 	}
 }

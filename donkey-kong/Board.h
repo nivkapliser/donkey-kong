@@ -20,19 +20,17 @@ class Board
 	static constexpr char PAULINE = '$';
 	MenuGraphics* menuGraphics;
 
-	int marioX;
+	int marioX = -1;
 	int marioY;
-	int paulineX;
-	int paulineY;
-	int legendX;
-	int legendY;
-	int donkeyX;
-	int donkeyY;
+	//int paulineX;
+	//int paulineY;
+	int legendX = -1;
+	int legendY = -1;
+	int donkeyX = -1;
+	int donkeyY = -1;
 
 	std::vector<int> ghostsX;
 	std::vector<int> ghostsY;
-	//int ghostsX[7]; // change to vector
-	//int ghostsY[7]; // change to vector
 
 	char boardFile[MAX_Y][MAX_X + 1];
 	char currentBoard[MAX_Y][MAX_X + 1]; // +1 for null terminator
@@ -53,7 +51,8 @@ public:
 	void printLegend() const {
 		gotoxy(legendX, legendY);
 		std::cout << "Lives: " << " | Score: " << std::endl;
-		std::cout << " Hammer: ";
+		gotoxy(legendX, legendY + 1);
+		std::cout << "Hammer: ";
 	}
 	int getLegendX() const {
 		return legendX;

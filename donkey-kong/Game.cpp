@@ -13,11 +13,13 @@
 	5. create a manager class for all entities - Niv
 	8. pad with spaces if board too small - Niv
 	9. if mario wins, move to next board - Omri
-	10. show hammer in legend - Niv
+	10. show hammer in legend - Niv -------------------- V
 	11. polymorphism for entities - Niv
-	13. mario hits in the moving dir - Niv
+	13. mario hits in the moving dir - Niv ---------------- V
 	15. fix barrels in screen 2. wall and floor (gravitation) - Omri
 	16. check for bugs - Omri
+	17. check if missing enteties in board file - Niv --------------- V
+	18. make enum class - Niv
 */
 
 
@@ -25,7 +27,6 @@
 void Game::initGame() {
 	mario.resetLives();
 	mario.resetScore();
-	//mario.resetFallCounter();
 	resetStage();
 }
 
@@ -63,9 +64,10 @@ void Game::showMenu() {
 			choice = input[0];
 			switch (choice) {
 			case '1':
-				showAndLoadBoards(); 
-				currentState = GameState::RUNNING;
-				run = false;
+				if (showAndLoadBoards()) {
+					currentState = GameState::RUNNING;
+					run = false;
+				}
 				break;
 			case '2':
 				menuGraphics.disableColors();
@@ -93,7 +95,7 @@ void Game::showMenu() {
 
 }
 
-void Game::showAndLoadBoards() {
+bool Game::showAndLoadBoards() {
 	system("cls");
 	namespace fs = std::filesystem;
 	boardFiles.clear();
@@ -110,7 +112,7 @@ void Game::showAndLoadBoards() {
 
 	if (boardFiles.empty()) {
 		std::cout << "No board files found. Exiting game.\n";
-		return; // should be State change
+		return false; // should be State change
 	}
 
 	std::cout << "Select a board to load:\n";
@@ -128,9 +130,13 @@ void Game::showAndLoadBoards() {
 		std::cout << "Invalid choice. Try again.\n";
 		std::cin >> currentBoardIndex;
 	}
-
-	board.readBoard(boardFiles[currentBoardIndex - 1], mario, hammer);
+	if (board.readBoard(boardFiles[currentBoardIndex - 1], mario, hammer) != 1) {
+		std::cout << "Error while reading board file. Exiting game.\n";
+		Sleep(3000); // so user can see
+		return false;
+	}
 	std::getline(std::cin, input);
+	return true;
 }
 
 // Main game loop to handle different game states
@@ -299,6 +305,14 @@ void Game::checkEncounters(GhostManager& gm, Mario& mario) {
 
 void Game::checkHammer(Mario& mario, Hammer& hammer) {
 	mario.checkIfMetHammer();
+	if (hammer.isCollected()) {
+		gotoxy(board.getLegendX() + 8, board.getLegendY() + 1);
+		std::cout << "p";
+	}
+	else {
+		gotoxy(board.getLegendX() + 8, board.getLegendY() + 1);
+		std::cout << " ";
+	}
 }
 
 void Game::smashBarrel(BarrelManager& bm, Mario& mario) {
