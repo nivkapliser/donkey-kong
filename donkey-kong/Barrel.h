@@ -48,6 +48,7 @@ public:
 	void barrelDeactivation();
 	void eraseBoom() const;
 	bool checkEncounters(Mario& mario); // should be virtual 
+	//bool reachedBottom();
 };
 
 

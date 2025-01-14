@@ -12,14 +12,15 @@
 	4. change Enemy ctor to have no default values - check if can remove - Niv
 	5. create a manager class for all entities - Niv
 	8. pad with spaces if board too small - Niv
-	9. if mario wins, move to next board - Omri
+	9. if mario wins, move to next board - Omri -------------------- V
 	10. show hammer in legend - Niv -------------------- V
 	11. polymorphism for entities - Niv
 	13. mario hits in the moving dir - Niv ---------------- V
-	15. fix barrels in screen 2. wall and floor (gravitation) - Omri
+	15. fix barrels in screen 2. wall and floor (gravitation) - Omri ---------------- V
 	16. check for bugs - Omri
 	17. check if missing enteties in board file - Niv --------------- V
 	18. make enum class - Niv
+	19. bug ! - when we input a letter (instead of int) in the board selection the screen blinks and the game not works.
 */
 
 

@@ -14,7 +14,7 @@ class GhostManager : public Manager
 
 	std::vector<Ghost> ghosts;
 
-	int ghostsLocationsMap[25][80]; // what is this???
+	int ghostsLocationsMap[26][80]; // what is this???
 
 public:
 	GhostManager(Board b, MenuGraphics* mg) : Manager(b, mg) {}

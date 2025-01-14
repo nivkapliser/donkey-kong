@@ -64,10 +64,12 @@ public:
 	bool isValidMove(int x, int y) const;
 	bool isFloor(int x, int y) const;
 	bool isBoarder(int x, int y) const {
-		return getChar(x, y) == WALL;
+		if(getChar(x, y) == WALL || y >= MAX_Y)
+			return true;
+		return false;
 	}
 	bool isLadder(int x, int y) const;
-	bool gravitation(int x, int y) const; 
+	bool gravitation(int x, int y, int dirX = 0) const; 
 	bool isEmptySpace(int x, int y) const {
 		return getChar(x, y) == EMPTY_SPACE;
 	}
@@ -91,7 +93,8 @@ public:
 		return donkeyY;
 	}
 	size_t getNumGhosts() const { return ghostsX.size(); } // need?
-	int readBoard(const std::string& filename, Mario& mario, Hammer& hammer);	
+	int readBoard(const std::string& filename, Mario& mario, Hammer& hammer);
+	char getLetter(const char* object);
 };
 
 

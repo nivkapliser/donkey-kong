@@ -9,7 +9,7 @@ void Ghost::move() {
 
 	if (isFloorEnd() || ghostsMeeting == true) {
 		setDirX(-dirX);
-		setDirY(0);
+		//setDirY(0);
 		if (ghostsMeeting == true)
 			switchGhostsMeeting();
 	}
@@ -17,6 +17,11 @@ void Ghost::move() {
 	{
 		setDirX(-dirX);
 	}
+
+	if (getBoard().gravitation(getX(), getY(), getDirX()))
+		setDirY(1);
+	else
+		setDirY(0);
 
 	dirX = getDirX();
 	dirY = getDirY();
@@ -33,7 +38,7 @@ bool Ghost::isFloorEnd() const
 	int y = getY();
 	int dirY = getDirY();
 
-	if (getBoard().getChar(x + dirX, y + 1) == ' ' || getBoard().getChar(x + dirX, y + dirY) == 'Q')
+	if (getBoard().getChar(x + dirX, y + 1) == ' ' || getBoard().getChar(x + dirX, y + dirY) == getBoard().getLetter("WALL") || !getBoard().isValidMove(x + dirX, y + dirY))
 		return true;
 	return false;
 }

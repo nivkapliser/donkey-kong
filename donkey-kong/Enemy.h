@@ -111,6 +111,8 @@ public:
 	int getDirectionRandomly() const;
 	void setEncountered(bool b) { encountered = b; }
 	bool isEncountered() { return encountered; }
+	bool reachedBottom();
+	//bool onFloor();
 
 };
 

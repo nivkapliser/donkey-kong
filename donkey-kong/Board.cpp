@@ -56,8 +56,10 @@ bool Board::isLadder(int x, int y) const {
 }
 
 // Function to check if a given position is empty space
-bool Board::gravitation(int x, int y) const {
-	return getChar(x, y + 1) == EMPTY_SPACE; 
+bool Board::gravitation(int x, int y, int dirX) const {
+	if (getChar(x + dirX, y + 1) == EMPTY_SPACE)
+		return true;
+	return false;
 }
 
 int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) { // handle not found cases
@@ -119,4 +121,14 @@ int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) 
 
 	myFile.close();
 	return returnVal;
+}
+
+char Board::getLetter(const char* object)
+{
+	if (object == "WALL")
+		return WALL;
+	else if (object == "LADDER")
+		return LADDER;
+	else if (object == "PAULINE")
+		return PAULINE;
 }

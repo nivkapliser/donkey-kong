@@ -21,11 +21,15 @@ void Barrel::move() {
 	int dirX = getDirX();
 	int dirY = getDirY();
 
-	if (!getBoard().isValidMove(x + dirX, y + dirY)) {
-		changeDir(STOP);
+	if (reachedBottom())
+		explode();
+
+	if (!getBoard().isValidMove(x + dirX, y + dirY) || getBoard().getChar(x + 2 * dirX, y + dirY) == getBoard().getLetter("WALL")) {
+		setDirX(-dirX);
+		//changeDir(STOP);
 	}
 
-	if (getBoard().gravitation(x, y)) {
+	if (getBoard().gravitation(x, y, getDirX())) {
 		setDirY(1);
 		linesFallen++;
 		isFalling = true;
@@ -33,8 +37,8 @@ void Barrel::move() {
 	else
 		isFalling = false;
 
-	setX(x + dirX);
 	setY(y + dirY);
+	setX(x + dirX);
 }
 
 // Function to print the explosion effect
@@ -105,6 +109,13 @@ bool Barrel::checkEncounters(Mario& mario)
 	}
 	return false;
 }
+
+//bool Barrel::reachedBottom()
+//{
+//	if (getBoard().getChar(getX(), getY() + 1) == getBoard().getLetter("WALL") || getY() >= 24) //change 24 to (MAX_Y - 1)
+//		return true;
+//	return false;
+//}
 
 // Function to activate a barrel
 void Barrel::barrelActivation() // need to make more generic

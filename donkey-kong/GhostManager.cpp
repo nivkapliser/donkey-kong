@@ -44,7 +44,6 @@ void GhostManager::move(Mario& mario)
 		}
 
 		next_location = ghostsLocationsMap[ghosts[i].getY() + ghosts[i].getDirY()][ghosts[i].getX() + ghosts[i].getDirX()]; // change
-		ghostsLocationsMap[ghosts[i].getY()][ghosts[i].getX()] = 0; //the current ghost will move, so his current cell becomes 0
 
 		if (next_location != 0)
 		{
@@ -53,6 +52,8 @@ void GhostManager::move(Mario& mario)
 		}
 
 		ghosts[i].erase();
+		ghostsLocationsMap[ghosts[i].getY()][ghosts[i].getX()] = 0; //the current ghost will move, so his current cell becomes 0
+
 		ghosts[i].move();
 
 		ghostsLocationsMap[ghosts[i].getY()][ghosts[i].getX()] = i; //update the ghosts location table
