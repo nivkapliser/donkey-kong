@@ -62,9 +62,17 @@ bool Board::gravitation(int x, int y, int dirX) const {
 	return false;
 }
 
+// Function to read the selected board from file. 
+// The function returns:
+// 0 - could not open the file
+// 1 - success reading board
+// -1 - missing objects when reading the board.
+// The function pads with spaces if board too small. 
+// if more than one mario or donkey kong in the file, it will take the last position it read
 int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) { // handle not found cases
 	int g_ind = 1; // needed?
 	int returnVal = 0;
+	int i = 0;
 	std::ifstream myFile(filename);
 	if (!myFile.is_open()) {
 		std::cout << "Error opening file\n";
@@ -75,9 +83,12 @@ int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) 
 	ghostsY.clear();
 
 	std::string line;
-	for (int i = 0; i < MAX_Y && std::getline(myFile, line); i++) {
+	for (; i < MAX_Y && std::getline(myFile, line); i++) {
 		if (line.length() > MAX_X) {
 			line = line.substr(0, MAX_X); // for spaces or something
+		}
+		else if (line.length() < MAX_X) {
+			line.resize(MAX_X, ' '); // to pad with spaces
 		}
 		std::copy(line.begin(), line.end(), boardFile[i]);
 		boardFile[i][line.length()] = '\0'; // Null-terminate the string
@@ -112,6 +123,13 @@ int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) 
 			}
 		}
 	}
+
+	// Pad with empty lines if the number of lines is smaller than MAX_Y
+	for (; i < MAX_Y; i++) {
+		std::fill(boardFile[i], boardFile[i] + MAX_X, ' ');
+		boardFile[i][MAX_X] = '\0'; // Null-terminate the string
+	}
+
 	if (ghostsX.size() == 0 || legendX == -1 || donkeyX == -1 || marioX == -1) {
 		returnVal = -1;
 	}

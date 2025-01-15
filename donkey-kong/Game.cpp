@@ -21,6 +21,7 @@
 	17. check if missing enteties in board file - Niv --------------- V
 	18. make enum class - Niv
 	19. bug ! - when we input a letter (instead of int) in the board selection the screen blinks and the game not works.
+	20. add kbhit loop - Niv
 */
 
 
