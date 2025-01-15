@@ -10,16 +10,15 @@
 
 class GhostManager : public Manager
 {
-	static constexpr int MAX_GHOSTS = 7; // max number of ghosts in a game
+	//static constexpr int MAX_GHOSTS = 7; // max number of ghosts in a game
 
 	std::vector<Ghost> ghosts;
 
-	int ghostsLocationsMap[26][80]; // what is this???
+	int ghostsLocationsMap[26][80] = { 0 }; 
 
 public:
 	GhostManager(Board b, MenuGraphics* mg) : Manager(b, mg) {}
 
-	//void initGhosts(Board& board);
 	void reset(Board& board) override;
 	void draw(Mario& mario) override;
 	void move(Mario& mario) override;

@@ -44,15 +44,3 @@ bool Enemy::reachedBottom()
 	return false;
 }
 
-//bool Enemy::onFloor()
-//{
-//	char under = getBoard().getChar(getX(), getY() + 1);
-//	char floor[4] = "<>=";
-//
-//	if (under == getBoard().getLetter("WALL") || getY() >= 24) //change 24 to (MAX_Y - 1)
-//		return true;
-//	for (int i = 0; i < 3; i++)
-//		if (under == floor[i])
-//			return true;
-//	return false;
-//}

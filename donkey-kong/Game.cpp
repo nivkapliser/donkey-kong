@@ -10,19 +10,14 @@
 
 /*
 	TODO
-	4. change Enemy ctor to have no default values - check if can remove - Niv
-	5. create a manager class for all entities - Niv
-	8. pad with spaces if board too small - Niv -------------------- V
-	9. if mario wins, move to next board - Omri -------------------- V
-	10. show hammer in legend - Niv -------------------- V
+	5. create a manager class for all entities - Niv ---------------- V
 	11. polymorphism for entities - Niv
-	13. mario hits in the moving dir - Niv ---------------- V
 	15. fix barrels in screen 2. wall and floor (gravitation) - Omri ---------------- V
 	16. check for bugs - Omri
-	17. check if missing enteties in board file - Niv --------------- V
 	18. make enum class - Niv
-	19. bug ! - when we input a letter (instead of int) in the board selection the screen blinks and the game not works. ----------- V
 	20. add kbhit loop - Niv
+	21. bug - barrels fall to the oposite direction. - Omri
+	22. bug - mario dont fall in board 4. - Omri
 */
 
 
@@ -205,12 +200,18 @@ void Game::runGame() {
 
 		// check for user input
 		if (_kbhit()) {
-			char key = _getch();
-			if (key == ESC) {
-				currentState = GameState::PAUSED;
-				break;
+			std::vector<char> keyBuffer;
+			for (int i = 0; i < 5 && _kbhit(); ++i) {
+				keyBuffer.push_back(_getch());
 			}
-			mario.keyPressed(key);
+
+			for (char key : keyBuffer) {
+				if (key == ESC) {
+					currentState = GameState::PAUSED;
+					break;
+				}
+				mario.keyPressed(key);
+			}
 		}
 		Sleep(50); // for better visual effect
 		
@@ -290,7 +291,6 @@ void Game::checkEncounters(BarrelManager& bm, Mario& mario) {
 		resetStage();
 		if (mario.getLives() == 0) {
 			currentState = GameState::GAME_OVER;
-			bm.setEncounters(false);
 		}
 		bm.setEncounters(false);
 	}
@@ -302,7 +302,6 @@ void Game::checkEncounters(GhostManager& gm, Mario& mario) {
 		resetStage();
 		if (mario.getLives() == 0) {
 			currentState = GameState::GAME_OVER;
-			gm.setEncounters(false);
 		}
 		gm.setEncounters(false);
 	}
@@ -343,22 +342,3 @@ void Game::checkNextStage() {
 	else
 		currentState = GameState::MENU;
 }
-
-//void Game::updateLegend() {
-//	if (hammer.isCollected()) {
-//		board.updateLegend("Hammer: Collected");
-//	}
-//	else {
-//		board.updateLegend("Hammer: Not Collected");
-//	}
-//	printLegend()
-//	
-//
-//}
-
-//void Game::getUserInput() {
-//	char key = _getch();
-//	if (key == ESC) {
-//		currentState = PAUSED;
-//	}
-//	mario.keyPressed(key);

@@ -4,7 +4,9 @@
 void GhostManager::reset(Board& board) {
 	resetLocationMap(); //very very important!! 
 	ghosts.clear();
+
 	ghosts.push_back(Ghost()); //dummy ghost to keep index 0 free.
+
 	for (size_t i = 0; i < board.getNumGhosts(); i++) {
 		Ghost ghost;
 		ghost.setBoard(board);
@@ -43,7 +45,9 @@ void GhostManager::move(Mario& mario)
 			setEncounters(true);
 		}
 
-		next_location = ghostsLocationsMap[ghosts[i].getY() + ghosts[i].getDirY()][ghosts[i].getX() + ghosts[i].getDirX()]; // change
+		int nextY = ghosts[i].getY() + ghosts[i].getDirY();
+		int nextX = ghosts[i].getX() + ghosts[i].getDirX();	
+		next_location = ghostsLocationsMap[nextY][nextX];
 
 		if (next_location != 0)
 		{
@@ -88,9 +92,6 @@ void GhostManager::smashGhosts(Mario& mario) {
 				ghosts.erase(ghosts.begin() + i);
 				mario.increaseScore(mario.getGhostPoints());
 			}
-		}
-		else {
-			continue;
 		}
 	}
 }

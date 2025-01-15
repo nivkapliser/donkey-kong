@@ -16,9 +16,10 @@ class Barrel : public Enemy
 {
 	static constexpr int START_X_R = 38; // for barrels that start from the right
 	static constexpr int START_X_L = 36; // for barrels that start from the left
-	static constexpr int START_Y = 7; 
+	//static constexpr int START_Y = 7; 
 	static constexpr int FALL_LIMIT = 8; // how many lines can a barrel fall
 	static constexpr int EXPLODE_ZONE = 2; // for encountering with mario
+	static constexpr char BARREL_CHAR = 'O'; // the char of the barrel
 	int dk_X;
 	int dk_Y;
 
@@ -32,14 +33,16 @@ class Barrel : public Enemy
 	bool isExploding = false;
 
 public:
-	Barrel() : Enemy('O', false, START_Y) {}//????
+	Barrel() : Enemy(BARREL_CHAR, false, 0) {}
 
 	// Function to check if the barrel is falling
-	bool fallingStatus() const {
-		return isFalling;
-	}
+	bool fallingStatus() const { return isFalling; }
 	
-	void move();
+	void move() override;
+	//void handleCollision() override;
+	bool checkEncounters(Mario& mario) override;
+
+	// Barrel specific functions
 	void floorDirSync();
 	void printBoom();
 	void explode();
@@ -47,7 +50,7 @@ public:
 	void barrelActivation(); 
 	void barrelDeactivation();
 	void eraseBoom() const;
-	bool checkEncounters(Mario& mario); // should be virtual 
+	 
 	//bool reachedBottom();
 };
 

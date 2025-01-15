@@ -65,8 +65,6 @@ public:
 	void checkHammer(Mario& mario, Hammer& hammer);
 	void smashBarrel(BarrelManager& bm, Mario& mario);
 	void smashGhost(GhostManager& gm, Mario& mario);
-	//void updateLegend(); // will add lives and score update
-	//void loadBoardFromFile(const std::string& fileName); // should be in board?
 	bool showAndLoadBoards();
 	void checkNextStage();
 };

@@ -9,7 +9,6 @@ void Ghost::move() {
 
 	if (isFloorEnd() || ghostsMeeting == true) {
 		setDirX(-dirX);
-		//setDirY(0);
 		if (ghostsMeeting == true)
 			switchGhostsMeeting();
 	}
@@ -18,7 +17,7 @@ void Ghost::move() {
 		setDirX(-dirX);
 	}
 
-	if (getBoard().gravitation(getX(), getY(), getDirX()))
+	if (getBoard().gravitation(getX(), getY(), getDirX()))	
 		setDirY(1);
 	else
 		setDirY(0);
@@ -50,16 +49,3 @@ void Ghost::switchGhostsMeeting() {
 	else
 		ghostsMeeting = true;
 }
-
-//void Ghost::placeRandomly(Board& board) {
-//	int x, y;
-//
-//	srand(time(0));
-//	do {
-//		x = rand() % Board::getMaxX();
-//		y = rand() % Board::getMaxY();
-//	} while (!board.isFloor(x, y + 1) || board.getChar(x, y) != ' ');  // Place on floor space
-//
-//	setX(x);
-//	setY(y);
-//}

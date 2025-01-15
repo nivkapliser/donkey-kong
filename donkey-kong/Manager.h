@@ -1,9 +1,7 @@
 #pragma once
 #include "Board.h"
 #include "Mario.h"
-//#include "Barrel.h"
 #include "MenuGraphics.h"
-//#include "Ghost.h"
 #include <vector>
 #include "Enemy.h"
 
@@ -18,25 +16,18 @@ class Manager
 
 public:
 	Manager(Board b, MenuGraphics* mg) : board(b), menuGraphics(mg) {}
-
-	bool getEncounters() const {
-		return encounters;
-	}
-
-	// set the encouters value
-	void setEncounters(bool value) {
-		encounters = value;
-	}
-	virtual void reset(Board& board) = 0;
-	virtual void draw(Mario& mario) = 0;
-	virtual void move(Mario& mario) = 0;
-
-	//void smashBarrels(Mario& mario);
+	virtual ~Manager() = default;
 
 	MenuGraphics* getMG() { return menuGraphics; }
+	bool getEncounters() const { return encounters; }
+	void setEncounters(bool value) { encounters = value; }
 	int getSleepCount() { return sleepCount; }
 	void setSleepCount(int count) { sleepCount = count; }
 	int getActivatedIndex() { return activated_I; }
 	void setActivatedIndex(int index) { activated_I = index; }
+
+	virtual void reset(Board& board) = 0;
+	virtual void draw(Mario& mario) = 0;
+	virtual void move(Mario& mario) = 0;
 };
 

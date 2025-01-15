@@ -26,7 +26,6 @@ void Barrel::move() {
 
 	if (!getBoard().isValidMove(x + dirX, y + dirY) || getBoard().getChar(x + 2 * dirX, y + dirY) == getBoard().getLetter("WALL")) {
 		setDirX(-dirX);
-		//changeDir(STOP);
 	}
 
 	if (getBoard().gravitation(x, y, getDirX())) {
@@ -56,7 +55,7 @@ void Barrel::explode()
 	barrelDeactivation();
 	erase();
 	printBoom();
-	if(isEncountered() == true)
+	if(isEncountered())
 		Sleep(700); // longer Sleep time for visual effect
 	else
 		Sleep(25);
@@ -96,7 +95,7 @@ bool Barrel::barrelFallManager()
 // Function to check if the barrel encounters mario
 bool Barrel::checkEncounters(Mario& mario)
 {
-	if (Enemy::checkEncounters(mario)) // direct encounter
+	if (mario.getX() == getX() && mario.getY() == getY()) // direct encounter
 	{
 		setEncountered(true);
 		explode();
@@ -109,13 +108,6 @@ bool Barrel::checkEncounters(Mario& mario)
 	}
 	return false;
 }
-
-//bool Barrel::reachedBottom()
-//{
-//	if (getBoard().getChar(getX(), getY() + 1) == getBoard().getLetter("WALL") || getY() >= 24) //change 24 to (MAX_Y - 1)
-//		return true;
-//	return false;
-//}
 
 // Function to activate a barrel
 void Barrel::barrelActivation() // need to make more generic
@@ -137,5 +129,3 @@ void Barrel::barrelDeactivation() {
 	//isExploding = false;
 	setEncountered(false);
 }
-
-// Function to get the starting direction of the barrel randomly (left or right)
