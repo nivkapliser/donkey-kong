@@ -1,3 +1,2 @@
-﻿  Board.cpp
-C:\Users\niv\Desktop\donkey-kong\donkey-kong\Board.cpp(152,1): warning C4715: 'Board::getLetter': not all control paths return a value
+﻿  Game.cpp
   donkey-kong.vcxproj -> C:\Users\niv\Desktop\donkey-kong\x64\Debug\donkey-kong.exe

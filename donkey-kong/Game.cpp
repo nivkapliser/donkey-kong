@@ -6,12 +6,13 @@
 #include <filesystem>
 #include <fstream>
 #include <vector>
+#include <limits>
 
 /*
 	TODO
 	4. change Enemy ctor to have no default values - check if can remove - Niv
 	5. create a manager class for all entities - Niv
-	8. pad with spaces if board too small - Niv
+	8. pad with spaces if board too small - Niv -------------------- V
 	9. if mario wins, move to next board - Omri -------------------- V
 	10. show hammer in legend - Niv -------------------- V
 	11. polymorphism for entities - Niv
@@ -20,7 +21,7 @@
 	16. check for bugs - Omri
 	17. check if missing enteties in board file - Niv --------------- V
 	18. make enum class - Niv
-	19. bug ! - when we input a letter (instead of int) in the board selection the screen blinks and the game not works.
+	19. bug ! - when we input a letter (instead of int) in the board selection the screen blinks and the game not works. ----------- V
 	20. add kbhit loop - Niv
 */
 
@@ -123,7 +124,9 @@ bool Game::showAndLoadBoards() {
 	}
 
 	std::cin >> currentBoardIndex;
-	while (!(currentBoardIndex > 0 && currentBoardIndex <= boardFiles.size())) {
+	while (std::cin.fail() || !(currentBoardIndex > 0 && currentBoardIndex <= boardFiles.size())) {
+		std::cin.clear(); // clear the error state
+		std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n'); // ignore the remaining input in the buffer
 		system("cls");
 		std::cout << "Select a board to load:\n";
 		for (size_t i = 0; i < boardFiles.size(); ++i) {
