@@ -223,28 +223,29 @@ void Game::runGame() {
 
 		checkHammer(mario, hammer); // works better
 		if (mario.getSmash()) {
-			//char last_char = board.getChar(mario.getX() + 2 * mario.getDirX(), mario.getY());
-			//gotoxy(mario.getX() + 2*mario.getDirX(), mario.getY());
-			//std::cout << 'p';
-			//Sleep(12);
+			char last_char = board.getChar(mario.getX() + 2 * mario.getDirX(), mario.getY());
+			gotoxy(mario.getX() + 2*mario.getDirX(), mario.getY());
+			std::cout << 'p';
+			Sleep(12);
 			barrelsManager.smashBarrels(mario);
 			ghostsManager.smashGhosts(mario);
 
-			//gotoxy(mario.getX() + 2 * mario.getDirX(), mario.getY());
-			//std::cout << last_char;
+			gotoxy(mario.getX() + 2 * mario.getDirX(), mario.getY());
+			std::cout << last_char;
 			mario.smashOnce();
 		}
 
 		barrelsManager.move(mario);
 		ghostsManager.move(mario);
 
+		// if mario encounters a barrel, reset the stage or game over
+		checkEncounters(barrelsManager, mario);
+		checkEncounters(ghostsManager, mario);
 
 		barrelsManager.barrelsActivation();
 		
 		
-		// if mario encounters a barrel, reset the stage or game over
-		checkEncounters(barrelsManager, mario);
-		checkEncounters(ghostsManager, mario);
+		
 		
 		if (!ghostsManager.getEncounters() && !barrelsManager.getEncounters())
 			mario.drawScore();
@@ -292,7 +293,6 @@ void Game::explodeMarioAndResetStage(Mario& mario) {
 // function to check for encounters of mario and barrels
 void Game::checkEncounters(BarrelManager& bm, Mario& mario) {
 	if (bm.getEncounters()) {
-		//mario.explode();
 		mario.downLives();
 		resetStage();
 		if (mario.getLives() == 0) {

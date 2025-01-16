@@ -165,6 +165,9 @@ public:
 	void setHammer(Hammer* h) {
 		hammer = h;
 	}
+	Hammer* getHammer() const {
+		return hammer;
+	}
 	void smashOnce() { smash = false; }
 	void smashEnemies();
 	void increaseScore(int increase) { score += increase; }

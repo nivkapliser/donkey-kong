@@ -14,19 +14,15 @@
 
 class Barrel : public Enemy
 {
-	static constexpr int START_X_R = 38; // for barrels that start from the right
-	static constexpr int START_X_L = 36; // for barrels that start from the left
-	//static constexpr int START_Y = 7; 
 	static constexpr int FALL_LIMIT = 8; // how many lines can a barrel fall
 	static constexpr int EXPLODE_ZONE = 2; // for encountering with mario
 	static constexpr char BARREL_CHAR = 'O'; // the char of the barrel
+
 	int dk_X;
 	int dk_Y;
 
 	char floor[5] = "<>=Q";
 	static constexpr size_t floorTypes = sizeof(floor) / sizeof(floor[0]); // to get the size of the floor array
-
-	
 
 	int linesFallen = 0;
 	bool isFalling = false;
@@ -39,19 +35,16 @@ public:
 	bool fallingStatus() const { return isFalling; }
 	
 	void move() override;
-	//void handleCollision() override;
 	bool checkEncounters(Mario& mario) override;
 
 	// Barrel specific functions
 	void floorDirSync();
-	void printBoom();
 	void explode();
 	bool barrelFallManager();
 	void barrelActivation(); 
 	void barrelDeactivation();
-	void eraseBoom() const;
-	 
-	//bool reachedBottom();
+	int getExplodeZone() const { return EXPLODE_ZONE; } // check
+	void setExploding(bool value) { isExploding = value; }
 };
 
 

@@ -66,37 +66,39 @@ void GhostManager::move(Mario& mario)
 }
 
 void GhostManager::smashGhosts(Mario& mario) {
-	for (size_t i = 1; i < ghosts.size(); i++) {
+	for (size_t i = 1; i < ghosts.size(); ) {
+		bool ghostHit = false;
+
 		if (mario.getDirX() == -1) {
 			if ((ghosts[i].getY() == mario.getY()) &&
-				((ghosts[i].getX() == mario.getX() - 1) ||
-					(ghosts[i].getX() == mario.getX() - 2)))
+				((ghosts[i].getX() >= mario.getX() - 2) &&
+					(ghosts[i].getX() < mario.getX())))
 			{
-				// Erase ghost from screen
-				//ghosts[i].erase(); //when activation is false its erase himself
-				ghosts[i].activation(false);
-				// earase ghost from vector
-				ghosts[i].printAnimation("SMASH!!", "_\\x/_");
-				ghosts.erase(ghosts.begin() + i);
-				mario.increaseScore(mario.getGhostPoints());
+				ghostHit = true;
 			}
 		}
 		else if (mario.getDirX() == 1) {
 			if ((ghosts[i].getY() == mario.getY()) &&
-				((ghosts[i].getX() == mario.getX() + 1) ||
-					(ghosts[i].getX() == mario.getX() + 2)))
+				((ghosts[i].getX() <= mario.getX() + 2) &&
+					(ghosts[i].getX() > mario.getX())))
 			{
-				// Erase ghost from screen
-				//ghosts[i].erase();  
-				ghosts[i].activation(false);
-				ghosts[i].printAnimation("SMASH!!", "_\\x/_");
-				// earase ghost from vector
-				ghosts.erase(ghosts.begin() + i);
-				mario.increaseScore(mario.getGhostPoints());
+				ghostHit = true;
 			}
+		}
+
+		if (ghostHit) {
+			ghosts[i].activation(false);
+			ghosts[i].printAnimation("SMASH!!", "_\\x/_");
+			ghostsLocationsMap[ghosts[i].getY()][ghosts[i].getX()] = 0; // Clear location map
+			mario.increaseScore(mario.getGhostPoints());
+			ghosts.erase(ghosts.begin() + i);
+		}
+		else {
+			i++; // Only increment if we didn't remove a ghost
 		}
 	}
 }
+
 void GhostManager::resetLocationMap()
 {
 	for (size_t i = 1; i < ghosts.size(); i++)

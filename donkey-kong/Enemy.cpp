@@ -1,6 +1,5 @@
 #include "Enemy.h"
 
-
 void Enemy::changeDir(Direction dir) {
 	switch (dir) {
 	case LEFT:
@@ -21,7 +20,7 @@ void Enemy::changeDir(Direction dir) {
 	}
 }
 
-bool Enemy::checkEncounters(Mario& mario) {
+bool Enemy::checkEncounters(Mario& mario) { // virtual?
 	if (mario.getX() == getX() && mario.getY() == getY()) // direct encounter
 	{
 		return true;
@@ -44,15 +43,13 @@ bool Enemy::reachedBottom()
 	return false;
 }
 
-void Enemy::printAnimation (const char* upper, const char* under, int sleep)
+void Enemy::printAnimation (const char* upper, const char* under, int sleep) // need to handle print on forbidden chars
 {
 	gotoxy(getX() - 2, getY() - 2);
 	std::cout << upper;
 	gotoxy(getX() - 2, getY());
 	std::cout << under;
-
-	Sleep(50);
-
+	Sleep(sleep);
 	eraseAnimation(upper, under);
 }
 void Enemy::eraseAnimation(const char* upper, const char* under)

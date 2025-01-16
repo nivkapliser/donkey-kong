@@ -71,8 +71,8 @@ public:
 	virtual void activation(bool b) { active = b; }; //need to be Enemy activator
 	virtual bool checkEncounters(Mario& mario);
 	int getDirectionRandomly() const;
-	void setEncountered(bool b) { encountered = b; }
-	bool isEncountered() { return encountered; }
+	void setEncountered(bool b) { encountered = b; } 
+	bool isEncountered() { return encountered; } // nee to be virtual?
 	virtual bool reachedBottom();
 	void printAnimation (const char* upper, const char* under, int sleep = 100);
 	void eraseAnimation(const char* upper, const char* under);
