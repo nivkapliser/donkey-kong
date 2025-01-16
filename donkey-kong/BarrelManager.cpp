@@ -57,21 +57,23 @@ void BarrelManager::barrelsActivation() {
 void BarrelManager::smashBarrels(Mario& mario) {
     for (auto& barrel : barrels) {
         if (mario.getDirX() == -1) {
-            if ((barrel.getY() == mario.getY()) &&
+            if (barrel.checkActivationStatus() && (barrel.getY() == mario.getY()) &&
                 ((barrel.getX() == mario.getX() - 3) ||
                     (barrel.getX() == mario.getX() - 2))) {
-                barrel.erase();
-                barrel.explode();
+                //barrel.erase(); //deactivation erase it automatically
+                //barrel.explode();
+                barrel.printAnimation("SMASH!!", "_\\O/_");
                 barrel.barrelDeactivation();
                 mario.increaseScore(mario.getBarrelPoints());
             }
         }
         else if (mario.getDirX() == 1) {
-            if ((barrel.getY() == mario.getY()) &&
+            if (barrel.checkActivationStatus() && (barrel.getY() == mario.getY()) &&
                 ((barrel.getX() == mario.getX() + 3) ||
                     (barrel.getX() == mario.getX() + 2))) {
-                barrel.erase();
-                barrel.explode();
+                //barrel.erase();
+                //barrel.explode();
+                barrel.printAnimation("SMASH!!", "_\\O/_");
                 barrel.barrelDeactivation();
                 mario.increaseScore(mario.getBarrelPoints());
             }

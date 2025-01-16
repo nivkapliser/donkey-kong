@@ -16,8 +16,8 @@
 	16. check for bugs - Omri
 	18. make enum class - Niv
 	20. add kbhit loop - Niv
-	21. bug - barrels fall to the oposite direction. - Omri
-	22. bug - mario dont fall in board 4. - Omri
+	21. bug - barrels fall to the oposite direction. - Omri ---------------- V
+	22. bug - mario dont fall in board 4. - Omri ---------------- V
 */
 
 
@@ -223,9 +223,15 @@ void Game::runGame() {
 
 		checkHammer(mario, hammer); // works better
 		if (mario.getSmash()) {
+			//char last_char = board.getChar(mario.getX() + 2 * mario.getDirX(), mario.getY());
+			//gotoxy(mario.getX() + 2*mario.getDirX(), mario.getY());
+			//std::cout << 'p';
+			//Sleep(12);
 			barrelsManager.smashBarrels(mario);
 			ghostsManager.smashGhosts(mario);
 
+			//gotoxy(mario.getX() + 2 * mario.getDirX(), mario.getY());
+			//std::cout << last_char;
 			mario.smashOnce();
 		}
 

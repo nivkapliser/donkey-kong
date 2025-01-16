@@ -74,6 +74,8 @@ public:
 	void setEncountered(bool b) { encountered = b; }
 	bool isEncountered() { return encountered; }
 	virtual bool reachedBottom();
+	void printAnimation (const char* upper, const char* under, int sleep = 100);
+	void eraseAnimation(const char* upper, const char* under);
 
 	//virtual void handleCollision() = 0;
 };

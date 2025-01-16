@@ -73,9 +73,10 @@ void GhostManager::smashGhosts(Mario& mario) {
 					(ghosts[i].getX() == mario.getX() - 2)))
 			{
 				// Erase ghost from screen
-				ghosts[i].erase();
+				//ghosts[i].erase(); //when activation is false its erase himself
 				ghosts[i].activation(false);
 				// earase ghost from vector
+				ghosts[i].printAnimation("SMASH!!", "_\\x/_");
 				ghosts.erase(ghosts.begin() + i);
 				mario.increaseScore(mario.getGhostPoints());
 			}
@@ -86,8 +87,9 @@ void GhostManager::smashGhosts(Mario& mario) {
 					(ghosts[i].getX() == mario.getX() + 2)))
 			{
 				// Erase ghost from screen
-				ghosts[i].erase();
+				//ghosts[i].erase();  
 				ghosts[i].activation(false);
+				ghosts[i].printAnimation("SMASH!!", "_\\x/_");
 				// earase ghost from vector
 				ghosts.erase(ghosts.begin() + i);
 				mario.increaseScore(mario.getGhostPoints());

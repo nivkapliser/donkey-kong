@@ -54,13 +54,15 @@ void Barrel::explode()
 	isExploding = true;
 	barrelDeactivation();
 	erase();
-	printBoom();
-	if(isEncountered())
-		Sleep(700); // longer Sleep time for visual effect
+	//printBoom();
+	if (isEncountered())
+		printAnimation("BOOM!", "_\\|/_", 700);
+		//Sleep(700); // longer Sleep time for visual effect
 	else
-		Sleep(25);
+		printAnimation("BOOM!", "_\\|/_", 25);
+		//Sleep(25);
 
-	eraseBoom();
+	//eraseBoom();
 	linesFallen = 0;
 }
 
