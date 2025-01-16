@@ -85,7 +85,7 @@ void Mario::move() {
     }
 
 	// gravity logic
-    else if (pBoard->gravitation(x, y) && !isJump && pBoard->isValidMove(newX, y+1)) { 
+    else if (pBoard->gravitation(x, y, dirX) && !isJump && pBoard->isValidMove(newX, y + 1)) { 
         gravity = true;
         y++;
         x += dirX;
