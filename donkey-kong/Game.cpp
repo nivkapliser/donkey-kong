@@ -224,24 +224,15 @@ void Game::runGame() {
 
 		checkHammer(mario, hammer); // works better
 		if (mario.getSmash()) {
-			char last_char = board.getChar(mario.getX() + 2 * mario.getDirX(), mario.getY());
-			gotoxy(mario.getX() + 2*mario.getDirX(), mario.getY());
-			std::cout << 'p';
-			Sleep(12);
-			barrelsManager.smashBarrels(mario);
-			ghostsManager.smashGhosts(mario);
-
-			gotoxy(mario.getX() + 2 * mario.getDirX(), mario.getY());
-			std::cout << last_char;
-			mario.smashOnce();
+			marioHit();
 		}
 
 		barrelsManager.move(mario);
 		ghostsManager.move(mario);
 
 		// if mario encounters a barrel, reset the stage or game over
-		checkEncounters(barrelsManager, mario);
-		checkEncounters(ghostsManager, mario);
+		checkBarrelEncounters(barrelsManager, mario);
+		checkGhostEncounters(ghostsManager, mario);
 
 		barrelsManager.barrelsActivation();
 		
@@ -292,7 +283,7 @@ void Game::explodeMarioAndResetStage(Mario& mario) {
 }
 
 // function to check for encounters of mario and barrels
-void Game::checkEncounters(BarrelManager& bm, Mario& mario) {
+void Game::checkBarrelEncounters(BarrelManager& bm, Mario& mario) {
 	if (bm.getEncounters()) {
 		mario.downLives();
 		resetStage();
@@ -302,7 +293,7 @@ void Game::checkEncounters(BarrelManager& bm, Mario& mario) {
 		bm.setEncounters(false);
 	}
 }
-void Game::checkEncounters(GhostManager& gm, Mario& mario) {
+void Game::checkGhostEncounters(GhostManager& gm, Mario& mario) {
 	if (gm.getEncounters()) {
 		mario.ghosted();
 		mario.downLives();
@@ -338,6 +329,19 @@ void Game::smashGhost(GhostManager& gm, Mario& mario) {
 		gm.smashGhosts(mario);
 		mario.smashEnemies();
 	}
+}
+
+void Game::marioHit() {
+	char last_char = board.getChar(mario.getX() + 2 * mario.getDirX(), mario.getY());
+	gotoxy(mario.getX() + 2 * mario.getDirX(), mario.getY());
+	std::cout << 'p';
+	Sleep(12);
+	barrelsManager.smashBarrels(mario);
+	ghostsManager.smashGhosts(mario);
+
+	gotoxy(mario.getX() + 2 * mario.getDirX(), mario.getY());
+	std::cout << last_char;
+	mario.smashOnce();
 }
 
 void Game::checkNextStage() {

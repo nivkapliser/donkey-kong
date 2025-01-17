@@ -2,25 +2,25 @@
 
 void Enemy::changeDir(Direction dir) {
 	switch (dir) {
-	case LEFT:
+	case Direction::LEFT:
 		dirY = 0;
 		dirX = -1;
 		break;
-	case RIGHT:
+	case Direction::RIGHT:
 		dirY = 0;
 		dirX = 1;
 		break;
-	case STOP:
+	case Direction::STOP:
 		dirX = 0;
 		dirY = 0;
 		break;
-	case SAME:
+	case Direction::SAME:
 		dirY = 0;
 		break;
 	}
 }
 
-bool Enemy::checkEncounters(Mario& mario) { // virtual?
+bool Enemy::checkEncounters(Mario& mario) {
 	if (mario.getX() == getX() && mario.getY() == getY()) // direct encounter
 	{
 		return true;
@@ -38,12 +38,13 @@ int Enemy::getDirectionRandomly() const {
 }
 bool Enemy::reachedBottom()
 {
-	if (getBoard().getChar(getX(), getY() + 1) == getBoard().getLetter("WALL") || getY() >= getBoard().getDimension('Y') - 1)
+	if (getBoard().getChar(getX(), getY() + 1) == getBoard().getLetter("WALL") ||
+		getY() >= getBoard().getDimension('Y') - 1)
 		return true;
 	return false;
 }
 
-void Enemy::printAnimation (const char* upper, const char* under, int sleep) // need to handle print on forbidden chars
+void Enemy::printAnimation (const char* upper, const char* under, int sleep)
 {
 	gotoxy(getX() - 2, getY() - 2);
 	std::cout << upper;

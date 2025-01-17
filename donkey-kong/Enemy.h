@@ -19,24 +19,22 @@ class Enemy
 	int dirX = 0;
 	int dirY = 0;
 
-	bool active; // for the barrelsManager to check if the barrel is active
+	bool active; 
 	char lastPoint; // to save the last point char for latter printing
-
 	bool encountered = false;
 
 	Board* pBoard = nullptr;
-
 
 	void draw(char c) const {
 		gotoxy(x, y);
 		std::cout << c;
 	}
 
-protected: // need to decide
-	enum Direction { LEFT, RIGHT, SAME, STOP }; //very helps when in public, need to check if its ok
+protected: 
+	enum class Direction { LEFT, RIGHT, SAME, STOP }; 
 
 public:
-	Enemy(char _c, bool _active, int start_y = 0, int start_x = 0) : ch(_c), active(_active), x(start_x), y(start_y) {} // need to change to no default values
+	Enemy(char _c, bool _active, int start_y = 0, int start_x = 0) : ch(_c), active(_active), x(start_x), y(start_y) {} 
 
 	virtual ~Enemy() = default;
 
@@ -68,15 +66,13 @@ public:
 	virtual void move() = 0;
 	
 	virtual void resetLocation(int start_x, int start_y) { x = start_x; y = start_y; }
-	virtual void activation(bool b) { active = b; }; //need to be Enemy activator
+	virtual void activation(bool b) { active = b; }; 
 	virtual bool checkEncounters(Mario& mario);
 	int getDirectionRandomly() const;
 	void setEncountered(bool b) { encountered = b; } 
-	bool isEncountered() { return encountered; } // nee to be virtual?
+	bool isEncountered() { return encountered; } 
 	virtual bool reachedBottom();
 	void printAnimation (const char* upper, const char* under, int sleep = 100);
 	void eraseAnimation(const char* upper, const char* under);
-
-	//virtual void handleCollision() = 0;
 };
 

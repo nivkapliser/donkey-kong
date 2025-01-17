@@ -43,7 +43,8 @@ class Game
 
 
 public:
-	Game() : currentState(GameState::MENU), ghostsManager(board, &menuGraphics), barrelsManager(board, &menuGraphics), mario(&menuGraphics, &hammer), board(&menuGraphics), hammer(){
+	Game() : currentState(GameState::MENU), ghostsManager(board, &menuGraphics),
+		barrelsManager(board, &menuGraphics), mario(&menuGraphics, &hammer), board(&menuGraphics), hammer(){
 		mario.setBoard(board);
 	}
 
@@ -60,11 +61,12 @@ public:
 
 	void run();
 	void explodeMarioAndResetStage(Mario& mario);
-	void checkEncounters(BarrelManager& bm, Mario& mario); // change name
-	void checkEncounters(GhostManager& gm, Mario& mario); // change name
+	void checkBarrelEncounters(BarrelManager& bm, Mario& mario); 
+	void checkGhostEncounters(GhostManager& gm, Mario& mario); 
 	void checkHammer(Mario& mario, Hammer& hammer);
 	void smashBarrel(BarrelManager& bm, Mario& mario);
 	void smashGhost(GhostManager& gm, Mario& mario);
 	bool showAndLoadBoards();
 	void checkNextStage();
+	void marioHit();
 };
