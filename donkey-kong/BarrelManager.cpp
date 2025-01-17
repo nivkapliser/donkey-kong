@@ -17,7 +17,6 @@ void BarrelManager::draw(Mario& mario) {
             barrel.floorDirSync(); 
             
             if (barrel.barrelFallManager()) {
-                //barrel.setExploding(true);
                 barrel.explode();
             }
 

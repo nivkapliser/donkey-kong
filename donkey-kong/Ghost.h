@@ -13,12 +13,7 @@ class Ghost : public Enemy
 
 public:
 	Ghost() : Enemy(GHOST, true) { Enemy::setDirX(Enemy::getDirectionRandomly()); }
-
-	
 	void move() override;
-	//void hadleCollision() override;
-
-
 	void switchGhostsMeeting();
 	bool isFloorEnd() const;
 };

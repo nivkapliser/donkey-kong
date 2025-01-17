@@ -3,11 +3,12 @@
 
 void Ghost::move() {
 
-	int x, y;
+	int x = getX();
+	int y = getY();
 	int dirX = getDirX();
 	int dirY = getDirY();
 
-	if (isFloorEnd() || ghostsMeeting == true) {
+	if (isFloorEnd() || ghostsMeeting == true || !(getBoard().isValidMove(getX() + dirX, getY() + dirY))) {
 		setDirX(-dirX);
 		if (ghostsMeeting == true)
 			switchGhostsMeeting();
@@ -24,8 +25,6 @@ void Ghost::move() {
 
 	dirX = getDirX();
 	dirY = getDirY();
-	x = getX();
-	y = getY();
 	setX(x + dirX);
 	setY(y + dirY);
 }

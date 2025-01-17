@@ -15,7 +15,7 @@
 class Barrel : public Enemy
 {
 	static constexpr int FALL_LIMIT = 8; // how many lines can a barrel fall
-	static constexpr int EXPLODE_ZONE = 2; // for encountering with mario
+	static constexpr int EXPLODE_ZONE = 2; // for encountering with mario while exploding
 	static constexpr char BARREL_CHAR = 'O'; // the char of the barrel
 
 	int dk_X;

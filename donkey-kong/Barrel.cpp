@@ -27,7 +27,6 @@ void Barrel::move() {
 	}
 
 		
-
 	// if next move is invalid (floor or wall) change direction
 	if (!getBoard().isValidMove(x + dirX, y + dirY) || getBoard().getChar(x + 2 * dirX, y + dirY) == getBoard().getLetter("WALL")) { // wall can be enum 
 		setDirX(-dirX);
@@ -47,14 +46,6 @@ void Barrel::move() {
 	setX(x + dirX);
 }
 
-// Function to print the explosion effect
-//void Barrel::printBoom() {
-//	gotoxy(getX() - 2, getY() - 2);
-//	std::cout << "BOOM!";
-//	gotoxy(getX() - 2, getY());
-//	std::cout << "_\\|/_";
-//}
-
 // Function to explode the barrel 
 void Barrel::explode()
 {
@@ -70,20 +61,6 @@ void Barrel::explode()
 	linesFallen = 0;
 }
 
-// Function to erase the explosion
-//void Barrel::eraseBoom() const
-//{
-//	char lastchar;
-//	for (int i = 0; i <= 5; i++)
-//	{
-//		lastchar = getBoard().getChar(getX() - 2 + i, getY() - 2);
-//		gotoxy(getX() - 2 + i, getY() - 2);
-//		std::cout << lastchar;
-//		lastchar = getBoard().getChar(getX() - 2 + i, getY());
-//		gotoxy(getX() - 2 + i, getY());
-//		std::cout << lastchar;
-//	}
-//}
 
 // Function to check if the barrel has fallen enough lines
 bool Barrel::barrelFallManager()
@@ -113,9 +90,7 @@ bool Barrel::checkEncounters(Mario& mario)
 	}
 	else if ((abs(mario.getX() - getX()) <= EXPLODE_ZONE && mario.getY() == getY()) && isExploding) // indirect encounter (2 chars away)
 	{
-		setEncountered(true);	// check
-		//explode();	
-		//setEncountered(false);	
+		//setEncountered(true);	// check	
 		return true;	
 	}
 	return false;
@@ -138,6 +113,5 @@ void Barrel::barrelActivation() // need to make more generic
 void Barrel::barrelDeactivation() {
 	activation(false);
 	linesFallen = 0;
-	//isExploding = false;
 	setEncountered(false);
 }

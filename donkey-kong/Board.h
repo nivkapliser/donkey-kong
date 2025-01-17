@@ -22,8 +22,6 @@ class Board
 
 	int marioX = -1;
 	int marioY;
-	//int paulineX;
-	//int paulineY;
 	int legendX = -1;
 	int legendY = -1;
 	int donkeyX = -1;
@@ -95,6 +93,7 @@ public:
 	size_t getNumGhosts() const { return ghostsX.size(); } // need?
 	int readBoard(const std::string& filename, Mario& mario, Hammer& hammer);
 	char getLetter(const char* object);
+	int getDimension(char dim) { return tolower(dim) == 'y' ? MAX_Y : MAX_X; }
 };
 
 

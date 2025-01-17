@@ -38,7 +38,7 @@ int Enemy::getDirectionRandomly() const {
 }
 bool Enemy::reachedBottom()
 {
-	if (getBoard().getChar(getX(), getY() + 1) == getBoard().getLetter("WALL") || getY() >= 24) //change 24 to (MAX_Y - 1)
+	if (getBoard().getChar(getX(), getY() + 1) == getBoard().getLetter("WALL") || getY() >= getBoard().getDimension('Y') - 1)
 		return true;
 	return false;
 }

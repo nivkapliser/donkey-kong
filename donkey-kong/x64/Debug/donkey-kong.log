@@ -1,2 +1,4 @@
-﻿  BarrelManager.cpp
+﻿  Enemy.cpp
+C:\Users\shtru\source\repos\donkey-kong17.1.test\donkey-kong\Enemy.cpp(58,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\shtru\source\repos\donkey-kong17.1.test\donkey-kong\Enemy.cpp(59,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   donkey-kong.vcxproj -> C:\Users\shtru\Source\Repos\donkey-kong17.1.test\x64\Debug\donkey-kong.exe
