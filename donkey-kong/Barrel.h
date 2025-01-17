@@ -7,7 +7,6 @@
 */
 
 #include <iostream>
-#include "utils.h"
 #include "Board.h"
 #include "Mario.h"
 #include "Enemy.h"
@@ -30,14 +29,12 @@ class Barrel : public Enemy
 
 public:
 	Barrel() : Enemy(BARREL_CHAR, false, 0) {}
-
-	// Function to check if the barrel is falling
-	bool fallingStatus() const { return isFalling; }
 	
 	void move() override;
 	bool checkEncounters(Mario& mario) override;
 
 	// Barrel specific functions
+	bool fallingStatus() const { return isFalling; }
 	void floorDirSync();
 	void explode();
 	bool barrelFallManager();

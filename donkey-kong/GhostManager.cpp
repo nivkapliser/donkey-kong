@@ -2,7 +2,7 @@
 
 
 void GhostManager::reset(Board& board) {
-	resetLocationMap(); //very very important!! 
+	resetLocationMap();  
 	ghosts.clear();
 
 	ghosts.push_back(Ghost()); //dummy ghost to keep index 0 free.

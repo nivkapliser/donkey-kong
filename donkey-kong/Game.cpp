@@ -10,14 +10,7 @@
 
 /*
 	TODO
-	5. create a manager class for all entities - Niv ---------------- V
-	11. polymorphism for entities - Niv
-	15. fix barrels in screen 2. wall and floor (gravitation) - Omri ---------------- V
 	16. check for bugs - Omri
-	18. make enum class - Niv
-	20. add kbhit loop - Niv
-	21. bug - barrels fall to the oposite direction. - Omri ---------------- V
-	22. bug - mario dont fall in board 4. - Omri ---------------- V
 	23. REMINDER TO DELETE POINT CLASS 
 */
 
@@ -84,7 +77,7 @@ void Game::showMenu() {
 				std::cout << "Invalid Choice. Please try again.\n";
 			}
 		}
-		else { // need to fix after choosing a board
+		else { 
 			system("cls"); // for printing in the screen size
 			menuGraphics.displayMenu();
 			std::cout << "Invalid Choice. Please try again.\n";
@@ -171,7 +164,7 @@ void Game::run() {
 			menuGraphics.displayGameWon();
 			checkNextStage();
 			break;
-		case GameState::NEXT_STAGE:
+		case GameState::NEXT_STAGE: // moving on to the next stage after winning
 			resetStage();
 			runGame();
 			break;
@@ -179,7 +172,7 @@ void Game::run() {
 			run = false;
 			break;
 		default:
-			currentState = GameState::MENU;
+			currentState = GameState::MENU; // default state
 			break;
 		}
 
@@ -222,7 +215,7 @@ void Game::runGame() {
 		mario.move();
 		hammer.erase();
 
-		checkHammer(mario, hammer); // works better
+		checkHammer(mario, hammer); 
 		if (mario.getSmash()) {
 			marioHit();
 		}

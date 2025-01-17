@@ -266,6 +266,5 @@ public:
 	int getBrown() const {
 		return BROWN;
 	}
-
 };
 

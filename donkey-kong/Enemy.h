@@ -35,7 +35,6 @@ protected:
 
 public:
 	Enemy(char _c, bool _active, int start_y = 0, int start_x = 0) : ch(_c), active(_active), x(start_x), y(start_y) {} 
-
 	virtual ~Enemy() = default;
 
 	int getX() const { return x; }

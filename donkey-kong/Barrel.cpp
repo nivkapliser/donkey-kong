@@ -28,7 +28,8 @@ void Barrel::move() {
 
 		
 	// if next move is invalid (floor or wall) change direction
-	if (!getBoard().isValidMove(x + dirX, y + dirY) || getBoard().getChar(x + 2 * dirX, y + dirY) == getBoard().getLetter("WALL")) { // wall can be enum 
+	if (!getBoard().isValidMove(x + dirX, y + dirY) || 
+		getBoard().getChar(x + 2 * dirX, y + dirY) == getBoard().getLetter("WALL")) { 
 		setDirX(-dirX);
 	}
 
@@ -89,8 +90,7 @@ bool Barrel::checkEncounters(Mario& mario)
 		return true;
 	}
 	else if ((abs(mario.getX() - getX()) <= EXPLODE_ZONE && mario.getY() == getY()) && isExploding) // indirect encounter (2 chars away)
-	{
-		//setEncountered(true);	// check	
+	{	
 		return true;	
 	}
 	return false;

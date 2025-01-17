@@ -21,7 +21,6 @@ class Board
 	MenuGraphics* menuGraphics;
 
 	int marioX = -1;
-	//int marioY;
 	int legendX = -1;
 	int legendY = -1;
 	int donkeyX = -1;

@@ -5,8 +5,6 @@
 class Hammer
 {
 	static constexpr char HAMMER_CHAR = 'p';
-	static constexpr int MAX_SLEEP = 500;
-	static constexpr int SLEEP_STEP = 50;
 
 	char c = HAMMER_CHAR;
 	int x;
@@ -17,8 +15,8 @@ class Hammer
 
 	bool active = true; // if is active mario can pick it up and smash barrels
 	bool collected = false;
-
 	int sleepCounter = 0;
+
 	Board* pBoard = nullptr;
 
 	void draw(char c) const {
@@ -29,29 +27,12 @@ class Hammer
 public:
 	Hammer() {}
 
-	int getX() const {
-		return x;
-	}
-
-	int getY() const {
-		return y;
-	}
-
-	void setX(int newX) {
-		x = newX;
-	}
-
-	void setY(int newY) {
-		y = newY;
-	}
-
-	void setStartX(int x) {
-		startX = x;
-	}
-
-	void setStartY(int y) {
-		startY = y;
-	}
+	int getX() const { return x; }
+	int getY() const { return y; }
+	void setX(int newX) { x = newX; }
+	void setY(int newY) { y = newY; }
+	void setStartX(int x) { startX = x; }
+	void setStartY(int y) { startY = y; }
 
 	void resetPosition() {
 		x = startX;
@@ -63,30 +44,16 @@ public:
 			draw(c);	
 	}
 
-	// Function to set the board for mario
-	void setBoard(Board& board) {
-		pBoard = &board;
-	}
-
-	void setLastPoint() {
-		lastPoint = pBoard->getChar(x, y);
-	}
-
 	void erase() {
 		if (collected) {
 			setLastPoint();
 			draw(lastPoint);
 		}
 	}
-	
-	void setCollected(bool b) {
-		collected = b;
-	}
 
-	bool isCollected() const {
-		return collected;
-	}
-
-	void placeRandomly(Board& board); // need to delete?
+	void setBoard(Board& board) { pBoard = &board; }
+	void setLastPoint() { lastPoint = pBoard->getChar(x, y); }
+	void setCollected(bool b) { collected = b; }
+	bool isCollected() const { return collected; }
 };
 

@@ -29,8 +29,8 @@ class Mario
 	static constexpr int PAULINE_POINTS = 1000;
 	
 	char ch = '@';
-	int x = START_X;
-	int y = START_Y;
+	int x;
+	int y;
 	int lives;
 	int startX;
 	int startY;
@@ -43,7 +43,6 @@ class Mario
 	int isJump = false; 
 	int fallCounter = 0;  // to count the number of lines mario fell
 	int jumpCounter = 0; // to count the number of lines mario jumped
-	bool haveHammer = false; // to check if mario has a hammer --------------- delete?
 	bool smash = false;
 	int score;
 
@@ -61,8 +60,8 @@ public:
 
 	// Function to reset mario position to the starting point
 	void resetMarioPosition() {
-		x = startX;//START_X;
-		y = startY;//START_Y;
+		x = startX;
+		y = startY;
 		dirX = dirY = 0;
 	}
 
@@ -138,23 +137,15 @@ public:
 	}
 
 	// Function to check if mario met Pauline
-	bool metPauline() const {
-		return pBoard->getChar(x, y) == '$'; // change to const char
-	}
+	bool metPauline() const { return pBoard->getChar(x, y) == '$'; }
 	
 	// Function to check if mario is on a ladder
-	bool isOnFloor() const {
-		return (pBoard->isFloor(x, y + 1) || pBoard->isBoarder(x, y + 1));
-	}
-
+	bool isOnFloor() const { return (pBoard->isFloor(x, y + 1) || pBoard->isBoarder(x, y + 1)); }
 	bool getSmash() const { return smash; }
-
 	void setSmash(bool s) { smash = s; }
-	
 	int getBarrelPoints() const { return BARREL_POINTS; }
 	int getGhostPoints() const { return GHOST_POINTS; }
 	int getPaulinePoints() const { return PAULINE_POINTS; }
-
 	void changeDir(Direction dir);
 	void move();
 	void keyPressed(char key);
@@ -162,12 +153,8 @@ public:
 	void explode();
 	void ghosted();
 	void checkIfMetHammer();
-	void setHammer(Hammer* h) {
-		hammer = h;
-	}
-	Hammer* getHammer() const {
-		return hammer;
-	}
+	void setHammer(Hammer* h) { hammer = h; }
+	Hammer* getHammer() const { return hammer; }
 	void smashOnce() { smash = false; }
 	void smashEnemies();
 	void increaseScore(int increase) { score += increase; }
