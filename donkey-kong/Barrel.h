@@ -43,8 +43,7 @@ public:
 	bool barrelFallManager();
 	void barrelActivation(); 
 	void barrelDeactivation();
-	int getExplodeZone() const { return EXPLODE_ZONE; } // check
-	void setExploding(bool value) { isExploding = value; }
+
 };
 
 

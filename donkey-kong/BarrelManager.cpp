@@ -37,6 +37,9 @@ void BarrelManager::move(Mario& mario) {
             }
             barrel.erase();
             barrel.move();
+            if (barrel.checkEncounters(mario)) {
+                setEncounters(true);
+            }
         }
     }
 }
