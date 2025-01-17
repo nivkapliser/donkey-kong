@@ -18,6 +18,7 @@
 	20. add kbhit loop - Niv
 	21. bug - barrels fall to the oposite direction. - Omri ---------------- V
 	22. bug - mario dont fall in board 4. - Omri ---------------- V
+	23. REMINDER TO DELETE POINT CLASS 
 */
 
 
