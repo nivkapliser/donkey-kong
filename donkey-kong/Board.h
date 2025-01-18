@@ -24,7 +24,7 @@ class Board
 	static constexpr char FLOOR[] = { '<', '>', '=' };
 	static constexpr char WALL = 'Q';
 	static constexpr char PAULINE = '$';
-	enum Mandatory {MARIO, DONKEY, LEGEND, GHOST, HAMMER, PAULI, LADD, FL0, FL1, FL2};
+	enum Mandatory { MARIO, DONKEY, LEGEND, GHOST, HAMMER, PAULI, LADD, FL0, FL1, FL2 }; // enum for mandatory chars in the board
 	
 	// to get the start position of the entities
 	int legendX = -1;

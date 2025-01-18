@@ -132,10 +132,11 @@ int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) 
 	return returnVal;
 }
 
-// Function to get the start positions of the entities
+// Function to get the start positions of the entities and to check if all the mandatory objects are in the board
 int Board::setStartPositions(std::string line, Mario& mario, Hammer& hammer, int i) {
 
 	for (int j = 0; j < line.length(); j++) {
+		// check for entities and set their starting positions
 		if (line[j] == '@') {
 			if (j == 0 || set_table[MARIO] == 1) // there is only one mario in the game
 				return -1;
@@ -176,23 +177,19 @@ int Board::setStartPositions(std::string line, Mario& mario, Hammer& hammer, int
 			legendY = i;
 			set_table[LEGEND] = 1;
 		}
+		//checks if the mandatory chars are in the board
 		else if (line[j] == PAULINE) {
 			if (set_table[PAULI] == 1)
 				return -1;
 			set_table[PAULI] = 1;
 		}
-		else if (line[j] == LADDER)
-			set_table[LADD] = 1;
-		else if (line[j] == FLOOR[0])
-			set_table[FL0] = 1;
-		else if (line[j] == FLOOR[1])
-			set_table[FL1] = 1;
-		else if (line[j] == FLOOR[2])
-			set_table[FL2] = 1;
+		else if (line[j] == LADDER) { set_table[LADD] = 1; }
+		else if (line[j] == FLOOR[0]) { set_table[FL0] = 1; }
+		else if (line[j] == FLOOR[1]) { set_table[FL1] = 1; } 
+		else if (line[j] == FLOOR[2]) { set_table[FL2] = 1; }
 		else if (line[j] != WALL && line[j] != EMPTY_SPACE) //checks if it not a mandatory char that allowed to be in game.
 			return -1;
 	}
-
 }
 
 // Function to get the letter of the object
