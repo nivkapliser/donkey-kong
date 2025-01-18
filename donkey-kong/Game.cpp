@@ -8,12 +8,6 @@
 #include <vector>
 #include <limits>
 
-/*
-	TODO
-	16. check for bugs - Omri
-*/
-
-
 // Initializes the game by resetting the board and setting up mario and barrels
 void Game::initGame() {
 	mario.resetLives();
@@ -90,10 +84,9 @@ bool Game::showAndLoadBoards() {
 	system("cls");
 	namespace fs = std::filesystem;
 	boardFiles.clear();
-	//std::vector<std::string> boardFiles;
 	std::string input; // to clear the buffer
 
-	// Scan directory for board files - taken from chatGpt
+	// scan directory for board files
 	for (const auto& entry : fs::directory_iterator(".")) {
 		if (entry.path().string().find("dkong_") != std::string::npos &&
 			entry.path().string().find(".screen") != std::string::npos) {
@@ -101,11 +94,13 @@ bool Game::showAndLoadBoards() {
 		}
 	}
 
+	// if no board files found, return false for game exit
 	if (boardFiles.empty()) {
 		std::cout << "No board files found. Exiting game.\n";
-		return false; // should be State change
+		return false; 
 	}
 
+	// display board files and load the selected board
 	std::cout << "Select a board to load:\n";
 	for (size_t i = 0; i < boardFiles.size(); ++i) {
 		std::cout << i + 1 << ". " << boardFiles[i] << "\n";
@@ -123,6 +118,8 @@ bool Game::showAndLoadBoards() {
 		std::cout << "Invalid choice. Try again.\n";
 		std::cin >> currentBoardIndex;
 	}
+
+	// check if the board file was read successfully
 	if (board.readBoard(boardFiles[currentBoardIndex - 1], mario, hammer) != 1) {
 		std::cout << "Error while reading board file. Exiting game.\n";
 		Sleep(3000); // so user can see
@@ -139,42 +136,41 @@ void Game::run() {
 	menuGraphics.displayOpenScreen();
 	while (run) {
 		switch (getGameState()) {
-		case GameState::MENU: // the default game state
+		case GameState::MENU:		// the default game state
 			showMenu();
 			break;
-		case GameState::RUNNING:  // to start the game movement loop
+		case GameState::RUNNING:	// to start the game movement loop
 			initGame();
 			runGame();
 			break;
-		case GameState::RESUME: // to resume the game after pausing
+		case GameState::RESUME:		// to resume the game after pausing
 			board.print();
 			mario.drawLife();
 			currentState = GameState::RUNNING;
 			runGame();
 			break;
-		case GameState::PAUSED: // to pause the game
+		case GameState::PAUSED:		// to pause the game
 			pauseGame();
 			break;
 		case GameState::GAME_OVER:	// to display game over screen and return to menu
 			menuGraphics.displayGameOver();
 			currentState = GameState::MENU;
 			break;
-		case GameState::GAME_WON: // to display game won screen and return to menu
+		case GameState::GAME_WON:	// to display game won screen and return to menu
 			menuGraphics.displayGameWon();
 			checkNextStage();
 			break;
-		case GameState::NEXT_STAGE: // moving on to the next stage after winning
+		case GameState::NEXT_STAGE:	// moving on to the next stage after winning
 			resetStage();
 			runGame();
 			break;
-		case GameState::FINISH: // to exit the game loop
+		case GameState::FINISH:		// to exit the game loop
 			run = false;
 			break;
 		default:
 			currentState = GameState::MENU; // default state
 			break;
 		}
-
 	}
 	Sleep(50);
 	menuGraphics.displayGoodBye();
@@ -187,11 +183,11 @@ void Game::runGame() {
 	while (currentState == GameState::RUNNING || currentState == GameState::NEXT_STAGE) {
 
 		mario.draw();
-		barrelsManager.draw(mario); // draw all active barrels
+		barrelsManager.draw(mario);
 		ghostsManager.draw(mario);
 		hammer.draw();
 
-		// check for user input
+		// check and get user input
 		if (_kbhit()) {
 			std::vector<char> keyBuffer;
 			for (int i = 0; i < 5 && _kbhit(); ++i) {
@@ -209,11 +205,11 @@ void Game::runGame() {
 		Sleep(50); // for better visual effect
 		
 		
-		// erase and move mario and barrels
 		mario.erase();
 		mario.move();
 		hammer.erase();
 
+		// check if mario has met and used hammer
 		checkHammer(mario, hammer); 
 		if (mario.getSmash()) {
 			marioHit();
@@ -226,11 +222,9 @@ void Game::runGame() {
 		checkBarrelEncounters(barrelsManager, mario);
 		checkGhostEncounters(ghostsManager, mario);
 
-		barrelsManager.barrelsActivation();
+		barrelsManager.barrelsActivation(); // reseting the barrel activation
 		
-		
-		
-		
+		// draw the score 
 		if (!ghostsManager.getEncounters() && !barrelsManager.getEncounters())
 			mario.drawScore();
 
@@ -274,7 +268,7 @@ void Game::explodeMarioAndResetStage(Mario& mario) {
 	}
 }
 
-// function to check for encounters of mario and barrels
+// Function to check for encounters of mario and barrels
 void Game::checkBarrelEncounters(BarrelManager& bm, Mario& mario) {
 	if (bm.getEncounters()) {
 		mario.downLives();
@@ -285,6 +279,8 @@ void Game::checkBarrelEncounters(BarrelManager& bm, Mario& mario) {
 		bm.setEncounters(false);
 	}
 }
+
+// Function to check for encounters of mario and ghosts
 void Game::checkGhostEncounters(GhostManager& gm, Mario& mario) {
 	if (gm.getEncounters()) {
 		mario.ghosted();
@@ -297,6 +293,7 @@ void Game::checkGhostEncounters(GhostManager& gm, Mario& mario) {
 	}
 }
 
+// Function to check if mario has met hammer and update the legend
 void Game::checkHammer(Mario& mario, Hammer& hammer) {
 	mario.checkIfMetHammer();
 	if (hammer.isCollected()) {
@@ -309,6 +306,7 @@ void Game::checkHammer(Mario& mario, Hammer& hammer) {
 	}
 }
 
+// Function to handle smashing barrels
 void Game::smashBarrel(BarrelManager& bm, Mario& mario) {
 	if (mario.getSmash()) {
 		bm.smashBarrels(mario);	
@@ -316,6 +314,7 @@ void Game::smashBarrel(BarrelManager& bm, Mario& mario) {
 	}
 }
 
+// Function to handle smashing ghosts
 void Game::smashGhost(GhostManager& gm, Mario& mario) {
 	if (mario.getSmash()) {
 		gm.smashGhosts(mario);
@@ -323,6 +322,7 @@ void Game::smashGhost(GhostManager& gm, Mario& mario) {
 	}
 }
 
+// Function to represent mario hammer hit
 void Game::marioHit() {
 	char last_char = board.getChar(mario.getX() + 2 * mario.getDirX(), mario.getY());
 	gotoxy(mario.getX() + 2 * mario.getDirX(), mario.getY());
@@ -336,6 +336,7 @@ void Game::marioHit() {
 	mario.smashOnce();
 }
 
+// Function to check if there is a next stage and move to it
 void Game::checkNextStage() {
 	if (currentBoardIndex < boardFiles.size()) {
 		currentBoardIndex++;

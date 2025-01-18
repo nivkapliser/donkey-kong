@@ -1,6 +1,6 @@
 #include "Ghost.h"
 
-
+// Function to move the ghost in the game
 void Ghost::move() {
 
 	int x = getX();
@@ -29,6 +29,7 @@ void Ghost::move() {
 	setY(y + dirY);
 }
 
+// Function to check if the ghost is at the end of the floor for direction change
 bool Ghost::isFloorEnd() const
 {
 	int x = getX();
@@ -41,6 +42,7 @@ bool Ghost::isFloorEnd() const
 	return false;
 }
 
+// Function to switch the direction of the ghosts when they meet
 void Ghost::switchGhostsMeeting() {
 
 	if (ghostsMeeting == true)

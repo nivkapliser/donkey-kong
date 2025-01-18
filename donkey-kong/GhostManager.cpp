@@ -1,6 +1,6 @@
 #include "GhostManager.h"
 
-
+// Function to reset the ghosts in the game
 void GhostManager::reset(Board& board) {
 	resetLocationMap();  
 	ghosts.clear();
@@ -16,7 +16,7 @@ void GhostManager::reset(Board& board) {
 	}
 }
 
-// Function to draw all the active barrels on the board 
+// Function to draw all the active ghost on the board 
 void GhostManager::draw(Mario& mario)
 {
 	getMG()->setCurrentColor(getMG()->getCyan());
@@ -25,7 +25,7 @@ void GhostManager::draw(Mario& mario)
 		if (ghosts[i].checkActivationStatus()) {
 			ghosts[i].draw();
 
-			if (ghosts[i].checkEncounters(mario)) { // if barrel encounters mario
+			if (ghosts[i].checkEncounters(mario)) { // if ghost encounters mario
 				setEncounters(true);
 			}
 		}
@@ -34,7 +34,7 @@ void GhostManager::draw(Mario& mario)
 	getMG()->setCurrentColor(getMG()->getLightRed());
 }
 
-// Function to move all the active barrels on the board
+// Function to move all the active ghosts on the board
 void GhostManager::move(Mario& mario)
 {
 	int next_location;
@@ -56,7 +56,8 @@ void GhostManager::move(Mario& mario)
 		}
 
 		ghosts[i].erase();
-		ghostsLocationsMap[ghosts[i].getY()][ghosts[i].getX()] = 0; //the current ghost will move, so his current cell becomes 0
+		//the current ghost will move, so his current cell becomes 0
+		ghostsLocationsMap[ghosts[i].getY()][ghosts[i].getX()] = 0;
 
 		ghosts[i].move();
 
@@ -65,6 +66,7 @@ void GhostManager::move(Mario& mario)
 	}
 }
 
+// Function to check if a ghost has been smashed by mario
 void GhostManager::smashGhosts(Mario& mario) {
 	for (size_t i = 1; i < ghosts.size(); ) {
 		bool ghostHit = false;
@@ -94,11 +96,12 @@ void GhostManager::smashGhosts(Mario& mario) {
 			ghosts.erase(ghosts.begin() + i);
 		}
 		else {
-			i++; // Only increment if we didn't remove a ghost
+			i++; // only increment if we didn't remove a ghost
 		}
 	}
 }
 
+// Function to reset the location map of the ghosts
 void GhostManager::resetLocationMap()
 {
 	for (size_t i = 1; i < ghosts.size(); i++)

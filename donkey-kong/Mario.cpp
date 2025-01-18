@@ -119,6 +119,7 @@ void Mario::move() {
     fallCounter = gravity ? ++fallCounter : 0; 
 }
 
+// Function to check if mario met Hammer
 void Mario::checkIfMetHammer() {
     if (hammer && !hammer->isCollected() && x == hammer->getX() && y == hammer->getY()) { // change to const char
 		//haveHammer = true;
@@ -126,6 +127,7 @@ void Mario::checkIfMetHammer() {
 	}
 }
 
+// Function to set the smash state
 void Mario::smashEnemies() {
     if (smash)
         smash = false;
@@ -150,7 +152,7 @@ void Mario::jump()
     }
 }
 
-// Function to draw mario explosion
+// Function to draw mario falling explosion
 void Mario::explode()
 {
     erase();
@@ -161,6 +163,7 @@ void Mario::explode()
     Sleep(700); // longer Sleep time for visual effect
 }
 
+// Function to draw mario ghosted explosion
 void Mario::ghosted()
 {
     erase();

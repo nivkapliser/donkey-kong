@@ -1,11 +1,9 @@
 #include "Barrel.h"
 
-
 // Function to set the barrel direction according to the floor type
 void Barrel::floorDirSync()
 {
 	char floor_type = getBoard().getChar(getX(), getY() + 1);
-
 	for (size_t i = 0; i < floorTypes; i++) {
 		if (floor_type == floor[i]) {
 			changeDir(Direction(i));
@@ -16,17 +14,14 @@ void Barrel::floorDirSync()
 
 // Function to handle barrels movement logic
 void Barrel::move() {
-	int x = getX();
-	int y = getY();
-	int dirX = getDirX();
-	int dirY = getDirY();
+	int x = getX(), y = getY();
+	int dirX = getDirX(), dirY = getDirY();
 
 	if (reachedBottom()) {
 		explode();
 		return;
 	}
 
-		
 	// if next move is invalid (floor or wall) change direction
 	if (!getBoard().isValidMove(x + dirX, y + dirY) || 
 		getBoard().getChar(x + 2 * dirX, y + dirY) == getBoard().getLetter("WALL")) { 
@@ -82,14 +77,16 @@ bool Barrel::checkEncounters(Mario& mario)
 	if (mario.getSmash() && mario.getHammer()->isCollected()) {
 		return false;
 	}
-	if (mario.getX() == getX() && mario.getY() == getY()) // direct encounter
+	// direct encounter
+	if (mario.getX() == getX() && mario.getY() == getY()) 
 	{
 		setEncountered(true);
 		explode();
 		setEncountered(false);
 		return true;
 	}
-	else if ((abs(mario.getX() - getX()) <= EXPLODE_ZONE && mario.getY() == getY()) && isExploding) // indirect encounter (2 chars away)
+	// indirect encounter (2 chars away)
+	else if ((abs(mario.getX() - getX()) <= EXPLODE_ZONE && mario.getY() == getY()) && isExploding) 
 	{	
 		return true;	
 	}
@@ -97,19 +94,21 @@ bool Barrel::checkEncounters(Mario& mario)
 }
 
 // Function to activate a barrel
-void Barrel::barrelActivation() // need to make more generic
+void Barrel::barrelActivation() 
 {
 	if (!checkActivationStatus())
 	{
 		isExploding = false;
 		activation(true);
 		if (getDirectionRandomly() == 1)
-			setX(getBoard().getDonkeyKongX() + 1);
+			setX(getBoard().getDonkeyKongX() + 1); // for the start position of the barrel
 		else
-			setX(getBoard().getDonkeyKongX() - 1);
+			setX(getBoard().getDonkeyKongX() - 1); // for the start position of the barrel
 		setY(getBoard().getDonkeyKongY());
 	}
 }
+
+// Function to deactivate a barrel
 void Barrel::barrelDeactivation() {
 	activation(false);
 	linesFallen = 0;

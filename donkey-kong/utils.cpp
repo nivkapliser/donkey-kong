@@ -29,7 +29,5 @@ int randomZeroOrOne()
 }
 int getRandomIntInRange(int biggest)
 {
-    //srand(time(0));
     return (rand() % (biggest + 1));
-
 }

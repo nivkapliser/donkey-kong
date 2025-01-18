@@ -11,6 +11,7 @@ void Board::reset() {
 	}
 }
 
+// Function to print the legend
 void Board::printLegend() const {
 	gotoxy(legendX, legendY);
 	std::cout << "Lives: " << " | Score: " << std::endl;
@@ -18,6 +19,7 @@ void Board::printLegend() const {
 	std::cout << "Hammer: ";
 }
 
+// Function to check if a given position is a boarder
 bool Board::isBoarder(int x, int y) const {
 	if (getChar(x, y) == WALL || y >= MAX_Y)
 		return true;
@@ -25,8 +27,7 @@ bool Board::isBoarder(int x, int y) const {
 }
 
 // Function to print the board
-void Board::print() const
-{	
+void Board::print() const {	
 	system("cls");
 	menuGraphics->setCurrentColor(menuGraphics->getLightRed());
 	for (int i = 0; i < MAX_Y - 1; i++) {
@@ -70,15 +71,15 @@ bool Board::gravitation(int x, int y, int dirX) const {
 	return false;
 }
 
-// Function to read the selected board from file. 
-// The function returns:
-// 0 - could not open the file
-// 1 - success reading board
-// -1 - missing objects when reading the board.
-// The function pads with spaces if board too small. 
-// if more than one mario or donkey kong in the file, it will take the last position it read
+/* Function to read the selected board from file.
+* The function returns:
+* 0 - could not open the file
+* 1 - success reading board
+* -1 - missing objects when reading the board.
+* The function pads with spaces if board too small. 
+* if more than one mario or donkey kong in the file, it will take the last position it read
+*/
 int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) { 
-	int g_ind = 1; // needed?
 	int returnVal = 0;
 	int i = 0;
 	std::ifstream myFile(filename);
@@ -87,33 +88,37 @@ int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) 
 		return returnVal;
 	}
 
+	// Reset the ghost positions
 	ghostsX.clear();
 	ghostsY.clear();
 
 	std::string line;
 	for (; i < MAX_Y && std::getline(myFile, line); i++) {
 
+		// resize the line if it is too long
 		if (line.length() > MAX_X) {
 			line = line.substr(0, MAX_X); 
 		}
+		// to pad with spaces if the line is too short
 		else if (line.length() < MAX_X) {
-			line.resize(MAX_X, ' '); // to pad with spaces
+			line.resize(MAX_X, ' '); 
 		}
 
+		// copy the line to the boardFile
 		std::copy(line.begin(), line.end(), boardFile[i]);
-		boardFile[i][line.length()] = '\0'; // Null-terminate the string
+		boardFile[i][line.length()] = '\0'; 
 
-
-		// Scan the line for special characters
+		// scan the line for special characters - for setting the start positions
 		setStartPositions(line, mario, hammer, i);
 	}
 
-	// Pad with empty lines if the number of lines is smaller than MAX_Y
+	// pad with empty lines if the number of lines is smaller than MAX_Y
 	for (; i < MAX_Y; i++) {
 		std::fill(boardFile[i], boardFile[i] + MAX_X, ' ');
 		boardFile[i][MAX_X] = '\0'; // Null-terminate the string
 	}
 
+	// handle missing objects
 	if (ghostsX.size() == 0 || legendX == -1 || donkeyX == -1 || marioX == -1) {
 		returnVal = -1;
 	}
@@ -125,6 +130,7 @@ int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) 
 	return returnVal;
 }
 
+// Function to get the start positions of the entities
 void Board::setStartPositions(std::string line, Mario& mario, Hammer& hammer, int i) {
 
 	for (int j = 0; j < line.length(); j++) {
@@ -156,6 +162,7 @@ void Board::setStartPositions(std::string line, Mario& mario, Hammer& hammer, in
 	}
 }
 
+// Function to get the letter of the object
 char Board::getLetter(const char* object)
 {
 	if (object == "WALL")

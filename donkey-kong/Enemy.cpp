@@ -1,5 +1,6 @@
 #include "Enemy.h"
 
+// Function to change the direction of the enemy
 void Enemy::changeDir(Direction dir) {
 	switch (dir) {
 	case Direction::LEFT:
@@ -20,6 +21,7 @@ void Enemy::changeDir(Direction dir) {
 	}
 }
 
+// Function to check if the enemy has encountered Mario
 bool Enemy::checkEncounters(Mario& mario) {
 	if (mario.getX() == getX() && mario.getY() == getY()) // direct encounter
 	{
@@ -28,6 +30,7 @@ bool Enemy::checkEncounters(Mario& mario) {
 	return false;
 }
 
+// Function to get random direction for the enemy
 int Enemy::getDirectionRandomly() const {
 
 	if (getRandomIntInRange(1) == 0)
@@ -36,6 +39,8 @@ int Enemy::getDirectionRandomly() const {
 		return -1;
 
 }
+
+// Function to check if the enemy has reached the bottom floor
 bool Enemy::reachedBottom()
 {
 	if (getBoard().getChar(getX(), getY() + 1) == getBoard().getLetter("WALL") ||
@@ -44,6 +49,7 @@ bool Enemy::reachedBottom()
 	return false;
 }
 
+// Function to print animation (for exploding and encountering)
 void Enemy::printAnimation (const char* upper, const char* under, int sleep)
 {
 	gotoxy(getX() - 2, getY() - 2);
@@ -53,6 +59,8 @@ void Enemy::printAnimation (const char* upper, const char* under, int sleep)
 	Sleep(sleep);
 	eraseAnimation(upper, under);
 }
+
+// Function to erase animation
 void Enemy::eraseAnimation(const char* upper, const char* under)
 {
 	char lastchar;
@@ -70,6 +78,5 @@ void Enemy::eraseAnimation(const char* upper, const char* under)
 		gotoxy(getX() - 2 + i, getY());
 		std::cout << lastchar;
 	}
-
 }
 
