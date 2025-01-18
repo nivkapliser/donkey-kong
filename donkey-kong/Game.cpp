@@ -53,6 +53,11 @@ void Game::showMenu() {
 					currentState = GameState::RUNNING;
 					run = false;
 				}
+				else
+				{
+					currentState = GameState::FINISH;
+					return;
+				}
 				break;
 			case '2':
 				menuGraphics.disableColors();

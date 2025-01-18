@@ -81,6 +81,7 @@ bool Board::gravitation(int x, int y, int dirX) const {
 */
 int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) { 
 	int returnVal = 0;
+	int valid = 0;
 	int i = 0;
 	std::ifstream myFile(filename);
 	if (!myFile.is_open()) {
@@ -109,7 +110,9 @@ int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) 
 		boardFile[i][line.length()] = '\0'; 
 
 		// scan the line for special characters - for setting the start positions
-		setStartPositions(line, mario, hammer, i);
+		valid = setStartPositions(line, mario, hammer, i);
+		if (valid == -1)
+			return valid;
 	}
 
 	// pad with empty lines if the number of lines is smaller than MAX_Y
@@ -118,48 +121,80 @@ int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) 
 		boardFile[i][MAX_X] = '\0'; // Null-terminate the string
 	}
 
-	// handle missing objects
-	if (ghostsX.size() == 0 || legendX == -1 || donkeyX == -1 || marioX == -1) {
-		returnVal = -1;
+	for (int i : set_table) //checks that every mandatory char is in board
+	{
+		if (i != 1)
+			returnVal =  -1;
 	}
-	else {
-		returnVal = 1;
-	}
+	std::memset(set_table, 0, sizeof(set_table)); //reset the set table, for the next reading
+
+	returnVal = 1;
 
 	myFile.close();
 	return returnVal;
 }
 
 // Function to get the start positions of the entities
-void Board::setStartPositions(std::string line, Mario& mario, Hammer& hammer, int i) {
+int Board::setStartPositions(std::string line, Mario& mario, Hammer& hammer, int i) {
 
 	for (int j = 0; j < line.length(); j++) {
 		if (line[j] == '@') {
+			if (j == 0 || set_table[MARIO] == 1) // there is only one mario in the game
+				return -1;
+
 			boardFile[i][j] = ' ';
 			mario.setStartX(j);
 			mario.setStartY(i);
-			marioX = 1;
+			set_table[MARIO] = 1;
 		}
 		else if (line[j] == 'p') {
+			if (j == 0 || set_table[HAMMER] == 1) //there is only one hammer in the game
+				return -1;
 			boardFile[i][j] = ' ';
 			hammer.setStartX(j);
 			hammer.setStartY(i);
+			set_table[HAMMER] = 1;
 		}
 		else if (line[j] == '&') { // so we can set the barrels starting position
+			if (j == 0 || set_table[DONKEY] == 1)  //there is only one donkey in the game
+				return -1;
 			donkeyX = j;
 			donkeyY = i;
+			set_table[DONKEY] = 1;
 		}
-		else if (line[j] == 'x') { 
+		else if (line[j] == 'x') {
+			if (j == 0)
+				return -1;
 			boardFile[i][j] = ' ';
 			ghostsX.push_back(j);
 			ghostsY.push_back(i);
+			set_table[GHOST] = 1;
 		}
 		else if (line[j] == 'L') {
+			if (set_table[LEGEND] == 1)
+				return -1;
 			boardFile[i][j] = ' ';
 			legendX = j;
 			legendY = i;
+			set_table[LEGEND] = 1;
 		}
+		else if (line[j] == PAULINE) {
+			if (set_table[PAULI] == 1)
+				return -1;
+			set_table[PAULI] = 1;
+		}
+		else if (line[j] == LADDER)
+			set_table[LADD] = 1;
+		else if (line[j] == FLOOR[0])
+			set_table[FL0] = 1;
+		else if (line[j] == FLOOR[1])
+			set_table[FL1] = 1;
+		else if (line[j] == FLOOR[2])
+			set_table[FL2] = 1;
+		else if (line[j] != WALL && line[j] != EMPTY_SPACE) //checks if it not a mandatory char that allowed to be in game.
+			return -1;
 	}
+
 }
 
 // Function to get the letter of the object

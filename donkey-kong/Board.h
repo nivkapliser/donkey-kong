@@ -24,13 +24,14 @@ class Board
 	static constexpr char FLOOR[] = { '<', '>', '=' };
 	static constexpr char WALL = 'Q';
 	static constexpr char PAULINE = '$';
+	enum Mandatory {MARIO, DONKEY, LEGEND, GHOST, HAMMER, PAULI, LADD, FL0, FL1, FL2};
 	
 	// to get the start position of the entities
-	int marioX = -1;
 	int legendX = -1;
 	int legendY = -1;
 	int donkeyX = -1;
 	int donkeyY = -1;
+	int set_table[10] = {}; //table which checks every mandatory char has been set
 
 	// to get the start position of the ghosts
 	std::vector<int> ghostsX;
@@ -65,7 +66,7 @@ public:
 	void reset();
 	void print() const;
 	int readBoard(const std::string& filename, Mario& mario, Hammer& hammer);
-	void setStartPositions(std::string line, Mario& mario, Hammer& hammer, int i);
+	int setStartPositions(std::string line, Mario& mario, Hammer& hammer, int i);
 	void printLegend() const;
 	
 	// moves checking
