@@ -43,18 +43,19 @@ void BarrelManager::move(Mario& mario) {
     }
 }
 
+
 void BarrelManager::barrelsActivation() {
-    if (getSleepCount() == BARRELS_PACE) {
-        if (!barrels[getActivatedIndex()].checkActivationStatus()) {
-            barrels[getActivatedIndex()].barrelActivation();
-            setActivatedIndex(getActivatedIndex() + 1);
+    if (sleepCount == BARRELS_PACE) {
+        if (!barrels[activated_I].checkActivationStatus()) {
+            barrels[activated_I].barrelActivation();
+			activated_I++;
         }
-        if (getActivatedIndex() >= barrels.size()) {
-            setActivatedIndex(0);
+        if (activated_I >= barrels.size()) {
+            activated_I = 0;
         }
-        setSleepCount(0);
+        sleepCount = 0;
     }
-    setSleepCount(getSleepCount() + 50);
+    sleepCount += 50;
 }
 
 void BarrelManager::smashBarrels(Mario& mario) {

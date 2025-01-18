@@ -11,7 +11,6 @@
 /*
 	TODO
 	16. check for bugs - Omri
-	23. REMINDER TO DELETE POINT CLASS 
 */
 
 

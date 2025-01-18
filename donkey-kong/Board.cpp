@@ -11,6 +11,19 @@ void Board::reset() {
 	}
 }
 
+void Board::printLegend() const {
+	gotoxy(legendX, legendY);
+	std::cout << "Lives: " << " | Score: " << std::endl;
+	gotoxy(legendX, legendY + 1);
+	std::cout << "Hammer: ";
+}
+
+bool Board::isBoarder(int x, int y) const {
+	if (getChar(x, y) == WALL || y >= MAX_Y)
+		return true;
+	return false;
+}
+
 // Function to print the board
 void Board::print() const
 {	

@@ -1,16 +1,22 @@
 #pragma once
 #include "MenuGraphics.h"
-#include <iostream>
-#include <cstring>
 #include <fstream>
 #include <string>
 #include <vector>
 
-class Mario; // forward declaration
-class Hammer; // forward declaration
+class Mario;  
+class Hammer; 
+
+/*
+* This class is responsible for the game board.
+* It handles reading, storing, and printing the game board.
+* It contains methods to check the validity of a moves on board (floor, ladder, empty space, etc.).
+* It also contains methods to get the start positions of the entities and ghosts.
+*/
 
 class Board
-{
+{	
+	// for game board settings
 	static constexpr int MAX_X = 80;
 	static constexpr int MAX_Y = 25;
 	static constexpr char EMPTY_SPACE = ' ';
@@ -18,49 +24,33 @@ class Board
 	static constexpr char FLOOR[] = { '<', '>', '=' };
 	static constexpr char WALL = 'Q';
 	static constexpr char PAULINE = '$';
-	MenuGraphics* menuGraphics;
-
+	
+	// to get the start position of the entities
 	int marioX = -1;
 	int legendX = -1;
 	int legendY = -1;
 	int donkeyX = -1;
 	int donkeyY = -1;
 
+	// to get the start position of the ghosts
 	std::vector<int> ghostsX;
 	std::vector<int> ghostsY;
 
+	// to store the board
 	char boardFile[MAX_Y][MAX_X + 1];
-	char currentBoard[MAX_Y][MAX_X + 1]; // +1 for null terminator
+	char currentBoard[MAX_Y][MAX_X + 1];
+	MenuGraphics* menuGraphics;
 
 public:
-	//Board() {}
 	Board(MenuGraphics* mg) : menuGraphics(mg) { 
 		reset();
 	}
-	void reset();
-	void print() const;
+
+	// some getters and setters
 	char getChar(int x, int y) const { return currentBoard[y][x]; }
 	void setChar(int x, int y, char c) { currentBoard[y][x] = c; }
-	void printLegend() const {
-		gotoxy(legendX, legendY);
-		std::cout << "Lives: " << " | Score: " << std::endl;
-		gotoxy(legendX, legendY + 1);
-		std::cout << "Hammer: ";
-	}
 	int getLegendX() const { return legendX; }
 	int getLegendY() const { return legendY; }
-	
-	bool isValidMove(int x, int y) const;
-	bool isFloor(int x, int y) const;
-	bool isBoarder(int x, int y) const {
-		if(getChar(x, y) == WALL || y >= MAX_Y)
-			return true;
-		return false;
-	}
-	
-	bool isLadder(int x, int y) const { return currentBoard[y][x] == LADDER; }
-	bool gravitation(int x, int y, int dirX = 0) const; 
-	bool isEmptySpace(int x, int y) const { return getChar(x, y) == EMPTY_SPACE; }
 	static int getMaxX() { return MAX_X; }
 	static int getMaxY() { return MAX_Y; }
 	int getGhostX(int index) { return ghostsX[index]; }
@@ -68,10 +58,23 @@ public:
 	int getDonkeyKongX() const { return donkeyX; }
 	int getDonkeyKongY() const { return donkeyY; }
 	size_t getNumGhosts() const { return ghostsX.size(); }
-	int readBoard(const std::string& filename, Mario& mario, Hammer& hammer);
-	void setStartPositions(std::string line, Mario& mario, Hammer& hammer, int i);
 	char getLetter(const char* object);
 	int getDimension(char dim) { return tolower(dim) == 'y' ? MAX_Y : MAX_X; }
+
+	// reading, printing, and setting the board
+	void reset();
+	void print() const;
+	int readBoard(const std::string& filename, Mario& mario, Hammer& hammer);
+	void setStartPositions(std::string line, Mario& mario, Hammer& hammer, int i);
+	void printLegend() const;
+	
+	// moves checking
+	bool isValidMove(int x, int y) const;
+	bool isFloor(int x, int y) const;
+	bool isLadder(int x, int y) const { return currentBoard[y][x] == LADDER; }
+	bool gravitation(int x, int y, int dirX = 0) const; 
+	bool isEmptySpace(int x, int y) const { return getChar(x, y) == EMPTY_SPACE; }
+	bool isBoarder(int x, int y) const;
 };
 
 

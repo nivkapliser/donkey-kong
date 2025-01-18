@@ -1,12 +1,17 @@
 #pragma once
-#include "Board.h"
-#include "Mario.h"
-#include "Barrel.h"
-#include "MenuGraphics.h"
-#include "Ghost.h"
-#include <vector>
 #include "Manager.h"
+#include "Ghost.h"
+#include "MenuGraphics.h"
 
+/*
+* This class is responsible for managing the ghosts in the game.
+* It is responsible for drawing, moving, and activating the ghosts.
+* It also checks for collisions between the ghosts and mario and between two ghosts.
+* It is a derived class of Manager.
+*/
+
+class Board;
+class Mario;
 
 class GhostManager : public Manager
 {
@@ -20,6 +25,7 @@ public:
 	void draw(Mario& mario) override;
 	void move(Mario& mario) override;
 
+	// GhostManager specific functions
 	void smashGhosts(Mario& mario);
 	void resetLocationMap();
 };

@@ -1,10 +1,4 @@
 #pragma once
-
-/*
-* This class is the main class of the game. It manages the game state, flow, and controls the game loop.
-* It also initializes the game and handles user input.
-*/
-
 #include "utils.h"
 #include "Board.h"
 #include "Mario.h"
@@ -15,58 +9,60 @@
 #include "GhostManager.h"
 #include "Hammer.h"
 
+/*
+* This class is the main class of the game. It manages the game state, flow, and controls the game loop.
+* It also initializes the game and handles user input.
+* It is responsible for the game logic and the interactions between the game entities.
+*/
+
 class Game
 {
-	static constexpr int ESC = 27; // ASCII value for the escape key
+	static constexpr int ESC = 27; 
 	static constexpr char PAULINE = '$';
-	enum class GameState { MENU, RUNNING, PAUSED, RESUME, GAME_OVER, GAME_WON, NEXT_STAGE, FINISH }; // To manage game state for better game control
 
+	// managing the game state
+	enum class GameState { MENU, RUNNING, PAUSED, RESUME, GAME_OVER, GAME_WON, NEXT_STAGE, FINISH }; 
+	GameState currentState = GameState::MENU; // the default starting state
 
+	// game entities
 	MenuGraphics menuGraphics;
 	Board board;
 	Mario mario;
 	BarrelManager barrelsManager;
 	GhostManager ghostsManager;
 	Hammer hammer;
+
+	// managing the game boards
 	std::vector<std::string> boardFiles;
 	int currentBoardIndex = 0;
-
-
-	GameState currentState = GameState::MENU;
-
-
+	
+	// some internal use functions to manage the game flow
 	void resetStage();
 	void showMenu();
 	void initGame();
 	void runGame();
 	void pauseGame();
-
+	void checkNextStage();
+	bool showAndLoadBoards();
 
 public:
 	Game() : currentState(GameState::MENU), ghostsManager(board, &menuGraphics),
-		barrelsManager(board, &menuGraphics), mario(&menuGraphics, &hammer), board(&menuGraphics), hammer(){
+		barrelsManager(board, &menuGraphics), mario(&menuGraphics, &hammer), board(&menuGraphics), hammer()
+	{
 		mario.setBoard(board);
 	}
-
-	// Function to get the game state
-	GameState getGameState() const {
-		return currentState;
-	}
-
-	// Function to check if mario met Pauline and won the game
-	void marioMetPauline(Mario& mario) {
-		if (mario.metPauline())
-			currentState = GameState::GAME_WON;
-	}
-
-	void run();
+	
+	void run(); 
+	GameState getGameState() const { return currentState; }
 	void explodeMarioAndResetStage(Mario& mario);
 	void checkBarrelEncounters(BarrelManager& bm, Mario& mario); 
 	void checkGhostEncounters(GhostManager& gm, Mario& mario); 
 	void checkHammer(Mario& mario, Hammer& hammer);
 	void smashBarrel(BarrelManager& bm, Mario& mario);
 	void smashGhost(GhostManager& gm, Mario& mario);
-	bool showAndLoadBoards();
-	void checkNextStage();
 	void marioHit();
+	void marioMetPauline(Mario& mario) {
+		if (mario.metPauline())
+			currentState = GameState::GAME_WON;
+	}
 };

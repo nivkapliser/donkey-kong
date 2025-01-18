@@ -1,15 +1,14 @@
 #pragma once
+#include <iostream>
+#include <conio.h>
+#include <Windows.h>
+#include "utils.h"
 
 /*
 * This class is responsible for the game graphics.
 * It contains the game menu, game over screen, game won screen, open screen, instructions screen and stop screen.
 * The class also contains a boolean variable that determines whether to add colors to the game or not.
 */
-
-#include <iostream>
-#include <conio.h>
-#include <Windows.h>
-#include "utils.h"
 
 class MenuGraphics
 {
@@ -41,8 +40,6 @@ class MenuGraphics
 		  "|                                                                              |",//21
 		  "+==============================================================================+" //22
 	};
-
-	const char* chooseBoardScreen[GRAPHICS_HIGHT] = {};
 
 	const char* instructions[GRAPHICS_HIGHT] = {
 		// 01234567890123456789012345678901234567890123456789012345678901234567890123456789
@@ -207,8 +204,6 @@ class MenuGraphics
 
 	};
 
-	const char* legend = " Lives:  | Score:  ";
-
 	enum COLORS {
 		BLACK = 0,
 		BLUE = 1,
@@ -232,12 +227,15 @@ class MenuGraphics
 
 public:
 	
+	// color control functions
 	void setCurrentColor(int color) const {
 		if (addColor) { setColor(color); }
 		else { setColor(WHITE); }
 	}
-
 	void setColor(int color) const;
+	void disableColors();
+
+	// Display functions
 	void printGraphics(const char* graphics[]) const;
 	void displayMenu();
 	void displayGameOver();
@@ -246,25 +244,13 @@ public:
 	void displayInstructions();
 	void displayStopScreen();
 	void displayGoodBye();
-	void disableColors();
-	bool getAddColor() const {
-		return addColor;
-	}
-	void setAddColor(bool b) {
-		addColor = b;
-	}
-
-	int getLightRed() const {
-		return LIGHT_RED;
-	}
-	int getCyan() const {
-		return CYAN;
-	}
-	int getLightGreen() const {
-		return LIGHT_GREEN;
-	}
-	int getBrown() const {
-		return BROWN;
-	}
+	
+	// getters and setters
+	bool getAddColor() const { return addColor; }
+	void setAddColor(bool b) { addColor = b; }
+	int getLightRed() const { return LIGHT_RED; }
+	int getCyan() const { return CYAN; }
+	int getLightGreen() const { return LIGHT_GREEN; }
+	int getBrown() const { return BROWN;}
 };
 
