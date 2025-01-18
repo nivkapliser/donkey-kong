@@ -80,7 +80,7 @@ bool Board::gravitation(int x, int y, int dirX) const {
 * if more than one mario or donkey kong in the file, it will take the last position it read
 */
 int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) { 
-	int returnVal = 0;
+	int returnVal = 1;
 	int valid = 0;
 	int i = 0;
 	std::ifstream myFile(filename);
@@ -127,8 +127,6 @@ int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) 
 			returnVal =  -1;
 	}
 	std::memset(set_table, 0, sizeof(set_table)); //reset the set table, for the next reading
-
-	returnVal = 1;
 
 	myFile.close();
 	return returnVal;

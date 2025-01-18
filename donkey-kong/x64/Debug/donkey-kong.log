@@ -1,4 +1,4 @@
 ﻿  Board.cpp
-C:\Users\shtru\source\repos\donkey-kong1801\donkey-kong\Board.cpp(209,1): warning C4715: 'Board::getLetter': not all control paths return a value
-C:\Users\shtru\source\repos\donkey-kong1801\donkey-kong\Board.cpp(198,1): warning C4715: 'Board::setStartPositions': not all control paths return a value
+C:\Users\shtru\source\repos\donkey-kong1801\donkey-kong\Board.cpp(207,1): warning C4715: 'Board::getLetter': not all control paths return a value
+C:\Users\shtru\source\repos\donkey-kong1801\donkey-kong\Board.cpp(196,1): warning C4715: 'Board::setStartPositions': not all control paths return a value
   donkey-kong.vcxproj -> C:\Users\shtru\Source\Repos\donkey-kong1801\x64\Debug\donkey-kong.exe
