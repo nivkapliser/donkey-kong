@@ -8,6 +8,7 @@
 #include "Ghost.h"
 #include "GhostManager.h"
 #include "Hammer.h"
+#include "SpacialGhost.h"
 
 /*
 * This class is the main class of the game. It manages the game state, flow, and controls the game loop.
@@ -32,6 +33,8 @@ class Game
 	GhostManager ghostsManager;
 	Hammer hammer;
 
+	SpacialGhost spacialGhost; // for debug - latter will be in a manager class 
+
 	// managing the game boards
 	std::vector<std::string> boardFiles;
 	int currentBoardIndex = 0;
@@ -47,7 +50,8 @@ class Game
 
 public:
 	Game() : currentState(GameState::MENU), ghostsManager(board, &menuGraphics),
-		barrelsManager(board, &menuGraphics), mario(&menuGraphics, &hammer), board(&menuGraphics), hammer()
+		barrelsManager(board, &menuGraphics), mario(&menuGraphics, &hammer),
+		board(&menuGraphics), hammer(), spacialGhost(&mario)
 	{
 		mario.setBoard(board);
 	}

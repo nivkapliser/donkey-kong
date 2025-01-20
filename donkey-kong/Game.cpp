@@ -8,6 +8,11 @@
 #include <vector>
 #include <limits>
 
+/*
+* TODO:
+* 1. use one manager class for all enemies
+*/
+
 // Initializes the game by resetting the board and setting up mario and barrels
 void Game::initGame() {
 	mario.resetLives();
@@ -30,6 +35,7 @@ void Game::resetStage() {
 	hammer.setBoard(board);
 	barrelsManager.reset(board);
 	ghostsManager.reset(board);
+	spacialGhost.setBoard(board); // for debug
 }
 
 // Displays the main menu and handles user input for menu selection
@@ -191,6 +197,7 @@ void Game::runGame() {
 		barrelsManager.draw(mario);
 		ghostsManager.draw(mario);
 		hammer.draw();
+		spacialGhost.draw(); // for debug
 
 		// check and get user input
 		if (_kbhit()) {
@@ -222,6 +229,8 @@ void Game::runGame() {
 
 		barrelsManager.move(mario);
 		ghostsManager.move(mario);
+		spacialGhost.erase(); // for debug
+		spacialGhost.move(); // for debug
 
 		// if mario encounters a barrel, reset the stage or game over
 		checkBarrelEncounters(barrelsManager, mario);
