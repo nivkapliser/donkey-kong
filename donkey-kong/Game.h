@@ -10,6 +10,7 @@
 #include "Hammer.h"
 #include "SpacialGhost.h"
 
+
 /*
 * This class is the main class of the game. It manages the game state, flow, and controls the game loop.
 * It also initializes the game and handles user input.
@@ -18,12 +19,7 @@
 
 class Game
 {
-	static constexpr int ESC = 27; 
 	static constexpr char PAULINE = '$';
-
-	// managing the game state
-	enum class GameState { MENU, RUNNING, PAUSED, RESUME, GAME_OVER, GAME_WON, NEXT_STAGE, FINISH }; 
-	GameState currentState = GameState::MENU; // the default starting state
 
 	// game entities
 	MenuGraphics menuGraphics;
@@ -32,41 +28,57 @@ class Game
 	BarrelManager barrelsManager;
 	GhostManager ghostsManager;
 	Hammer hammer;
-
 	SpacialGhost spacialGhost; // for debug - latter will be in a manager class 
 
 	// managing the game boards
 	std::vector<std::string> boardFiles;
 	int currentBoardIndex = 0;
-	
+	long random_seed = static_cast<long>(std::chrono::system_clock::now().time_since_epoch().count());
+
+protected:
 	// some internal use functions to manage the game flow
 	void resetStage();
-	void showMenu();
+	//void showMenu(); // only in game from key
 	void initGame();
-	void runGame();
-	void pauseGame();
-	void checkNextStage();
-	bool showAndLoadBoards();
+	virtual void runGame() = 0; // virtual
+	//void pauseGame(); // only in game from key
+	virtual void checkNextStage() = 0; // virtual?
+	virtual bool showAndLoadBoards(); // need to split into load and show 
 
 public:
-	Game() : currentState(GameState::MENU), ghostsManager(board, &menuGraphics),
+	// game state should be something else
+	Game() : ghostsManager(board, &menuGraphics),
 		barrelsManager(board, &menuGraphics), mario(&menuGraphics, &hammer),
 		board(&menuGraphics), hammer(), spacialGhost(&mario)
 	{
 		mario.setBoard(board);
 	}
 	
-	void run(); 
-	GameState getGameState() const { return currentState; }
-	void explodeMarioAndResetStage(Mario& mario);
-	void checkBarrelEncounters(BarrelManager& bm, Mario& mario); 
-	void checkGhostEncounters(GhostManager& gm, Mario& mario); 
-	void checkHammer(Mario& mario, Hammer& hammer);
-	void smashBarrel(BarrelManager& bm, Mario& mario);
-	void smashGhost(GhostManager& gm, Mario& mario);
-	void marioHit();
-	void marioMetPauline(Mario& mario) {
-		if (mario.metPauline())
-			currentState = GameState::GAME_WON;
-	}
+	// ~Game() = default; // for virtual
+
+	virtual void run() = 0; // virtual
+	//GameState getGameState() const { return currentState; } // keyboard
+	void explodeMarioAndResetStage(Mario& mario); // both
+	virtual void checkBarrelEncounters(BarrelManager& bm, Mario& mario) = 0; // both
+	virtual void checkGhostEncounters(GhostManager& gm, Mario& mario) = 0; // both 
+	void checkHammer(Mario& mario, Hammer& hammer); // both
+	void smashBarrel(BarrelManager& bm, Mario& mario); // both 
+	void smashGhost(GhostManager& gm, Mario& mario); // both
+	void marioHit(); // both
+	//void marioMetPauline(Mario& mario) { // both?
+	//	if (mario.metPauline())
+	//		currentState = GameState::GAME_WON;
+	//}
+
+	Mario& getMario() { return mario; } 
+	BarrelManager& getBarrelManager() { return barrelsManager; }
+	GhostManager& getGhostManager() { return ghostsManager; }
+	Board& getBoard() { return board; }
+	SpacialGhost& getSpacialGhost() { return spacialGhost; }
+	Hammer& getHammer() { return hammer; }
+	MenuGraphics& getMenuGraphics() { return menuGraphics; }
+	std::vector<std::string>& getBoards() { return boardFiles; }
+	int getCurrBoardIndex() { return currentBoardIndex; }
+	void setCurrentBoardIndex(int index) { currentBoardIndex = index; }
+
 };

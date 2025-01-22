@@ -133,6 +133,8 @@
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameFromFile.cpp" />
+    <ClCompile Include="GameFromKeyboard.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="GhostManager.cpp" />
     <ClCompile Include="Hammer.cpp" />
@@ -149,6 +151,8 @@
     <ClInclude Include="Board.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameFromFile.h" />
+    <ClInclude Include="GameFromKeyboard.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="GhostManager.h" />
     <ClInclude Include="Hammer.h" />
