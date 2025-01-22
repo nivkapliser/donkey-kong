@@ -119,22 +119,17 @@ void GameFromKeyboard::runGame() {
 		spacialGhost.draw(); // for debug
 
 		// check and get user input
-		if (_kbhit()) {
-			std::vector<char> keyBuffer;
-			for (int i = 0; i < 5 && _kbhit(); ++i) {
-				keyBuffer.push_back(_getch());
-			}
-
-			for (char key : keyBuffer) {
-				if (key == ESC) { 
+		for (int i = 0; i < 2; i++) {
+			if (_kbhit()) {
+				char key = _getch();
+				if (key == ESC) {
 					currentState = GameState::PAUSED;
 					break;
 				}
 				mario.keyPressed(key);
 			}
+			Sleep(25);
 		}
-		Sleep(50); // for better visual effect
-
 
 		mario.erase();
 		mario.move();
