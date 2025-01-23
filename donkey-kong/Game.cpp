@@ -137,8 +137,7 @@ bool Game::showAndLoadBoards() {
 		Sleep(3000); // so user can see
 		return false;
 	}
-	curr_board_name = boardFiles[currentBoardIndex - 1];
-	removeSuffix(curr_board_name, ".screen");
+
 	std::getline(std::cin, input);
 	return true;
 }

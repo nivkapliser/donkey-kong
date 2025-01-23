@@ -128,6 +128,9 @@ int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) 
 	}
 	std::memset(set_table, 0, sizeof(set_table)); //reset the set table, for the next reading
 
+	curr_board_name = filename;
+	removeSuffix(curr_board_name, ".screen");
+
 	myFile.close();
 	return returnVal;
 }

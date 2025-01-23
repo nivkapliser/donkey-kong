@@ -169,7 +169,7 @@ void GameFromKeyboard::runGame() {
 			if (save == true)
 			{
 				steps.setFinalItr(curr_itr);
-				std::string steps_f_name = createFileName(getBoardName(), "steps");
+				std::string steps_f_name = createFileName(getBoard().getBoardName(), "steps");
 				steps.saveSteps(steps_f_name);
 			}
 			break;

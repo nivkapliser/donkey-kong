@@ -40,6 +40,7 @@ class Board
 	// to store the board
 	char boardFile[MAX_Y][MAX_X + 1];
 	char currentBoard[MAX_Y][MAX_X + 1];
+	std::string curr_board_name;
 	MenuGraphics* menuGraphics;
 
 public:
@@ -76,6 +77,8 @@ public:
 	bool gravitation(int x, int y, int dirX = 0) const; 
 	bool isEmptySpace(int x, int y) const { return getChar(x, y) == EMPTY_SPACE; }
 	bool isBoarder(int x, int y) const;
+	std::string& getBoardName() { return curr_board_name; }
+
 };
 
 

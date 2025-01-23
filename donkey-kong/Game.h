@@ -44,7 +44,6 @@ protected:
 	//void pauseGame(); // only in game from key
 	virtual void checkNextStage() = 0; // virtual?
 	virtual bool showAndLoadBoards(); // need to split into load and show 
-	std::string curr_board_name;
 public:
 	// game state should be something else
 	Game() : ghostsManager(board, &menuGraphics),
@@ -82,5 +81,4 @@ public:
 	void setCurrentBoardIndex(int index) { currentBoardIndex = index; }
 	void setRandomSeed(int seed) { random_seed = seed; }
 	long getRandomSeed() const { return random_seed; }
-	std::string& getBoardName() { return curr_board_name; }
 };

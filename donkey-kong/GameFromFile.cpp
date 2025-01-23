@@ -5,7 +5,7 @@
 
 void GameFromFile::run() {
 	showAndLoadBoards();
-	steps = steps.readSteps(createFileName(getBoardName(), "steps")); //reading the steps
+	steps = steps.readSteps(createFileName(getBoard().getBoardName(), "steps")); //reading the steps
 	setRandomSeed(steps.getRandomSeed());  //random seed set
 	initGame();
 	runGame();
