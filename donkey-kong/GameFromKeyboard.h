@@ -29,5 +29,6 @@ public:
 		if (mario.metPauline())
 			currentState = GameState::GAME_WON;
 	}
+
 };
 

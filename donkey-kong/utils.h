@@ -3,6 +3,12 @@
 #include <iostream>
 #include <cstdlib>
 #include <filesystem>
+#include <list>
+#include <utility>
+#include <fstream>
+#include <string>
+#include <vector>
+
 
 /*
 * This file contains some useful functions for console applications.

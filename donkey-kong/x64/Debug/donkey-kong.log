@@ -1,2 +1,4 @@
-﻿  GameFromKeyboard.cpp
-  donkey-kong.vcxproj -> C:\Users\niv\Desktop\donkey-kong\x64\Debug\donkey-kong.exe
+﻿  GameFromFile.cpp
+  main.cpp
+  Generating Code...
+  donkey-kong.vcxproj -> C:\Users\shtru\Source\Repos\donkey-kong3-2201\x64\Debug\donkey-kong.exe
