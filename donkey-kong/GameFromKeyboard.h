@@ -1,5 +1,7 @@
 #pragma once
+#include "utils.h"
 #include "Game.h"
+#include "Steps.h"
 
 class GameFromKeyboard : public Game
 {
@@ -7,7 +9,9 @@ class GameFromKeyboard : public Game
 	enum class GameState { MENU, RUNNING, PAUSED, RESUME, GAME_OVER, GAME_WON, NEXT_STAGE, FINISH };
 	GameState currentState = GameState::MENU; // the default starting state
 	
-	bool save;
+	bool save = true;
+	Steps steps;
+	int curr_itr = 0;
 
 	void showMenu();
 	void runGame() override;
@@ -15,7 +19,7 @@ class GameFromKeyboard : public Game
 	void checkNextStage() override;
 
 public:
-	GameFromKeyboard() :Game(), save(false) {}
+	GameFromKeyboard() :Game(), save(true) {}
 
 	~GameFromKeyboard() {} 
 

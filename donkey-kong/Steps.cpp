@@ -6,6 +6,8 @@ Steps Steps::readSteps(const std::string& filename)
     Steps res;
     int iteration;
     char key;
+    int random_seed;
+    int final_itr;
 
     std::ifstream steps_f(filename);
     if (!steps_f.is_open()) {
@@ -13,6 +15,7 @@ Steps Steps::readSteps(const std::string& filename)
         return Steps();  //to change
     }
     steps_f >> res.random_seed;
+    steps_f >> res.final_itr;
     size_t size;
     steps_f >> size;
 
@@ -28,10 +31,11 @@ Steps Steps::readSteps(const std::string& filename)
 
 void Steps::saveSteps(const std::string& filename) const
 {
+
     std::ofstream steps_f(filename);
-    steps_f << random_seed << '/n' << steps.size();
+    steps_f << random_seed << '\n' << final_itr << '\n' << steps.size();
     for(const auto& step : steps)
-        steps_f << '/n' << step.first << ' ' << step.second;
+        steps_f << '\n' << step.first << ' ' << step.second;
     steps_f.close();
 }
 

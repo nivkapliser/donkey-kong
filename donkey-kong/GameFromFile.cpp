@@ -1,8 +1,12 @@
 #include "GameFromFile.h"
 
 //
+
+
 void GameFromFile::run() {
 	showAndLoadBoards();
+	steps = steps.readSteps(createFileName(getBoardName(), "steps")); //reading the steps
+	setRandomSeed(steps.getRandomSeed());  //random seed set
 	initGame();
 	runGame();
 }
@@ -51,9 +55,7 @@ void GameFromFile::checkGhostEncounters(GhostManager& gm, Mario& mario)
 
 
 void GameFromFile::runGame() {
-	Steps steps;
-	steps = steps.readSteps("board01.steps"); //reading the steps
-	setRandomSeed(steps.getRandomSeed());  //random seed set
+	int final_itr = steps.getFinalItr();
 
 	//TODO: things that we are exactly doing in regular game - do with it something
 	Mario& mario = getMario();
@@ -70,8 +72,8 @@ void GameFromFile::runGame() {
 		next_step = steps.popStep();  // gets the first step (if exist)
 
 	// moving loop for mario and barrels
-	while (!steps.isEmpty()) {  //change the condition to a final itr - need to be saved in file
-		
+	for(int i = 0; i <= final_itr; i++) {  //change the condition to a final itr - need to be saved in file
+		curr_itr++; // increament for the itr counter
 		mario.draw();
 		barrelsManager.draw(mario);
 		ghostsManager.draw(mario);
@@ -79,11 +81,22 @@ void GameFromFile::runGame() {
 		spacialGhost.draw(); // for debug
 
 		// check and get user input
-		if (curr_itr == next_step.first) {
-			mario.keyPressed(next_step.second);
-			next_step = steps.popStep();  //get the next step
+		//if (curr_itr == next_step.first) {
+		//	mario.keyPressed(next_step.second);
+		//	if (!steps.isEmpty())
+		//		next_step = steps.popStep();  //get the next step
+		//}
+		//Sleep(25);
+
+		// check and get user input
+		for (int i = 0; i < 2; i++) {
+			if (curr_itr == next_step.first) {
+				mario.keyPressed(next_step.second);
+				if (!steps.isEmpty())
+					next_step = steps.popStep();  //get the next step
+			}
+			Sleep(10);
 		}
-		Sleep(10);
 
 		mario.erase();
 		mario.move();
@@ -121,6 +134,5 @@ void GameFromFile::runGame() {
 		//	break;
 		//}
 
-		curr_itr++; // increament for the itr counter
 	}
 }

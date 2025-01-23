@@ -108,10 +108,11 @@ void GameFromKeyboard::runGame() {
 	Hammer& hammer = getHammer();
 	SpacialGhost& spacialGhost = getSpacialGhost();
 
+	steps.setRandomSeed(getRandomSeed());
 
 	// moving loop for mario and barrels
 	while (currentState == GameState::RUNNING || currentState == GameState::NEXT_STAGE) {
-
+		curr_itr++;
 		mario.draw();
 		barrelsManager.draw(mario);
 		ghostsManager.draw(mario);
@@ -126,7 +127,8 @@ void GameFromKeyboard::runGame() {
 					currentState = GameState::PAUSED;
 					break;
 				}
-				mario.keyPressed(key);
+				if (mario.keyPressed(key) && save == true) //if the key is a legit key and save mode is on
+					steps.addStep(curr_itr, key);
 			}
 			Sleep(25);
 		}
@@ -164,6 +166,12 @@ void GameFromKeyboard::runGame() {
 		marioMetPauline(mario);
 
 		if (currentState == GameState::GAME_OVER) {
+			if (save == true)
+			{
+				steps.setFinalItr(curr_itr);
+				std::string steps_f_name = createFileName(getBoardName(), "steps");
+				steps.saveSteps(steps_f_name);
+			}
 			break;
 		}
 	}

@@ -28,17 +28,21 @@ void Mario::changeDir(Direction dir) {
 
 // Function to handle key press
 // based on code from the lab
-void Mario::keyPressed(char key) { // add 'p' for hammer
+bool Mario::keyPressed(char key) { // add 'p' for hammer
+    bool legit = false;
     for (size_t i = 0; i < numKeys; i++) {
         if (std::tolower(key) == keys[i]) {
             changeDir(static_cast<Direction>(i));
+            legit = true;
             break;
         }
     }
 	if (std::tolower(key) == 'p') { // should be const
         if (hammer->isCollected())
             smash = true;
+        legit = true;
 	}
+    return legit;
 }
 
 // Function to handle marios movement logic

@@ -127,7 +127,7 @@ public:
 	// movement control
 	void changeDir(Direction dir);
 	void move();
-	void keyPressed(char key);
+	bool keyPressed(char key);
 	void jump();
 	void explode();
 	void ghosted();

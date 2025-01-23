@@ -31,3 +31,14 @@ int getRandomIntInRange(int biggest)
 {
     return (rand() % (biggest + 1));
 }
+
+std::string createFileName(std::string filename, std::string sufix)
+{
+    return (filename + '.' + sufix);
+}
+void removeSuffix(std::string& str, const std::string& suffix) {
+    if (str.size() >= suffix.size() &&
+        str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0) {
+        str.erase(str.size() - suffix.size());
+    }
+}

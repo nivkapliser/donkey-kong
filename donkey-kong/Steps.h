@@ -4,6 +4,7 @@
 class Steps
 {
 	long random_seed = 0;
+	int final_itr;
 	std::list<std::pair<int, char>> steps;  //pairs of iteration and key pressed
 public:
 	static Steps readSteps(const std::string& filename);
@@ -17,6 +18,7 @@ public:
 	bool isEmpty() { return steps.empty(); }
 	bool isNextStepOnItr(int itr) const { return !steps.empty() && steps.front().first == itr; }
 	std::pair<int, char> popStep();// { std::pair<int, char> step = steps.front(); steps.pop_front(); return step; }
-
+	void setFinalItr(int itr) { final_itr = itr; }
+	int getFinalItr() { return final_itr; }
 };
 

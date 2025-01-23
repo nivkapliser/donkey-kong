@@ -20,3 +20,5 @@ void gotoxy(int x, int y);
 void ShowConsoleCursor(bool showFlag);
 int randomZeroOrOne();
 int getRandomIntInRange(int biggest);
+std::string createFileName(std::string filename,std::string sufix);
+void removeSuffix(std::string& str, const std::string& suffix);

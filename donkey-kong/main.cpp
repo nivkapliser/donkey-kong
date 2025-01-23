@@ -7,11 +7,19 @@
 
 int main()
 {
+	bool load = 1;
 	ShowConsoleCursor(false);
-	GameFromKeyboard gameFromKeyboard;
-	GameFromFile gameFromFile;
-	//gameFromFile.run();
-	gameFromKeyboard.run();
+	if (load)
+	{
+		GameFromFile gameFromFile;
+		gameFromFile.run();
+	}
+	else
+	{
+		GameFromKeyboard gameFromKeyboard;
+		gameFromKeyboard.run();
+	}
+
 	return 0;
 }
 
