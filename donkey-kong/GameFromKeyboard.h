@@ -10,7 +10,7 @@ class GameFromKeyboard : public Game
 	enum class GameState { MENU, RUNNING, PAUSED, RESUME, GAME_OVER, GAME_WON, NEXT_STAGE, FINISH };
 	GameState currentState = GameState::MENU; // the default starting state
 	
-	bool save = true; // not a default value. should be set in the constructor by the main argument input
+	bool save = true; 
 	Steps steps;
 	Results results;
 	//int curr_itr = 0;

@@ -21,6 +21,7 @@ public:
 			if (results.popResult().second != results.ResultValue::STAGE_FINISH) {
 				reportResultError("Result file does not match finish stage", getBoard().getBoardName(), getCurrItr());
 			}
+			checkNextStage();	
 		}
 	}
 };

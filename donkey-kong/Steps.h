@@ -18,5 +18,6 @@ public:
 	std::pair<int, char> popStep();// { std::pair<int, char> step = steps.front(); steps.pop_front(); return step; }
 	void setFinalItr(int itr) { final_itr = itr; }
 	int getFinalItr() { return final_itr; }
+	void clearSteps() { steps.clear(); }
 };
 

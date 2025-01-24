@@ -83,7 +83,6 @@ void GameFromKeyboard::run() {
 			currentState = GameState::MENU;
 			break;
 		case GameState::GAME_WON:	// to display game won screen and return to menu
-			results.addResult(getCurrItr(), Results::ResultValue::GAME_WON);
 			saveFiles();
 			setCurrItr(0);
 			menuGraphics.displayGameWon();
@@ -113,7 +112,8 @@ void GameFromKeyboard::runGame() {
 	GhostManager& ghostsManager = getGhostManager();
 	Hammer& hammer = getHammer();
 	SpacialGhost& spacialGhost = getSpacialGhost();
-
+	results.clearResults();
+	steps.clearSteps();
 	steps.setRandomSeed(getRandomSeed());
 
 	// moving loop for mario and barrels

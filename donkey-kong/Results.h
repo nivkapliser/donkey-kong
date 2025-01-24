@@ -31,5 +31,6 @@ public:
 	std::pair<size_t, ResultValue> popResult(); // for load
 	bool isEmpty() { return results.empty(); } // where to use?
 	bool isFinishedBy(size_t itr) const { return results.empty() || results.back().first <= itr; } // where to use?
+	void clearResults() { results.clear(); }
 };
 

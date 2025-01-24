@@ -8,7 +8,6 @@
 /*
 TODO:
 1. READ FROM MAIN ARGUMENTS
-3. SPLIT showAndLoadBoards FUNCTION
 4. SAVE IS NOT A DEFAULT OPTION. NEED TO DECIDE HOW TO SAVE ACCORDINGLY
 6. CHECK IF FUNCTIONS NEED TO BE CONST
 */
@@ -17,17 +16,14 @@ int main()
 {
 	bool load = 1;
 	ShowConsoleCursor(false);
-	if (load)
-	{
+	if (load) {
 		GameFromFile gameFromFile;
 		gameFromFile.run();
 	}
-	else
-	{
+	else {
 		GameFromKeyboard gameFromKeyboard(true);
 		gameFromKeyboard.run();
 	}
-
 	return 0;
 }
 

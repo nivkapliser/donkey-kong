@@ -7,6 +7,7 @@ void GameFromFile::run() {
 	setRandomSeed(steps.getRandomSeed());  //random seed set
 	initGame();
 	runGame();
+	checkNextStage();
 }
 
 bool GameFromFile::showAndLoadBoards() {
@@ -46,16 +47,26 @@ void GameFromFile::checkNextStage()
 {
 	int currentBoardIndex = getCurrBoardIndex();
 	std::vector<std::string> boardFiles = getBoards();
-	Board board = getBoard();
-	Hammer hammer = getHammer();
-	Mario mario = getMario();
+	
 
-	if (currentBoardIndex < boardFiles.size()) {
+	if (currentBoardIndex + 1 < boardFiles.size()) {
 		setCurrentBoardIndex(++currentBoardIndex);
-		board.readBoard(boardFiles[currentBoardIndex - 1], mario, hammer);
+		Board& board = getBoard();
+		Hammer& hammer = getHammer();
+		Mario& mario = getMario();
+		board.readBoard(boardFiles[currentBoardIndex], mario, hammer);
+		steps = steps.readSteps(createFileName(board.getBoardName(), "steps"));
+		results = results.readResults(createFileName(board.getBoardName(), "results"));
+		setRandomSeed(steps.getRandomSeed());
+		initGame();
+		runGame();
 		//currentState = GameState::NEXT_STAGE;
 	}
-	//else
+	else {
+		system("cls");
+		std::cout << "No more stages. Exiting recording.\n";
+		Sleep(3000);
+	}
 		//currentState = GameState::MENU;
 }
 
@@ -105,7 +116,7 @@ void GameFromFile::runGame() {
 	Hammer& hammer = getHammer();
 	SpacialGhost& spacialGhost = getSpacialGhost();
 	///////////////////
-
+	setCurrItr(0);  //reset the itr counter
 	std::pair<int, char> next_step;
 	//int curr_itr = 0;  //itr index
 
