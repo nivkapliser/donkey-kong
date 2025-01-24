@@ -33,7 +33,7 @@ public:
 	void explodeMarioAndResetStage(Mario& mario);
 	void checkBarrelEncounters(BarrelManager& bm, Mario& mario) override;
 	void checkGhostEncounters(GhostManager& gm, Mario& mario) override;
-	void marioMetPauline(Mario& mario) { 
+	void marioMetPauline(Mario& mario) override { 
 		if (mario.metPauline()) {
 			currentState = GameState::GAME_WON; 
 			results.addResult(getCurrItr(), Results::ResultValue::STAGE_FINISH);

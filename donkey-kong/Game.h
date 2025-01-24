@@ -39,10 +39,8 @@ class Game
 protected:
 	// some internal use functions to manage the game flow
 	void resetStage();
-	//void showMenu(); // only in game from key
 	void initGame();
 	virtual void runGame() = 0; // virtual
-	//void pauseGame(); // only in game from key
 	virtual void checkNextStage() = 0; // virtual?
 	virtual bool showAndLoadBoards(); // need to split into load and show 
 public:
@@ -65,11 +63,8 @@ public:
 	void smashBarrel(BarrelManager& bm, Mario& mario); // both 
 	void smashGhost(GhostManager& gm, Mario& mario); // both
 	void marioHit(); // both
-	//void marioMetPauline(Mario& mario) { // both?
-	//	if (mario.metPauline())
-	//		currentState = GameState::GAME_WON;
-	//}
-
+	virtual void marioMetPauline(Mario& mario) = 0;
+	
 	Mario& getMario() { return mario; } 
 	BarrelManager& getBarrelManager() { return barrelsManager; }
 	GhostManager& getGhostManager() { return ghostsManager; }
@@ -84,4 +79,5 @@ public:
 	long getRandomSeed() const { return random_seed; }
 	int getCurrItr() const { return curr_itr; }
 	void setCurrItr(int itr) { curr_itr = itr; }
+
 };

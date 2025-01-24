@@ -9,7 +9,7 @@ Results Results::readResults(const std::string& filename) {
 		size_t iteration;
 		int result;
 		results_file >> iteration >> result;
-		results.addResult(iteration, static_cast<ResultValue>(result));
+		results.pushResult(iteration, static_cast<ResultValue>(result));
 	}
 	return results;
 }

@@ -77,7 +77,7 @@ void GameFromKeyboard::run() {
 			pauseGame();
 			break;
 		case GameState::GAME_OVER:	// to display game over screen and return to menu
-			results.addResult(getCurrItr(), Results::ResultValue::GAME_FINISH);
+			//results.addResult(getCurrItr(), Results::ResultValue::GAME_FINISH);
 			saveFiles();
 			menuGraphics.displayGameOver();
 			currentState = GameState::MENU;

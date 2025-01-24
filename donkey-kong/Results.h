@@ -27,6 +27,7 @@ public:
 	static Results readResults(const std::string& filename);
 	void saveResults(const std::string& filename) const;
 	void addResult(size_t iteration, ResultValue result) { if (save) { results.push_back({ iteration, result }); } }
+	void pushResult(size_t iteration, ResultValue result) { results.push_back({ iteration, result }); } // without the save check for the 'from file' game
 	std::pair<size_t, ResultValue> popResult(); // for load
 	bool isEmpty() { return results.empty(); } // where to use?
 	bool isFinishedBy(size_t itr) const { return results.empty() || results.back().first <= itr; } // where to use?

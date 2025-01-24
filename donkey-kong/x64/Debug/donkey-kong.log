@@ -1,9 +1,2 @@
-﻿  GameFromFile.cpp
-  GameFromKeyboard.cpp
-  Results.cpp
-  Steps.cpp
-C:\Users\niv\Desktop\donkey-kong\donkey-kong\Steps.cpp(10,9): warning C4101: 'final_itr': unreferenced local variable
-C:\Users\niv\Desktop\donkey-kong\donkey-kong\Steps.cpp(9,9): warning C4101: 'random_seed': unreferenced local variable
-  main.cpp
-  Generating Code...
+﻿  main.cpp
   donkey-kong.vcxproj -> C:\Users\niv\Desktop\donkey-kong\x64\Debug\donkey-kong.exe
