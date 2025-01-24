@@ -118,7 +118,6 @@ void GameFromKeyboard::runGame() {
 
 	// moving loop for mario and barrels
 	while (currentState == GameState::RUNNING || currentState == GameState::NEXT_STAGE) {
-		//curr_itr++;
 		setCurrItr(getCurrItr() + 1);
 		mario.draw();
 		barrelsManager.draw(mario);
@@ -178,9 +177,8 @@ void GameFromKeyboard::runGame() {
 		if (currentState == GameState::GAME_OVER) {
 			if (save)
 			{
-				// move to the state control
+				// moved to the state control
 				//steps.setFinalItr(getCurrItr());
-				//steps.setFinalItr(curr_itr);
 				//std::string steps_f_name = createFileName(getBoard().getBoardName(), "steps");
 				//steps.saveSteps(steps_f_name);
 				results.addResult(getCurrItr(), Results::ResultValue::GAME_LOSE);

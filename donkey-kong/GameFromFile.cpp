@@ -1,8 +1,5 @@
 #include "GameFromFile.h"
 
-//
-
-
 void GameFromFile::run() {
 	showAndLoadBoards();
 	steps = steps.readSteps(createFileName(getBoard().getBoardName(), "steps")); //reading the steps

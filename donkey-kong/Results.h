@@ -4,12 +4,24 @@
 class Results
 {
 public:
-	//       encounted ghost,    barrel,    special ghost, fell to far, pauline save, final win, final lose, game finish (other reason)
-	enum ResultValue { ENC_GHOST, ENC_BARREL, ENC_SP_GHOST, ENC_FALL, STAGE_FINISH, GAME_WON ,GAME_LOSE, GAME_FINISH, NO_RESULT }; 
+
+	enum ResultValue {
+		ENC_GHOST,      // encounter ghost
+		ENC_BARREL,     // encounter barrel
+		ENC_SP_GHOST,   // encounter special ghost
+		ENC_FALL, 	    // fell too far	
+		STAGE_FINISH,   // mario met pauline
+		GAME_WON,       // mario won the game (finish all stages)
+		GAME_LOSE,      // mario lost the game (no more lives)
+		GAME_FINISH,	// game finished for some reason (esc, etc);
+		NO_RESULT 	    // no result
+	}; 
+
 private:
+
 	std::list<std::pair<size_t, ResultValue>> results; // pairs of iteration and result
-	bool save = false; 
-	// maybe add silent
+	bool save = false;
+
 public:
 	void setSave(bool _save) { save = _save; }
 	static Results readResults(const std::string& filename);
@@ -18,8 +30,5 @@ public:
 	std::pair<size_t, ResultValue> popResult(); // for load
 	bool isEmpty() { return results.empty(); } // where to use?
 	bool isFinishedBy(size_t itr) const { return results.empty() || results.back().first <= itr; } // where to use?
-	
-	//void setFinalItr(size_t itr) { final_itr = itr; }
-	//size_t getFinalItr() { return final_itr; }
 };
 
