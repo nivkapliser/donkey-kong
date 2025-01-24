@@ -77,14 +77,20 @@ void GameFromKeyboard::run() {
 			pauseGame();
 			break;
 		case GameState::GAME_OVER:	// to display game over screen and return to menu
+			results.addResult(getCurrItr(), Results::ResultValue::GAME_FINISH);
+			saveFiles();
 			menuGraphics.displayGameOver();
 			currentState = GameState::MENU;
 			break;
 		case GameState::GAME_WON:	// to display game won screen and return to menu
+			results.addResult(getCurrItr(), Results::ResultValue::GAME_WON);
+			saveFiles();
+			setCurrItr(0);
 			menuGraphics.displayGameWon();
 			checkNextStage();
 			break;
 		case GameState::NEXT_STAGE:	// moving on to the next stage after winning
+			// currItr is 0
 			resetStage();
 			runGame();
 			break;
@@ -112,7 +118,8 @@ void GameFromKeyboard::runGame() {
 
 	// moving loop for mario and barrels
 	while (currentState == GameState::RUNNING || currentState == GameState::NEXT_STAGE) {
-		curr_itr++;
+		//curr_itr++;
+		setCurrItr(getCurrItr() + 1);
 		mario.draw();
 		barrelsManager.draw(mario);
 		ghostsManager.draw(mario);
@@ -128,7 +135,7 @@ void GameFromKeyboard::runGame() {
 					break;
 				}
 				if (mario.keyPressed(key) && save == true) //if the key is a legit key and save mode is on
-					steps.addStep(curr_itr, key);
+					steps.addStep(getCurrItr(), key);
 			}
 			Sleep(25);
 		}
@@ -159,18 +166,24 @@ void GameFromKeyboard::runGame() {
 			mario.drawScore();
 
 		// check if mario has fallen 5 lines and reset the stage
-		if (mario.fellTooFar() && mario.isOnFloor())
+		if (mario.fellTooFar() && mario.isOnFloor()) {
+			results.addResult(getCurrItr(), Results::ResultValue::ENC_FALL);
 			explodeMarioAndResetStage(mario);
+		}
+			
 
 		// if mario meets Pauline, game won
 		marioMetPauline(mario);
 
 		if (currentState == GameState::GAME_OVER) {
-			if (save == true)
+			if (save)
 			{
-				steps.setFinalItr(curr_itr);
-				std::string steps_f_name = createFileName(getBoard().getBoardName(), "steps");
-				steps.saveSteps(steps_f_name);
+				// move to the state control
+				//steps.setFinalItr(getCurrItr());
+				//steps.setFinalItr(curr_itr);
+				//std::string steps_f_name = createFileName(getBoard().getBoardName(), "steps");
+				//steps.saveSteps(steps_f_name);
+				results.addResult(getCurrItr(), Results::ResultValue::GAME_LOSE);
 			}
 			break;
 		}
@@ -199,9 +212,9 @@ void GameFromKeyboard::pauseGame() {
 void GameFromKeyboard::checkNextStage() { // maybe should be inputs
 	int currentBoardIndex = getCurrBoardIndex();	
 	std::vector<std::string> boardFiles = getBoards();	
-	Board board = getBoard();
-	Hammer hammer = getHammer();
-	Mario mario = getMario();
+	Board& board = getBoard();
+	Hammer& hammer = getHammer();
+	Mario& mario = getMario();
 
 	if (currentBoardIndex < boardFiles.size()) {
 		setCurrentBoardIndex(++currentBoardIndex);
@@ -222,6 +235,7 @@ void GameFromKeyboard::explodeMarioAndResetStage(Mario& mario) {
 void GameFromKeyboard::checkBarrelEncounters(BarrelManager& bm, Mario& mario) {
 	if (bm.getEncounters()) {
 		mario.downLives();
+		results.addResult(getCurrItr(), Results::ResultValue::ENC_BARREL);
 		resetStage();
 		if (mario.getLives() == 0) {
 			currentState = GameState::GAME_OVER;
@@ -233,6 +247,7 @@ void GameFromKeyboard::checkBarrelEncounters(BarrelManager& bm, Mario& mario) {
 void GameFromKeyboard::checkGhostEncounters(GhostManager& gm, Mario& mario) {
 	if (gm.getEncounters()) {
 		mario.ghosted();
+		results.addResult(getCurrItr(), Results::ResultValue::ENC_GHOST);
 		mario.downLives();
 		resetStage();
 		if (mario.getLives() == 0) {
@@ -240,4 +255,10 @@ void GameFromKeyboard::checkGhostEncounters(GhostManager& gm, Mario& mario) {
 		}
 		gm.setEncounters(false);
 	}
+}
+
+void GameFromKeyboard::saveFiles() {
+	results.saveResults(createFileName(getBoard().getBoardName(), "results"));
+	steps.setFinalItr(getCurrItr());
+	steps.saveSteps(createFileName(getBoard().getBoardName(), "steps"));
 }

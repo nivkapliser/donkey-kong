@@ -142,6 +142,7 @@
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MenuGraphics.cpp" />
+    <ClCompile Include="Results.cpp" />
     <ClCompile Include="SpacialGhost.cpp" />
     <ClCompile Include="Steps.cpp" />
     <ClCompile Include="utils.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MenuGraphics.h" />
+    <ClInclude Include="Results.h" />
     <ClInclude Include="SpacialGhost.h" />
     <ClInclude Include="Steps.h" />
     <ClInclude Include="utils.h" />

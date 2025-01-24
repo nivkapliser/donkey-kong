@@ -34,6 +34,7 @@ class Game
 	std::vector<std::string> boardFiles;
 	int currentBoardIndex = 0;
 	long random_seed = static_cast<long>(std::chrono::system_clock::now().time_since_epoch().count());
+	int curr_itr = 0;
 
 protected:
 	// some internal use functions to manage the game flow
@@ -81,4 +82,6 @@ public:
 	void setCurrentBoardIndex(int index) { currentBoardIndex = index; }
 	void setRandomSeed(int seed) { random_seed = seed; }
 	long getRandomSeed() const { return random_seed; }
+	int getCurrItr() const { return curr_itr; }
+	void setCurrItr(int itr) { curr_itr = itr; }
 };

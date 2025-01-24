@@ -8,10 +8,7 @@
 #include <vector>
 #include <limits>
 
-/*
-* TODO:
-* 1. use one manager class for all enemies
-*/
+
 
 // Initializes the game by resetting the board and setting up mario and barrels
 void Game::initGame() {

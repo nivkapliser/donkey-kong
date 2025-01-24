@@ -7,14 +7,17 @@
 
 /*
 TODO:
-1. WHEN PAULINE RESCUED, BOARD IS NOT CHANGE TO THE NEXT BOARD (PROBABLY SETTER ISSUE IN FUNCTION checkNextStage)
+1. READ FROM MAIN ARGUMENTS
 2. MAKE A RESULT CLASS
 3. SPLIT showAndLoadBoards FUNCTION
+4. SAVE IS NOT A DEFAULT OPTION. NEED TO DECIDE HOW TO SAVE ACCORDINGLY
+5. STEPS RECCORDING DOES NOT OVERRIDE THE EXISTING FILES - PROBABLY NEED TO SAVE AFTER EACH STAGE
+6. CHECK IF FUNCTIONS NEED TO BE CONST
 */
 
 int main()
 {
-	bool load = 0;
+	bool load = 1;
 	ShowConsoleCursor(false);
 	if (load)
 	{
@@ -23,7 +26,7 @@ int main()
 	}
 	else
 	{
-		GameFromKeyboard gameFromKeyboard;
+		GameFromKeyboard gameFromKeyboard(true);
 		gameFromKeyboard.run();
 	}
 
