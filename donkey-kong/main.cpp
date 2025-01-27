@@ -14,7 +14,7 @@ TODO:
 
 int main()
 {
-	bool load = 1;
+	bool load = 0;
 	ShowConsoleCursor(false);
 	if (load) {
 		GameFromFile gameFromFile;

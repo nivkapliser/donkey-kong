@@ -10,6 +10,9 @@
 class Ghost : public Enemy
 {
 	static constexpr char GHOST = 'x';
+	static int ghostsLocationsMap[26][80]; // for ghost meeting
+	int ghostIndex;
+
 
 	bool ghostsMeeting = false;	// flag to indicate if the ghosts are meeting (for direction change)
 
@@ -17,8 +20,9 @@ public:
 	Ghost() : Enemy(GHOST, true) { Enemy::setDirX(Enemy::getDirectionRandomly()); }
 
 	void move() override;
-
+	void erase() override;
 	// Ghosts specific functions
+	void setIndex(int i) { ghostIndex = i; }
 	void switchGhostsMeeting();
 	bool isFloorEnd() const;
 };

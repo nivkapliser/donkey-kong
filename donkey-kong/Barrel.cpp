@@ -28,8 +28,10 @@ void Barrel::move() {
 		setDirX(-dirX);
 	}
 
+	floorDirSync();
+	
 	// to handle gravitation
-	if (getBoard().gravitation(x, y, getDirX())) {
+	if (getBoard().gravitation(getX(), getY(), getDirX())) {
 		setDirY(1);
 		linesFallen++;
 		isFalling = true;
@@ -38,8 +40,12 @@ void Barrel::move() {
 		isFalling = false;
 	}
 
-	setY(y + dirY);
-	setX(x + dirX);
+	if (barrelFallManager()) {
+		explode();
+	}
+
+	setY(getY() + getDirY());
+	setX(getX() + getDirX());
 }
 
 // Function to explode the barrel 

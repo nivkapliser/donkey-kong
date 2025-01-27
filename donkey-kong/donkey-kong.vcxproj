@@ -131,6 +131,7 @@
     <ClCompile Include="Barrel.cpp" />
     <ClCompile Include="BarrelManager.cpp" />
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="EnemiesManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameFromFile.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Barrel.h" />
     <ClInclude Include="BarrelManager.h" />
     <ClInclude Include="Board.h" />
+    <ClInclude Include="EnemiesManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameFromFile.h" />

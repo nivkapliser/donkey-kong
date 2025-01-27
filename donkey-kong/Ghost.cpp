@@ -1,5 +1,6 @@
 #include "Ghost.h"
 
+
 // Function to move the ghost in the game
 void Ghost::move() {
 
@@ -25,8 +26,17 @@ void Ghost::move() {
 
 	dirX = getDirX();
 	dirY = getDirY();
+	ghostsLocationsMap[getY()][getX()] = ghostIndex; //update the ghosts location table
+
 	setX(x + dirX);
 	setY(y + dirY);
+}
+
+void Ghost::erase()
+{
+	Enemy::erase();
+	ghostsLocationsMap[getY()][getX()] = 0;
+
 }
 
 // Function to check if the ghost is at the end of the floor for direction change

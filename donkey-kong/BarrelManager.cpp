@@ -16,11 +16,11 @@ void BarrelManager::draw(Mario& mario) {
     for (auto& barrel : barrels) {
         if (barrel.checkActivationStatus()) {
             barrel.draw();
-            barrel.floorDirSync(); 
+           /* barrel.floorDirSync(); 
     
             if (barrel.barrelFallManager()) {
                 barrel.explode();
-            }
+            }*/
 
             if (barrel.checkEncounters(mario)) {
                 setEncounters(true);
@@ -45,6 +45,8 @@ void BarrelManager::move(Mario& mario) {
         }
     }
 }
+
+
 
 // activate the barrels in the game
 void BarrelManager::barrelsActivation() {
