@@ -65,7 +65,7 @@ public:
 	// state update functions
 	virtual void resetLocation(int start_x, int start_y) { x = start_x; y = start_y; }
 	virtual void activation(bool b) { active = b; };
-	virtual bool checkEncounters(Mario& mario);
+	virtual bool checkEncounters(Mario& mario) = 0;
 	void setLastPoint() { lastPoint = pBoard->getChar(x, y); }
 	void setBoard(Board& board) { pBoard = &board; }
 	bool checkActivationStatus() const { return active; }
@@ -82,5 +82,6 @@ public:
 	virtual void deactivation() = 0;
 	virtual bool getExploding() { return exploding; }
 	virtual void setExploding(bool b) { exploding = b; }
+	virtual void explode() = 0;
 };
 

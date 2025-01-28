@@ -232,6 +232,7 @@ void GameFromKeyboard::explodeMarioAndResetStage(Mario& mario) {
 
 void GameFromKeyboard::checkEnemyEncounters(EnemiesManager& em, Mario& mario) {
 	if (em.getEncounters()) {
+		//mario.ghosted();
 		// need to handle ghosted
 		mario.downLives();
 		results.addResult(getCurrItr(), Results::ResultValue::ENC_ENEMY);

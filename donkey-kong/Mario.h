@@ -130,7 +130,6 @@ public:
 	bool keyPressed(char key);
 	void jump();
 	void explode();
-	void ghosted();
 	bool isOnFloor() const { return (pBoard->isFloor(x, y + 1) || pBoard->isBoarder(x, y + 1)); }
 	bool metPauline() const { return pBoard->getChar(x, y) == '$'; }	
 	

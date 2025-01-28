@@ -9,17 +9,17 @@
 TODO:
 1. READ FROM MAIN ARGUMENTS
 2. NEED TO FINISH SPACIAL GHOST - NIV
-3. GHOSTED - OMRI
+3. GHOSTED - OMRI   --------V
 4. SILENT - NIV
-5. HANDLE COLORS - OMRI
+5. HANDLE COLORS - OMRI   --------V
 6. CHECK IF FUNCTIONS NEED TO BE CONST
-7. HANDLE TYPE_ID - OMRI
+7. HANDLE TYPE_ID - OMRI  --------V
 8. CHECK BUGS
 */
 
 int main()
 {
-	bool load = 1;
+	bool load = 0;
 	ShowConsoleCursor(false);
 	if (load) {
 		GameFromFile gameFromFile;

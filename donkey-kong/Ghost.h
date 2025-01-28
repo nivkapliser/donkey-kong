@@ -18,6 +18,7 @@ class Ghost : public Enemy
 public:
 	Ghost() : Enemy(GHOST, true) { Enemy::setDirX(Enemy::getDirectionRandomly()); }
 
+	
 	void move() override;
 	void erase() override;
 	// Ghosts specific functions
@@ -28,4 +29,6 @@ public:
 	void reset(Board& board) override; //shold be virtual
 	void setGhostInLocationMap() { ghostsLocationsMap[getY()][getX()] = this; }
 	void deactivation() override;
+	void explode() override;
+	bool checkEncounters(Mario& mario) override;
 };

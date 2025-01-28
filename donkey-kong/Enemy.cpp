@@ -21,15 +21,6 @@ void Enemy::changeDir(Direction dir) {
 	}
 }
 
-// Function to check if the enemy has encountered Mario
-bool Enemy::checkEncounters(Mario& mario) {
-	if (mario.getX() == getX() && mario.getY() == getY()) // direct encounter
-	{
-		return true;
-	}
-	return false;
-}
-
 // Function to get random direction for the enemy
 int Enemy::getDirectionRandomly() const {
 

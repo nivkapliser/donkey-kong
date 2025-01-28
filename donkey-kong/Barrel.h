@@ -38,7 +38,7 @@ public:
 	// Barrel specific functions
 	bool fallingStatus() const { return isFalling; }
 	void floorDirSync();
-	void explode();
+	void explode() override;
 	bool barrelFallManager();
 	void barrelActivation(); 
 };

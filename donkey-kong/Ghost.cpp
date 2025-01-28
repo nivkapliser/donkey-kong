@@ -11,7 +11,10 @@ void Ghost::move() {
 	int dirX = getDirX();
 	int dirY = getDirY();
 
-	Ghost* next_location = ghostsLocationsMap[y + dirY][y + dirX];
+	resetGhostLocationInMap();
+
+	Ghost* next_location = ghostsLocationsMap[y + dirY][x + dirX];
+
 	if (next_location != nullptr)
 	{
 		switchGhostsMeeting();
@@ -36,17 +39,16 @@ void Ghost::move() {
 
 	dirX = getDirX();
 	dirY = getDirY();
-	setGhostInLocationMap(); //update the ghosts location table
 
 	setX(x + dirX);
 	setY(y + dirY);
+	setGhostInLocationMap(); //update the ghosts location table
+
 }
 
 void Ghost::erase()
 {
 	Enemy::erase();
-	resetGhostLocationInMap();
-
 }
 
 // Function to check if the ghost is at the end of the floor for direction change
@@ -82,4 +84,23 @@ void Ghost::deactivation()
 {
 	activation(false);
 	resetGhostLocationInMap();
+}
+
+void Ghost::explode()
+{
+	printAnimation("BUSTED!", "xX@Xx", 700);
+	deactivation();
+}
+
+bool Ghost :: checkEncounters(Mario& mario)
+{
+	// direct encounter
+	if (mario.getX() == getX() && mario.getY() == getY())
+	{
+		setEncountered(true);
+		explode();
+		setEncountered(false);
+		return true;
+	}
+	return false;
 }

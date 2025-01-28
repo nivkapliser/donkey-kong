@@ -33,9 +33,16 @@ void EnemiesManager::reset(Board& board) {
     //// set position
     //enemies.push_back(std::move(spacialGhost));
 }
-void EnemiesManager::draw(Mario& mario) { // need to add colors
+void EnemiesManager::draw(Mario& mario) {
+
 	for (auto& enemy : enemies)
-	{
+	{	
+		if (typeid(*enemy) == typeid(Ghost)) {
+			getMG()->setCurrentColor(getMG()->getCyan());
+		}
+		else
+			getMG()->setCurrentColor(getMG()->getBrown());
+
 		if (enemy->checkActivationStatus()) 
 		{
 			enemy->draw();
@@ -45,6 +52,8 @@ void EnemiesManager::draw(Mario& mario) { // need to add colors
 			}
 		}
 	}
+	getMG()->setCurrentColor(getMG()->getLightRed());
+
 }
 void EnemiesManager::move(Mario& mario) {
 	for (auto& enemy : enemies)
@@ -87,7 +96,12 @@ void EnemiesManager::smashEnemies(Mario& mario){
 			// the smash control
 			if (shouldSmash) {
 				enemy->erase();
-				enemy->printAnimation("SMASH!!", "_\\O/_"); // type_id
+
+				if(typeid(*enemy) == typeid(Ghost))
+					enemy->printAnimation("SMASH!!", "_\\x/_"); 
+				else
+					enemy->printAnimation("SMASH!!", "_\\O/_"); 
+
 				enemy->deactivation();
 			    mario.increaseScore(mario.getBarrelPoints()); // need to think (type_id)
 			}
