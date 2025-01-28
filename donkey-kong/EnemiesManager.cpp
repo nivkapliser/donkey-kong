@@ -5,7 +5,7 @@
 #include "Mario.h"
 
 void EnemiesManager::reset(Board& board) {
-	//resetLocationMap(); -- should see how to implement this
+	//resetLocationMap();// -- should see how to implement this
 
 	enemies.clear();
     for (int i = 0; i < MAX_BARRELS; ++i)
@@ -19,10 +19,11 @@ void EnemiesManager::reset(Board& board) {
     for (int i = 0; i < board.getNumGhosts(); ++i)
     {
         auto ghost = std::make_unique<Ghost>();
-		ghost->setIndex(MAX_BARRELS + i);
-        ghost->setBoard(board);
+		//ghost->setIndex(MAX_BARRELS + i);
+		ghost->setBoard(board);
         ghost->setX(board.getGhostX(i));
         ghost->setY(board.getGhostY(i));
+		ghost->resetGhostLocationInMap();
         enemies.push_back(std::move(ghost));
     }
 

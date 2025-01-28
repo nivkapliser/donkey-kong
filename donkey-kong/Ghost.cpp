@@ -1,5 +1,7 @@
 #include "Ghost.h"
 
+Ghost* Ghost::ghostsLocationsMap[26][80]; //static decleration
+
 
 // Function to move the ghost in the game
 void Ghost::move() {
@@ -8,6 +10,14 @@ void Ghost::move() {
 	int y = getY();
 	int dirX = getDirX();
 	int dirY = getDirY();
+
+	Ghost* next_location = ghostsLocationsMap[y + dirY][y + dirX];
+	if (next_location != nullptr)
+	{
+		switchGhostsMeeting();
+		next_location -> switchGhostsMeeting();
+	}
+
 
 	if (isFloorEnd() || ghostsMeeting == true || !(getBoard().isValidMove(getX() + dirX, getY() + dirY))) {
 		setDirX(-dirX);
@@ -26,7 +36,7 @@ void Ghost::move() {
 
 	dirX = getDirX();
 	dirY = getDirY();
-	ghostsLocationsMap[getY()][getX()] = ghostIndex; //update the ghosts location table
+	ghostsLocationsMap[getY()][getX()] = this; //update the ghosts location table
 
 	setX(x + dirX);
 	setY(y + dirY);
@@ -35,7 +45,7 @@ void Ghost::move() {
 void Ghost::erase()
 {
 	Enemy::erase();
-	ghostsLocationsMap[getY()][getX()] = 0;
+	ghostsLocationsMap[getY()][getX()] = nullptr;
 
 }
 
@@ -59,4 +69,9 @@ void Ghost::switchGhostsMeeting() {
 		ghostsMeeting = false;
 	else
 		ghostsMeeting = true;
+}
+
+void Ghost :: resetGhostLocationInMap()
+{
+	ghostsLocationsMap[getY()][getX()] = nullptr;
 }

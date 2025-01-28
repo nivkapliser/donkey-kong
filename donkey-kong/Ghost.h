@@ -10,8 +10,7 @@
 class Ghost : public Enemy
 {
 	static constexpr char GHOST = 'x';
-	static int ghostsLocationsMap[26][80]; // for ghost meeting
-	int ghostIndex;
+	static Ghost* ghostsLocationsMap[26][80]; // for ghost meeting
 
 
 	bool ghostsMeeting = false;	// flag to indicate if the ghosts are meeting (for direction change)
@@ -22,7 +21,9 @@ public:
 	void move() override;
 	void erase() override;
 	// Ghosts specific functions
-	void setIndex(int i) { ghostIndex = i; }
+	//void setIndex(int i) { ghostIndex = i; }
 	void switchGhostsMeeting();
 	bool isFloorEnd() const;
+	void resetGhostLocationInMap();
+
 };
