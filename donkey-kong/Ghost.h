@@ -24,7 +24,7 @@ public:
 	//void setIndex(int i) { ghostIndex = i; }
 	void switchGhostsMeeting();
 	bool isFloorEnd() const;
-	void resetGhostLocationInMap();
-	void reset(Board& board) override;
+	void resetGhostLocationInMap() {ghostsLocationsMap[getY()][getX()] = nullptr;}
+	void reset(Board& board) ; //shold be virtual
 	void setGhostInLocationMap() { ghostsLocationsMap[getY()][getX()] = this; }
 };

@@ -36,7 +36,7 @@ void Ghost::move() {
 
 	dirX = getDirX();
 	dirY = getDirY();
-	ghostsLocationsMap[getY()][getX()] = this; //update the ghosts location table
+	setGhostInLocationMap(); //update the ghosts location table
 
 	setX(x + dirX);
 	setY(y + dirY);
@@ -45,7 +45,7 @@ void Ghost::move() {
 void Ghost::erase()
 {
 	Enemy::erase();
-	ghostsLocationsMap[getY()][getX()] = nullptr;
+	resetGhostLocationInMap();
 
 }
 
@@ -71,10 +71,6 @@ void Ghost::switchGhostsMeeting() {
 		ghostsMeeting = true;
 }
 
-void Ghost :: resetGhostLocationInMap()
-{
-	ghostsLocationsMap[getY()][getX()] = nullptr;
-}
 
 void Ghost::reset(Board& board)
 {
@@ -82,7 +78,3 @@ void Ghost::reset(Board& board)
 	resetGhostLocationInMap();
 }
 
-void Ghost::setGhostInLocationMap()
-{
-	ghostsLocationsMap[getY()][getX()] = this;
-}

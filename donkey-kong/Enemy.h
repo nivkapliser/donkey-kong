@@ -77,6 +77,6 @@ public:
 	// animation functions
 	void printAnimation (const char* upper, const char* under, int sleep = 100);
 	void eraseAnimation(const char* upper, const char* under);
-	virtual void reset(Board& board) = 0;
+	void reset(Board& board); //should be virtual, need to implement in barrel and spec ghosts
 };
 
