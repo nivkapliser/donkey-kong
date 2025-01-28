@@ -25,5 +25,6 @@ public:
 	void switchGhostsMeeting();
 	bool isFloorEnd() const;
 	void resetGhostLocationInMap();
-
+	void reset(Board& board) override;
+	void setGhostInLocationMap() { ghostsLocationsMap[getY()][getX()] = this; }
 };

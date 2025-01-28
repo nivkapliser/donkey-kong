@@ -20,10 +20,10 @@ void EnemiesManager::reset(Board& board) {
     {
         auto ghost = std::make_unique<Ghost>();
 		//ghost->setIndex(MAX_BARRELS + i);
-		ghost->setBoard(board);
+		ghost->reset(board); //enemy virtual func, resets the board and the ghost place in location map 
         ghost->setX(board.getGhostX(i));
         ghost->setY(board.getGhostY(i));
-		ghost->resetGhostLocationInMap();
+		ghost->setGhostInLocationMap();
         enemies.push_back(std::move(ghost));
     }
 

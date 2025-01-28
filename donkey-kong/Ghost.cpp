@@ -75,3 +75,14 @@ void Ghost :: resetGhostLocationInMap()
 {
 	ghostsLocationsMap[getY()][getX()] = nullptr;
 }
+
+void Ghost::reset(Board& board)
+{
+	setBoard(board);
+	resetGhostLocationInMap();
+}
+
+void Ghost::setGhostInLocationMap()
+{
+	ghostsLocationsMap[getY()][getX()] = this;
+}
