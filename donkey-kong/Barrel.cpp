@@ -59,7 +59,7 @@ void Barrel::explode()
 	else
 		printAnimation("BOOM!", "_\\|/_", 25);
 
-	barrelDeactivation();
+	deactivation();
 	linesFallen = 0;
 }
 
@@ -115,7 +115,7 @@ void Barrel::barrelActivation()
 }
 
 // Function to deactivate a barrel
-void Barrel::barrelDeactivation() {
+void Barrel::deactivation() {
 	activation(false);
 	linesFallen = 0;
 	setEncountered(false);

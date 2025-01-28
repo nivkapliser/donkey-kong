@@ -70,11 +70,10 @@ void GameFromFile::checkNextStage()
 		//currentState = GameState::MENU;
 }
 
-void GameFromFile::checkBarrelEncounters(BarrelManager& bm, Mario& mario)
-{
-	if (bm.getEncounters()) {
-		if (results.popResult().second != results.ResultValue::ENC_BARREL) {
-			reportResultError("Result file does not match barrel encounter", getBoard().getBoardName(), getCurrItr());
+void GameFromFile::checkEnemyEncounters(EnemiesManager& em, Mario& mario) {
+	if (em.getEncounters()) {
+		if (results.popResult().second != results.ResultValue::ENC_ENEMY) {
+			reportResultError("Result file does not match enemy encounter", getBoard().getBoardName(), getCurrItr());	
 		}
 		mario.downLives();
 		resetStage();
@@ -83,27 +82,44 @@ void GameFromFile::checkBarrelEncounters(BarrelManager& bm, Mario& mario)
 				reportResultError("Result file does not match game over", getBoard().getBoardName(), getCurrItr());
 			}
 		}*/
-		bm.setEncounters(false);
+		em.setEncounters(false);
 	}
 }
 
-void GameFromFile::checkGhostEncounters(GhostManager& gm, Mario& mario)
-{
-	if (gm.getEncounters()) {
-		if (results.popResult().second != results.ResultValue::ENC_GHOST) {
-			reportResultError("Result file does not match ghost encounter", getBoard().getBoardName(), getCurrItr());
-		}
-		mario.ghosted();
-		mario.downLives();
-		resetStage();
-		/*if (mario.getLives() == 0) {
-			if (results.popResult().second != results.ResultValue::GAME_LOSE) {
-				reportResultError("Result file does not match game over", getBoard().getBoardName(), getCurrItr());
-			}
-		}*/
-		gm.setEncounters(false);
-	}
-}
+//void GameFromFile::checkBarrelEncounters(BarrelManager& bm, Mario& mario)
+//{
+//	if (bm.getEncounters()) {
+//		if (results.popResult().second != results.ResultValue::ENC_BARREL) {
+//			reportResultError("Result file does not match barrel encounter", getBoard().getBoardName(), getCurrItr());
+//		}
+//		mario.downLives();
+//		resetStage();
+//		/*if (mario.getLives() == 0) {
+//			if (results.popResult().second != results.ResultValue::GAME_LOSE) {
+//				reportResultError("Result file does not match game over", getBoard().getBoardName(), getCurrItr());
+//			}
+//		}*/
+//		bm.setEncounters(false);
+//	}
+//}
+
+//void GameFromFile::checkGhostEncounters(GhostManager& gm, Mario& mario)
+//{
+//	if (gm.getEncounters()) {
+//		if (results.popResult().second != results.ResultValue::ENC_GHOST) {
+//			reportResultError("Result file does not match ghost encounter", getBoard().getBoardName(), getCurrItr());
+//		}
+//		mario.ghosted();
+//		mario.downLives();
+//		resetStage();
+//		/*if (mario.getLives() == 0) {
+//			if (results.popResult().second != results.ResultValue::GAME_LOSE) {
+//				reportResultError("Result file does not match game over", getBoard().getBoardName(), getCurrItr());
+//			}
+//		}*/
+//		gm.setEncounters(false);
+//	}
+//}
 
 
 void GameFromFile::runGame() {
@@ -111,10 +127,11 @@ void GameFromFile::runGame() {
 
 	//TODO: things that we are exactly doing in regular game - do with it something
 	Mario& mario = getMario();
-	BarrelManager& barrelsManager = getBarrelManager();
-	GhostManager& ghostsManager = getGhostManager();
+	/*BarrelManager& barrelsManager = getBarrelManager();
+	GhostManager& ghostsManager = getGhostManager();*/
+	EnemiesManager& enemiesManager = getEnemiesManager();
 	Hammer& hammer = getHammer();
-	SpacialGhost& spacialGhost = getSpacialGhost();
+	//SpacialGhost& spacialGhost = getSpacialGhost();
 	///////////////////
 	setCurrItr(0);  //reset the itr counter
 	std::pair<int, char> next_step;
@@ -128,10 +145,9 @@ void GameFromFile::runGame() {
 		// increament for the itr counter
 		setCurrItr(getCurrItr() + 1);
 		mario.draw();
-		barrelsManager.draw(mario);
-		ghostsManager.draw(mario);
+		enemiesManager.draw(mario);
 		hammer.draw();
-		spacialGhost.draw(); // for debug
+		//spacialGhost.draw(); // for debug
 
 		// check and get user input
 		for (int i = 0; i < 2; i++) {
@@ -153,19 +169,19 @@ void GameFromFile::runGame() {
 			marioHit();
 		}
 
-		barrelsManager.move(mario);
-		ghostsManager.move(mario);
-		spacialGhost.erase(); // for debug
-		spacialGhost.move(); // for debug
+		enemiesManager.move(mario);
+		//spacialGhost.erase(); // for debug
+		//spacialGhost.move(); // for debug
 
 		// if mario encounters a barrel, reset the stage or game over
-		checkBarrelEncounters(barrelsManager, mario);
-		checkGhostEncounters(ghostsManager, mario);
+	/*	checkBarrelEncounters(barrelsManager, mario);
+		checkGhostEncounters(ghostsManager, mario);*/
+		checkEnemyEncounters(enemiesManager, mario);
 
-		barrelsManager.barrelsActivation(); // reseting the barrel activation
+		enemiesManager.barrelsActivation(); // reseting the barrel activation	
 
 		// draw the score 
-		if (!ghostsManager.getEncounters() && !barrelsManager.getEncounters())
+		if (!enemiesManager.getEncounters())
 			mario.drawScore();
 
 		// check if mario has fallen 5 lines and reset the stage

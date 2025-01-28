@@ -108,10 +108,11 @@ void GameFromKeyboard::run() {
 
 void GameFromKeyboard::runGame() {
 	Mario& mario = getMario();
-	BarrelManager& barrelsManager = getBarrelManager();
-	GhostManager& ghostsManager = getGhostManager();
+	//BarrelManager& barrelsManager = getBarrelManager();
+	//GhostManager& ghostsManager = getGhostManager();
+	EnemiesManager& enemiesManager = getEnemiesManager();
 	Hammer& hammer = getHammer();
-	SpacialGhost& spacialGhost = getSpacialGhost();
+	//SpacialGhost& spacialGhost = getSpacialGhost();
 	results.clearResults();
 	steps.clearSteps();
 	steps.setRandomSeed(getRandomSeed());
@@ -120,10 +121,9 @@ void GameFromKeyboard::runGame() {
 	while (currentState == GameState::RUNNING || currentState == GameState::NEXT_STAGE) {
 		setCurrItr(getCurrItr() + 1);
 		mario.draw();
-		barrelsManager.draw(mario);
-		ghostsManager.draw(mario);
+		enemiesManager.draw(mario);
 		hammer.draw();
-		spacialGhost.draw(); // for debug
+		//spacialGhost.draw(); // for debug
 
 		// check and get user input
 		for (int i = 0; i < 2; i++) {
@@ -149,19 +149,19 @@ void GameFromKeyboard::runGame() {
 			marioHit();
 		}
 
-		barrelsManager.move(mario);
-		ghostsManager.move(mario);
-		spacialGhost.erase(); // for debug
-		spacialGhost.move(); // for debug
+		enemiesManager.move(mario);
+		//spacialGhost.erase(); // for debug
+		//spacialGhost.move(); // for debug
 
 		// if mario encounters a barrel, reset the stage or game over
-		checkBarrelEncounters(barrelsManager, mario);
-		checkGhostEncounters(ghostsManager, mario);
+		/*checkBarrelEncounters(barrelsManager, mario);
+		checkGhostEncounters(ghostsManager, mario);*/
+		checkEnemyEncounters(enemiesManager, mario);
 
-		barrelsManager.barrelsActivation(); // reseting the barrel activation
+		enemiesManager.barrelsActivation(); // reseting the barrel activation
 
 		// draw the score 
-		if (!ghostsManager.getEncounters() && !barrelsManager.getEncounters())
+		if (!enemiesManager.getEncounters())
 			mario.drawScore();
 
 		// check if mario has fallen 5 lines and reset the stage
@@ -230,28 +230,16 @@ void GameFromKeyboard::explodeMarioAndResetStage(Mario& mario) {
 	}
 }
 
-void GameFromKeyboard::checkBarrelEncounters(BarrelManager& bm, Mario& mario) {
-	if (bm.getEncounters()) {
+void GameFromKeyboard::checkEnemyEncounters(EnemiesManager& em, Mario& mario) {
+	if (em.getEncounters()) {
+		// need to handle ghosted
 		mario.downLives();
-		results.addResult(getCurrItr(), Results::ResultValue::ENC_BARREL);
+		results.addResult(getCurrItr(), Results::ResultValue::ENC_ENEMY);
 		resetStage();
 		if (mario.getLives() == 0) {
 			currentState = GameState::GAME_OVER;
 		}
-		bm.setEncounters(false);
-	}
-}
-
-void GameFromKeyboard::checkGhostEncounters(GhostManager& gm, Mario& mario) {
-	if (gm.getEncounters()) {
-		mario.ghosted();
-		results.addResult(getCurrItr(), Results::ResultValue::ENC_GHOST);
-		mario.downLives();
-		resetStage();
-		if (mario.getLives() == 0) {
-			currentState = GameState::GAME_OVER;
-		}
-		gm.setEncounters(false);
+		em.setEncounters(false);
 	}
 }
 

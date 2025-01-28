@@ -9,6 +9,7 @@ public:
 		ENC_GHOST,      // encounter ghost
 		ENC_BARREL,     // encounter barrel
 		ENC_SP_GHOST,   // encounter special ghost
+		ENC_ENEMY,      // encounter enemy
 		ENC_FALL, 	    // fell too far	
 		STAGE_FINISH,   // mario met pauline
 		GAME_WON,       // mario won the game (finish all stages)

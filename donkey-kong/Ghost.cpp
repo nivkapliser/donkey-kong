@@ -78,3 +78,8 @@ void Ghost::reset(Board& board)
 	resetGhostLocationInMap();
 }
 
+void Ghost::deactivation()
+{
+	activation(false);
+	resetGhostLocationInMap();
+}

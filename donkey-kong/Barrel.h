@@ -31,6 +31,9 @@ public:
 	
 	void move() override;
 	bool checkEncounters(Mario& mario) override;
+	void deactivation() override;
+	void activation(bool _active) override { Enemy::activation(_active); }
+	void reset(Board& board) override { setBoard(board); }
 
 	// Barrel specific functions
 	bool fallingStatus() const { return isFalling; }
@@ -38,7 +41,6 @@ public:
 	void explode();
 	bool barrelFallManager();
 	void barrelActivation(); 
-	void barrelDeactivation();
 };
 
 

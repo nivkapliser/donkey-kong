@@ -22,6 +22,7 @@ class Enemy
 	bool active; 
 	char lastPoint; 
 	bool encountered = false;
+	bool exploding = false;
 
 	Board* pBoard = nullptr;
 
@@ -77,6 +78,9 @@ public:
 	// animation functions
 	void printAnimation (const char* upper, const char* under, int sleep = 100);
 	void eraseAnimation(const char* upper, const char* under);
-	void reset(Board& board); //should be virtual, need to implement in barrel and spec ghosts
+	virtual void reset(Board& board) = 0; //should be virtual, need to implement in barrel and spec ghosts
+	virtual void deactivation() = 0;
+	virtual bool getExploding() { return exploding; }
+	virtual void setExploding(bool b) { exploding = b; }
 };
 

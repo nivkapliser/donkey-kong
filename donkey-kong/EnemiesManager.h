@@ -17,6 +17,8 @@ class EnemiesManager : public Manager
 
 	Mario* pMario = nullptr; // to get mario location and move accordingly
 
+	int sleepCount = 0;			// counter to keep track of the pace of the activation
+	int activated_I = 1;		// index of the next barrel to be activated
 public:
 	EnemiesManager(Board b, MenuGraphics* mg) : Manager(b, mg) {};
 	~EnemiesManager() {};
@@ -28,7 +30,7 @@ public:
 	// Additional methods
 	void addEnemy(std::unique_ptr<Enemy> enemy);
 	void smashEnemies(Mario& mario);
-
+	void barrelsActivation();
 	// Manager's methods:..
 };
 

@@ -89,7 +89,7 @@ void GhostManager::smashGhosts(Mario& mario) {
 		}
 
 		if (ghostHit) {
-			ghosts[i].activation(false);
+			ghosts[i].activation(false); 
 			ghosts[i].printAnimation("SMASH!!", "_\\x/_");
 			ghostsLocationsMap[ghosts[i].getY()][ghosts[i].getX()] = 0; // Clear location map
 			mario.increaseScore(mario.getGhostPoints());

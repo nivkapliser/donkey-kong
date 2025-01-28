@@ -64,38 +64,56 @@ void EnemiesManager::move(Mario& mario) {
 		}
 	}
 }
-//
-//void GhostManager::move(Mario& mario)
-//{
-//	int next_location;
-//
-//	for (size_t i = 1; i < ghosts.size(); i++)
-//	{
-//		if (ghosts[i].checkEncounters(mario)) {
-//			setEncounters(true);
-//		}
-//
-//		int nextY = ghosts[i].getY() + ghosts[i].getDirY();
-//		int nextX = ghosts[i].getX() + ghosts[i].getDirX();
-//		next_location = ghostsLocationsMap[nextY][nextX];
-//
-//		if (next_location != 0)
-//		{
-//			ghosts[i].switchGhostsMeeting();
-//			ghosts[next_location].switchGhostsMeeting();
-//		}
-//
-//		ghosts[i].erase();
-//		//the current ghost will move, so his current cell becomes 0
-//		ghostsLocationsMap[ghosts[i].getY()][ghosts[i].getX()] = 0;
-//
-//		ghosts[i].move();
-//
-//		ghostsLocationsMap[ghosts[i].getY()][ghosts[i].getX()] = i; //update the ghosts location table
-//
-//	}
-
 
 // Additional methods
 void EnemiesManager::addEnemy(std::unique_ptr<Enemy> enemy){}
-void EnemiesManager::smashEnemies(Mario& mario){}
+void EnemiesManager::smashEnemies(Mario& mario){
+	for (auto& enemy : enemies)
+	{
+		if (enemy->checkActivationStatus())
+		{
+			bool shouldSmash = false;
+			// facing left
+			if (mario.getDirX() == -1) {
+			    shouldSmash = (enemy->getY() == mario.getY()) &&
+			        (enemy->getX() >= mario.getX() - 3 && enemy->getX() < mario.getX());
+			}
+			// facing right
+			else if (mario.getDirX() == 1) {
+			    shouldSmash = (enemy->getY() == mario.getY()) &&
+			        (enemy->getX() <= mario.getX() + 3 && enemy->getX() > mario.getX());
+			}
+			
+			// the smash control
+			if (shouldSmash) {
+				enemy->erase();
+				enemy->printAnimation("SMASH!!", "_\\O/_"); // type_id
+				enemy->deactivation();
+			    mario.increaseScore(mario.getBarrelPoints()); // need to think (type_id)
+			}
+		}
+	}
+}
+
+void EnemiesManager::barrelsActivation() {
+	if (sleepCount == BARRELS_PACE) {
+		if (!enemies[activated_I]->checkActivationStatus()) {
+			if (!enemies[activated_I]->checkActivationStatus())
+			{
+				enemies[activated_I]->setExploding(false);	
+				enemies[activated_I]->activation(true);	
+				if (getRandomIntInRange(1) == 1)
+					enemies[activated_I]->setX(enemies[activated_I]->getBoard().getDonkeyKongX() + 1); // for the start position of the barrel
+				else
+					enemies[activated_I]->setX(enemies[activated_I]->getBoard().getDonkeyKongX() - 1); // for the start position of the barrel
+				enemies[activated_I]->setY(enemies[activated_I]->getBoard().getDonkeyKongY());
+			}
+			activated_I++;
+		}
+		if (activated_I >= MAX_BARRELS) {
+			activated_I = 0;
+		}
+		sleepCount = 0;
+	}
+	sleepCount += 50;
+}

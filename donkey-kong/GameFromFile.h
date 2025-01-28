@@ -13,8 +13,9 @@ class GameFromFile : public Game
 public:
 	void run() override;
 	void checkNextStage() override;
-	void checkBarrelEncounters(BarrelManager& bm, Mario& mario) override;
-	void checkGhostEncounters(GhostManager& gm, Mario& mario) override;
+	void checkEnemyEncounters(EnemiesManager& em, Mario& mario) override;
+	//void checkBarrelEncounters(BarrelManager& bm, Mario& mario) override;
+	//void checkGhostEncounters(GhostManager& gm, Mario& mario) override;
 	void reportResultError(const std::string& message, const std::string& filename, size_t iteration);
 	void marioMetPauline(Mario& mario) override {
 		if (mario.metPauline()) {

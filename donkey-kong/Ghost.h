@@ -25,6 +25,7 @@ public:
 	void switchGhostsMeeting();
 	bool isFloorEnd() const;
 	void resetGhostLocationInMap() {ghostsLocationsMap[getY()][getX()] = nullptr;}
-	void reset(Board& board) ; //shold be virtual
+	void reset(Board& board) override; //shold be virtual
 	void setGhostInLocationMap() { ghostsLocationsMap[getY()][getX()] = this; }
+	void deactivation() override;
 };
