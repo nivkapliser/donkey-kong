@@ -36,12 +36,16 @@ class Board
 	// to get the start position of the ghosts
 	std::vector<int> ghostsX;
 	std::vector<int> ghostsY;
+	std::vector<int> spaGhostsX;
+	std::vector<int> spaGhostsY;
 
 	// to store the board
 	char boardFile[MAX_Y][MAX_X + 1];
 	char currentBoard[MAX_Y][MAX_X + 1];
 	std::string curr_board_name;
 	MenuGraphics* menuGraphics;
+	bool silent = false;
+	bool loadMode = false; // might not need this
 
 public:
 	Board(MenuGraphics* mg) : menuGraphics(mg) { 
@@ -57,11 +61,18 @@ public:
 	static int getMaxY() { return MAX_Y; }
 	int getGhostX(int index) { return ghostsX[index]; }
 	int getGhostY(int index) { return ghostsY[index]; }
+	int getSpacialGhostX(int index) { return spaGhostsX[index]; }
+	int getSpacialGhostY(int index) { return spaGhostsY[index]; }
 	int getDonkeyKongX() const { return donkeyX; }
 	int getDonkeyKongY() const { return donkeyY; }
 	size_t getNumGhosts() const { return ghostsX.size(); }
+	size_t getNumSpacialGhosts() const { return spaGhostsX.size(); }
 	char getLetter(const char* object);
 	int getDimension(char dim) { return tolower(dim) == 'y' ? MAX_Y : MAX_X; }
+	void setSilent(bool s) { silent = s; }
+	bool getSilent() const { return silent; }
+	void setLoadMode(bool l) { loadMode = l; }
+	bool getLoadMode() const { return loadMode; }
 
 	// reading, printing, and setting the board
 	void reset();

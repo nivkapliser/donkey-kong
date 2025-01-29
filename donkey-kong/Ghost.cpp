@@ -88,7 +88,8 @@ void Ghost::deactivation()
 
 void Ghost::explode()
 {
-	printAnimation("BUSTED!", "xX@Xx", 700);
+	bool isSilent = getBoard().getSilent();
+	if (!isSilent) printAnimation("BUSTED!", "xX@Xx", 700);
 	deactivation();
 }
 

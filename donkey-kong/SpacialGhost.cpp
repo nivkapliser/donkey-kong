@@ -41,6 +41,10 @@ void SpacialGhost::move() { // it should follow mario so need to find a way to g
 	}
 }
 
+void SpacialGhost::erase() {
+	Enemy::erase();
+}
+
 void SpacialGhost::setDirectionToMario() {
 	int marioX = getMarioX();
 	int ghostX = getX();
@@ -67,5 +71,29 @@ bool SpacialGhost::isFloorEnd() const{
 		!getBoard().isValidMove(x + dirX, y + dirY))
 		return true;
 	return false;
+}
 
+void SpacialGhost::deactivation() {
+	activation(false);
+}
+
+void SpacialGhost::reset(Board& board) {
+	setBoard(board);
+}
+
+void SpacialGhost::explode() {
+	bool isSilent = getBoard().getSilent();
+	if (!isSilent) printAnimation("BUSTED!", "xX@Xx", 700);
+	deactivation();
+}
+
+bool SpacialGhost::checkEncounters(Mario& mario) {
+	if (mario.getX() == getX() && mario.getY() == getY())
+	{
+		setEncountered(true);
+		explode();
+		setEncountered(false);
+		return true;
+	}
+	return false;
 }

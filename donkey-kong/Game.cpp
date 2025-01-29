@@ -21,20 +21,19 @@ void Game::initGame() {
 // Resets the stage entities, including the board, mario, and barrels
 void Game::resetStage() {
 	system("cls");
-	board.reset();
-	board.print();
+	board.reset();	
 	mario.resetMarioPosition();
 	mario.setBoard(board);
-	mario.drawLife();
-	mario.drawScore();
+	if (!silent) {
+		board.print();
+		mario.drawLife();
+		mario.drawScore();
+	}
 	mario.resetFallCounter();
 	hammer.setCollected(false);
 	hammer.resetPosition();
 	hammer.setBoard(board);
-	//barrelsManager.reset(board);
-	//ghostsManager.reset(board);
 	enemiesManager.reset(board);
-	//spacialGhost.setBoard(board); // for debug
 }
 
 bool Game::showAndLoadBoards() {
@@ -89,7 +88,7 @@ bool Game::showAndLoadBoards() {
 
 // Function to explode mario and reset the stage
 void Game::explodeMarioAndResetStage(Mario& mario) {
-	mario.explode();
+	if (!silent) mario.explode();
 	resetStage();
 	mario.downLives();
 }
@@ -99,18 +98,18 @@ void Game::checkHammer(Mario& mario, Hammer& hammer) {
 	mario.checkIfMetHammer();
 	if (hammer.isCollected()) {
 		gotoxy(board.getLegendX() + 8, board.getLegendY() + 1);
-		std::cout << "p";
+		if (!silent) std::cout << "p";
 	}
 	else {
 		gotoxy(board.getLegendX() + 8, board.getLegendY() + 1);
-		std::cout << " ";
+		if (!silent) std::cout << " ";
 	}
 }
 
 void Game::smashEnemy(EnemiesManager& em, Mario& mario) {
 	if (mario.getSmash()) {
 		em.smashEnemies(mario);
-		mario.smashEnemies();
+		mario.smashEnemies(); // might need to send the load mode
 	}
 }
 
@@ -118,12 +117,12 @@ void Game::smashEnemy(EnemiesManager& em, Mario& mario) {
 void Game::marioHit() {
 	char last_char = board.getChar(mario.getX() + 2 * mario.getDirX(), mario.getY());
 	gotoxy(mario.getX() + 2 * mario.getDirX(), mario.getY());
-	std::cout << 'p';
+	if (!silent) std::cout << 'p';
 	Sleep(12);
 	enemiesManager.smashEnemies(mario);
 
 	gotoxy(mario.getX() + 2 * mario.getDirX(), mario.getY());
-	std::cout << last_char;
+	if (!silent) std::cout << last_char;
 	mario.smashOnce();
 }
 

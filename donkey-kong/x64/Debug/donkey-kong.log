@@ -1,2 +1,8 @@
-﻿  main.cpp
-  donkey-kong.vcxproj -> C:\Users\shtru\Source\Repos\donkey-kong-3-2801\x64\Debug\donkey-kong.exe
+﻿  EnemiesManager.cpp
+  Game.cpp
+  GameFromFile.cpp
+  GameFromKeyboard.cpp
+  main.cpp
+  Generating Code...
+C:\Users\niv\Desktop\Donkey-Kong\donkey-kong\GameFromFile.cpp(44,1): warning C4715: 'GameFromFile::showAndLoadBoards': not all control paths return a value
+  donkey-kong.vcxproj -> C:\Users\niv\Desktop\Donkey-Kong\x64\Debug\donkey-kong.exe

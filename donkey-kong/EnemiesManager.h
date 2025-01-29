@@ -13,14 +13,15 @@ class EnemiesManager : public Manager
 	static constexpr int BARRELS_PACE = 700;    // pace at which barrels are activated
 
 	std::vector<std::unique_ptr<Enemy>> enemies;
-	//int ghostsLocationsMap[26][80] = { 0 }; // for ghost meeting - maybe implement with loops
 
 	Mario* pMario = nullptr; // to get mario location and move accordingly
 
 	int sleepCount = 0;			// counter to keep track of the pace of the activation
 	int activated_I = 1;		// index of the next barrel to be activated
 public:
-	EnemiesManager(Board b, MenuGraphics* mg) : Manager(b, mg) {};
+	EnemiesManager(Board b, MenuGraphics* mg, Mario* mario) : Manager(b, mg) {
+		setMario(mario);
+	};
 	~EnemiesManager() {};
 
 	void reset(Board& board) override;
@@ -28,9 +29,8 @@ public:
 	void move(Mario& mario) override;
 
 	// Additional methods
-	void addEnemy(std::unique_ptr<Enemy> enemy);
 	void smashEnemies(Mario& mario);
 	void barrelsActivation();
-	// Manager's methods:..
+	void setMario(Mario* mario) { pMario = mario; }
 };
 

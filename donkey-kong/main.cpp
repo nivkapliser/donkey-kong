@@ -8,9 +8,9 @@
 /*
 TODO:
 1. READ FROM MAIN ARGUMENTS
-2. NEED TO FINISH SPACIAL GHOST - NIV
+2. NEED TO FINISH SPACIAL GHOST - NIV  ---------V
 3. GHOSTED - OMRI   --------V
-4. SILENT - NIV
+4. SILENT - NIV   ----------V
 5. HANDLE COLORS - OMRI   --------V
 6. CHECK IF FUNCTIONS NEED TO BE CONST
 7. HANDLE TYPE_ID - OMRI  --------V
@@ -22,7 +22,7 @@ int main()
 	bool load = 0;
 	ShowConsoleCursor(false);
 	if (load) {
-		GameFromFile gameFromFile;
+		GameFromFile gameFromFile(false);
 		gameFromFile.run();
 	}
 	else {

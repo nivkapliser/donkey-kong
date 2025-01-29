@@ -26,10 +26,7 @@ class Game
 	MenuGraphics menuGraphics;
 	Board board;
 	Mario mario;
-	//BarrelManager barrelsManager;
-	//GhostManager ghostsManager;
 	Hammer hammer;
-	//SpacialGhost spacialGhost; // for debug - latter will be in a manager class 
 	EnemiesManager enemiesManager;
 
 	// managing the game boards
@@ -37,7 +34,8 @@ class Game
 	int currentBoardIndex = 0;
 	long random_seed = static_cast<long>(std::chrono::system_clock::now().time_since_epoch().count());
 	int curr_itr = 0;
-
+	bool silent = false; // need to handle not load mode
+	 
 protected:
 	// some internal use functions to manage the game flow
 	void resetStage();
@@ -48,31 +46,23 @@ protected:
 public:
 	// game state should be something else
 	Game() : mario(&menuGraphics, &hammer), board(&menuGraphics), 
-		hammer(), enemiesManager(board, &menuGraphics) {
+		hammer(), enemiesManager(board, &menuGraphics, &mario) {
 		mario.setBoard(board);
 	}
 	
 	// ~Game() = default; // for virtual
 
 	virtual void run() = 0; // virtual
-	//GameState getGameState() const { return currentState; } // keyboard
 	void explodeMarioAndResetStage(Mario& mario); // both
-	//virtual void checkBarrelEncounters(BarrelManager& bm, Mario& mario) = 0; // both
-	//virtual void checkGhostEncounters(GhostManager& gm, Mario& mario) = 0; // both
 	virtual void checkEnemyEncounters(EnemiesManager& em,Mario& mario) = 0;
 	void checkHammer(Mario& mario, Hammer& hammer); // both
-	//void smashBarrel(BarrelManager& bm, Mario& mario); // both 
-	//void smashGhost(GhostManager& gm, Mario& mario); // both
 	void smashEnemy(EnemiesManager& em, Mario& mario);
 	void marioHit(); // both
 	virtual void marioMetPauline(Mario& mario) = 0;
 	
 	Mario& getMario() { return mario; } 
-	//BarrelManager& getBarrelManager() { return barrelsManager; }
-	//GhostManager& getGhostManager() { return ghostsManager; }
 	EnemiesManager& getEnemiesManager() { return enemiesManager; }
 	Board& getBoard() { return board; }
-	//SpacialGhost& getSpacialGhost() { return spacialGhost; }
 	Hammer& getHammer() { return hammer; }
 	MenuGraphics& getMenuGraphics() { return menuGraphics; }
 	std::vector<std::string>& getBoards() { return boardFiles; }
@@ -82,5 +72,6 @@ public:
 	long getRandomSeed() const { return random_seed; }
 	int getCurrItr() const { return curr_itr; }
 	void setCurrItr(int itr) { curr_itr = itr; }
-
+	void setSilent(bool s) { silent = s; }
+	bool getSilent() const { return silent; }
 };

@@ -51,13 +51,14 @@ void Barrel::move() {
 // Function to explode the barrel 
 void Barrel::explode()
 {
+	bool isSilent = getBoard().getSilent();
 	isExploding = true;
 	
 	erase();
-	if (isEncountered())
+	if (isEncountered() && !isSilent)
 		printAnimation("BOOM!", "_\\|/_", 700);
 	else
-		printAnimation("BOOM!", "_\\|/_", 25);
+		if (!isSilent) printAnimation("BOOM!", "_\\|/_", 25);
 
 	deactivation();
 	linesFallen = 0;

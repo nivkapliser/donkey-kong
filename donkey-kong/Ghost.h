@@ -21,8 +21,7 @@ public:
 	
 	void move() override;
 	void erase() override;
-	// Ghosts specific functions
-	//void setIndex(int i) { ghostIndex = i; }
+
 	void switchGhostsMeeting();
 	bool isFloorEnd() const;
 	void resetGhostLocationInMap() {ghostsLocationsMap[getY()][getX()] = nullptr;}

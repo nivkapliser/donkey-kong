@@ -86,57 +86,21 @@ void GameFromFile::checkEnemyEncounters(EnemiesManager& em, Mario& mario) {
 	}
 }
 
-//void GameFromFile::checkBarrelEncounters(BarrelManager& bm, Mario& mario)
-//{
-//	if (bm.getEncounters()) {
-//		if (results.popResult().second != results.ResultValue::ENC_BARREL) {
-//			reportResultError("Result file does not match barrel encounter", getBoard().getBoardName(), getCurrItr());
-//		}
-//		mario.downLives();
-//		resetStage();
-//		/*if (mario.getLives() == 0) {
-//			if (results.popResult().second != results.ResultValue::GAME_LOSE) {
-//				reportResultError("Result file does not match game over", getBoard().getBoardName(), getCurrItr());
-//			}
-//		}*/
-//		bm.setEncounters(false);
-//	}
-//}
-
-//void GameFromFile::checkGhostEncounters(GhostManager& gm, Mario& mario)
-//{
-//	if (gm.getEncounters()) {
-//		if (results.popResult().second != results.ResultValue::ENC_GHOST) {
-//			reportResultError("Result file does not match ghost encounter", getBoard().getBoardName(), getCurrItr());
-//		}
-//		mario.ghosted();
-//		mario.downLives();
-//		resetStage();
-//		/*if (mario.getLives() == 0) {
-//			if (results.popResult().second != results.ResultValue::GAME_LOSE) {
-//				reportResultError("Result file does not match game over", getBoard().getBoardName(), getCurrItr());
-//			}
-//		}*/
-//		gm.setEncounters(false);
-//	}
-//}
-
 
 void GameFromFile::runGame() {
 	int final_itr = steps.getFinalItr();
+	bool silent = getSilent();
 
-	//TODO: things that we are exactly doing in regular game - do with it something
 	Mario& mario = getMario();
-	/*BarrelManager& barrelsManager = getBarrelManager();
-	GhostManager& ghostsManager = getGhostManager();*/
 	EnemiesManager& enemiesManager = getEnemiesManager();
 	Hammer& hammer = getHammer();
-	//SpacialGhost& spacialGhost = getSpacialGhost();
-	///////////////////
+	
+	if (silent)
+		std::cout << "Running game in silent mode..." << std::endl;
+
 	setCurrItr(0);  //reset the itr counter
 	std::pair<int, char> next_step;
-	//int curr_itr = 0;  //itr index
-
+	
 	if (!steps.isEmpty())
 		next_step = steps.popStep();  // gets the first step (if exist)
 
@@ -144,11 +108,13 @@ void GameFromFile::runGame() {
 	for(int i = 0; i < final_itr; i++) {  //change the condition to a final itr - need to be saved in file
 		// increament for the itr counter
 		setCurrItr(getCurrItr() + 1);
-		mario.draw();
-		enemiesManager.draw(mario);
-		hammer.draw();
-		//spacialGhost.draw(); // for debug
 
+		if (!silent) {
+			mario.draw();
+			enemiesManager.draw(mario);
+			hammer.draw();
+		}
+			
 		// check and get user input
 		for (int i = 0; i < 2; i++) {
 			if (getCurrItr() == next_step.first) {
@@ -159,9 +125,11 @@ void GameFromFile::runGame() {
 			Sleep(10);
 		}
 
-		mario.erase();
+		if (!silent) {
+			mario.erase();	
+			hammer.erase();
+		}
 		mario.move();
-		hammer.erase();
 
 		// check if mario has met and used hammer
 		checkHammer(mario, hammer);
@@ -170,19 +138,15 @@ void GameFromFile::runGame() {
 		}
 
 		enemiesManager.move(mario);
-		//spacialGhost.erase(); // for debug
-		//spacialGhost.move(); // for debug
-
-		// if mario encounters a barrel, reset the stage or game over
-	/*	checkBarrelEncounters(barrelsManager, mario);
-		checkGhostEncounters(ghostsManager, mario);*/
+		
+		// if mario encounters a barrel or ghost, reset the stage or game over
 		checkEnemyEncounters(enemiesManager, mario);
 
 		enemiesManager.barrelsActivation(); // reseting the barrel activation	
 
 		// draw the score 
 		if (!enemiesManager.getEncounters())
-			mario.drawScore();
+			if (!silent) mario.drawScore();
 
 		// check if mario has fallen 5 lines and reset the stage
 		if (mario.fellTooFar() && mario.isOnFloor()) {

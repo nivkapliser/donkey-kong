@@ -7,15 +7,18 @@ class GameFromFile : public Game
 {
 	Steps steps;
 	Results results;
-
+	
 	void runGame() override;
 	bool showAndLoadBoards() override;
 public:
+	GameFromFile(bool _silent) : Game() {
+		setSilent(_silent);
+		getBoard().setSilent(_silent);
+	}
+	~GameFromFile() {}
 	void run() override;
 	void checkNextStage() override;
 	void checkEnemyEncounters(EnemiesManager& em, Mario& mario) override;
-	//void checkBarrelEncounters(BarrelManager& bm, Mario& mario) override;
-	//void checkGhostEncounters(GhostManager& gm, Mario& mario) override;
 	void reportResultError(const std::string& message, const std::string& filename, size_t iteration);
 	void marioMetPauline(Mario& mario) override {
 		if (mario.metPauline()) {

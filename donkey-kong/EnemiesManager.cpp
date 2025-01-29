@@ -5,13 +5,10 @@
 #include "Mario.h"
 
 void EnemiesManager::reset(Board& board) {
-	//resetLocationMap();// -- should see how to implement this
-
 	enemies.clear();
     for (int i = 0; i < MAX_BARRELS; ++i)
     {
         auto barrel = std::make_unique<Barrel>();
-        // set its board, initial position, etc.
         barrel->setBoard(board);
         enemies.push_back(std::move(barrel));   
     }
@@ -19,7 +16,6 @@ void EnemiesManager::reset(Board& board) {
     for (int i = 0; i < board.getNumGhosts(); ++i)
     {
         auto ghost = std::make_unique<Ghost>();
-		//ghost->setIndex(MAX_BARRELS + i);
 		ghost->reset(board); //enemy virtual func, resets the board and the ghost place in location map 
         ghost->setX(board.getGhostX(i));
         ghost->setY(board.getGhostY(i));
@@ -27,11 +23,14 @@ void EnemiesManager::reset(Board& board) {
         enemies.push_back(std::move(ghost));
     }
 
-    //// Maybe add 1 spacial ghost for debug -- need to check this 
-    //auto spacialGhost = std::make_unique<SpacialGhost>(&pMario /* if you pass Mario* */);
-    //spacialGhost->setBoard(board);
-    //// set position
-    //enemies.push_back(std::move(spacialGhost));
+	for (int i = 0; i < board.getNumSpacialGhosts(); ++i) {
+		auto spacialGhost = std::make_unique<SpacialGhost>(pMario);
+		spacialGhost->setBoard(board);
+		spacialGhost->setX(board.getSpacialGhostX(i));
+		spacialGhost->setY(board.getSpacialGhostY(i));
+		enemies.push_back(std::move(spacialGhost));
+	}
+
 }
 void EnemiesManager::draw(Mario& mario) {
 
@@ -64,7 +63,7 @@ void EnemiesManager::move(Mario& mario) {
 			{
 				setEncounters(true);
 			}
-			enemy->erase();
+			if (!enemy->getBoard().getSilent()) enemy->erase();
 			enemy->move();
 			if (enemy->checkEncounters(mario))
 			{
@@ -74,8 +73,6 @@ void EnemiesManager::move(Mario& mario) {
 	}
 }
 
-// Additional methods
-void EnemiesManager::addEnemy(std::unique_ptr<Enemy> enemy){}
 void EnemiesManager::smashEnemies(Mario& mario){
 	for (auto& enemy : enemies)
 	{
@@ -95,15 +92,19 @@ void EnemiesManager::smashEnemies(Mario& mario){
 			
 			// the smash control
 			if (shouldSmash) {
-				enemy->erase();
+				if (!enemy->getBoard().getSilent()) {
+					enemy->erase();
 
-				if(typeid(*enemy) == typeid(Ghost))
-					enemy->printAnimation("SMASH!!", "_\\x/_"); 
-				else
-					enemy->printAnimation("SMASH!!", "_\\O/_"); 
-
+					if (typeid(*enemy) == typeid(Ghost))
+						enemy->printAnimation("SMASH!!", "_\\x/_");
+					else if (typeid(*enemy) == typeid(Barrel))
+						enemy->printAnimation("SMASH!!", "_\\O/_");
+					else if (typeid(*enemy) == typeid(SpacialGhost))
+						enemy->printAnimation("SMASH!!", "_\\X/_");
+				}
 				enemy->deactivation();
-			    mario.increaseScore(mario.getBarrelPoints()); // need to think (type_id)
+				mario.increaseScore(typeid(*enemy) == typeid(Ghost) ? 
+								mario.getGhostPoints() : mario.getBarrelPoints());
 			}
 		}
 	}
