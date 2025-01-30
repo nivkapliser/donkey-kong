@@ -66,7 +66,9 @@ void GameFromFile::checkNextStage()
 	}
 	else {
 		system("cls");
-		std::cout << "No more stages. Exiting recording.\n";
+		if (getSilent()) std::cout << "Ran in Silent mode.\n";
+		std::cout << "No more stages, everything looks good!!\n";
+		std::cout << "Exiting recording.";
 		Sleep(3000);
 	}
 }

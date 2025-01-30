@@ -2,11 +2,14 @@
 
 // Function to move the ghost
 void SpacialGhost::move() { 
+
 	setDirectionToMario();
+	
 	if (isFloorEnd()) {
 		changeDir(Direction::STOP);
 	}
-	Board pBoard = getBoard();
+	
+	Board& pBoard = getBoard();
 	int x = getX(), y = getY();
 	int dirX = getDirX(), dirY = getDirY();
 
@@ -32,6 +35,7 @@ void SpacialGhost::move() {
 			return;
 		}
 	}
+	
 	// first step in climbing down ladder
 	if ((pMario->getY() > getY()) &&
 		pBoard.isLadder(x, y + 2) &&
@@ -51,17 +55,18 @@ void SpacialGhost::erase() {
 
 // Function to set the spacial ghost direction to mario
 void SpacialGhost::setDirectionToMario() {
-	int marioX = getMarioX();
-	int ghostX = getX();
-
-	if (marioX > ghostX) {
-		 changeDir(Direction::RIGHT);
-	}
-	else if (marioX < ghostX) {
-		changeDir(Direction::LEFT);
-	}
+	
+	if (!pMario) changeDir(Direction::STOP);
 	else {
-		changeDir(Direction::STOP);
+		if (pMario->getX() > getX()) {
+			changeDir(Direction::RIGHT);
+		}
+		else if (pMario->getX() < getX()) {
+			changeDir(Direction::LEFT);
+		}
+		else {
+			changeDir(Direction::STOP);
+		}
 	}
 }
 
@@ -87,7 +92,7 @@ void SpacialGhost::deactivation() {
 
 // Function to reset the special ghost
 void SpacialGhost::reset(Board& board, Mario* pMario) {
-	setMario(pMario);
+	//setMario(pMario);
 	setBoard(board);
 }
 

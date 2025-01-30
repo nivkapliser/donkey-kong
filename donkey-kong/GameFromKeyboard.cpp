@@ -166,7 +166,7 @@ void GameFromKeyboard::runGame() {
 		marioMetPauline(mario);
 
 		if (currentState == GameState::GAME_OVER) {
-			if (save)
+			if (save) // maybe not needed
 			{
 				results.addResult(getCurrItr(), Results::ResultValue::GAME_LOSE);
 			}
@@ -233,9 +233,11 @@ void GameFromKeyboard::checkEnemyEncounters(EnemiesManager& em, Mario& mario) {
 
 // Function to save the results and steps to files
 void GameFromKeyboard::saveFiles() {
-	results.saveResults(createFileName(getBoard().getBoardName(), "results"));
-	steps.setFinalItr(getCurrItr());
-	steps.saveSteps(createFileName(getBoard().getBoardName(), "steps"));
+	if (save) {
+		results.saveResults(createFileName(getBoard().getBoardName(), "results"));
+		steps.setFinalItr(getCurrItr());
+		steps.saveSteps(createFileName(getBoard().getBoardName(), "steps"));
+	}
 }
 
 // Function to check if mario has met Pauline

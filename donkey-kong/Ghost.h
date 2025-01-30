@@ -17,7 +17,7 @@ class Ghost : public Enemy
 
 public:
 	Ghost() : Enemy(GHOST, true) { Enemy::setDirX(Enemy::getDirectionRandomly()); }
-	~Ghost() {}
+	~Ghost() { resetGhostLocationInMap(); }
 	
 	// virtual functions
 	void move() override;
