@@ -48,6 +48,7 @@ public:
 	Game() : mario(&menuGraphics, &hammer), board(&menuGraphics), 
 		hammer(), enemiesManager(board, &menuGraphics, &mario) {
 		mario.setBoard(board);
+		ShowConsoleCursor(false);
 	}
 	
 	// ~Game() = default; // for virtual

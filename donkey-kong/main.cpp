@@ -17,16 +17,18 @@ TODO:
 8. CHECK BUGS
 */
 
-int main()
+int main(int argc, char** argv)
 {
-	bool load = 0;
-	ShowConsoleCursor(false);
-	if (load) {
-		GameFromFile gameFromFile(false);
+	bool isLoad = argc > 1 && std::string(argv[1]) == "-load";
+	bool isSilent = isLoad && argc > 2 && std::string(argv[2]) == "-silent";
+	bool isSave = argc > 1 && std::string(argv[1]) == "-save";
+	
+	if (isLoad) {
+		GameFromFile gameFromFile(isSilent);
 		gameFromFile.run();
 	}
 	else {
-		GameFromKeyboard gameFromKeyboard(true);
+		GameFromKeyboard gameFromKeyboard(isSave);
 		gameFromKeyboard.run();
 	}
 	return 0;
