@@ -20,10 +20,6 @@ class Mario
 	static constexpr char keys[] = { 'a', 'w', 'd', 'x', 's' }; 
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]); 
 
-
-	//static constexpr int START_X = 50;
-	//static constexpr int START_Y = 23;
-
 	// for mario settings
 	static constexpr int MAX_LIVES = 3;
 	static constexpr int MAX_FALL = 5;			// max number of lines mario can fall

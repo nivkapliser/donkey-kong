@@ -1,5 +1,6 @@
 #include "Results.h"
 
+// Function to read the results from a file
 Results Results::readResults(const std::string& filename) {
 	std::ifstream results_file(filename);
 	Results results;
@@ -14,6 +15,7 @@ Results Results::readResults(const std::string& filename) {
 	return results;
 }
 
+// Function to save the results to a file
 void Results::saveResults(const std::string& filename) const {
 	if (save) {
 		std::ofstream results_file(filename);
@@ -25,6 +27,7 @@ void Results::saveResults(const std::string& filename) const {
 	}	
 }
 
+// Function to pop a result from the results list
 std::pair<size_t, Results::ResultValue> Results::popResult() {
 	if (results.empty()) {
 		std::cout << "no results!";

@@ -92,6 +92,8 @@ int Board::readBoard(const std::string& filename, Mario& mario, Hammer& hammer) 
 	// Reset the ghost positions
 	ghostsX.clear();
 	ghostsY.clear();
+	spaGhostsX.clear();
+	spaGhostsY.clear();
 
 	std::string line;
 	for (; i < MAX_Y && std::getline(myFile, line); i++) {
@@ -178,6 +180,7 @@ int Board::setStartPositions(std::string line, Mario& mario, Hammer& hammer, int
 			boardFile[i][j] = ' ';
 			spaGhostsX.push_back(j);
 			spaGhostsY.push_back(i);
+			set_table[SPAC_GHOST] = 1;
 		}
 		else if (line[j] == 'L') {
 			if (set_table[LEGEND] == 1)

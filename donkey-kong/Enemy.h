@@ -56,16 +56,21 @@ public:
 		setLastPoint();
 		draw(lastPoint);
 	}
-
 	
-	// movement functions
+	// virtual functions
 	virtual void changeDir(Direction dir);
 	virtual void move() = 0;
-	
-	// state update functions
+	virtual void reset(Board& board) = 0;
+	virtual void deactivation() = 0;
+	virtual bool getExploding() { return exploding; }
+	virtual void setExploding(bool b) { exploding = b; }
+	virtual void explode() = 0;
+	virtual bool reachedBottom();
 	virtual void resetLocation(int start_x, int start_y) { x = start_x; y = start_y; }
 	virtual void activation(bool b) { active = b; };
 	virtual bool checkEncounters(Mario& mario) = 0;
+
+	// state update functions
 	void setLastPoint() { lastPoint = pBoard->getChar(x, y); }
 	void setBoard(Board& board) { pBoard = &board; }
 	bool checkActivationStatus() const { return active; }
@@ -73,15 +78,10 @@ public:
 	int getDirectionRandomly() const;
 	void setEncountered(bool b) { encountered = b; } 
 	bool isEncountered() { return encountered; } 
-	virtual bool reachedBottom();
 
 	// animation functions
 	void printAnimation (const char* upper, const char* under, int sleep = 100);
 	void eraseAnimation(const char* upper, const char* under);
-	virtual void reset(Board& board) = 0; //should be virtual, need to implement in barrel and spec ghosts
-	virtual void deactivation() = 0;
-	virtual bool getExploding() { return exploding; }
-	virtual void setExploding(bool b) { exploding = b; }
-	virtual void explode() = 0;
+	
 };
 

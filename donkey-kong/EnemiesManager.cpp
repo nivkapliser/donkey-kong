@@ -4,6 +4,7 @@
 #include "SpacialGhost.h"
 #include "Mario.h"
 
+// Function to reset the manager with all the enemies
 void EnemiesManager::reset(Board& board) {
 	enemies.clear();
     for (int i = 0; i < MAX_BARRELS; ++i)
@@ -16,7 +17,7 @@ void EnemiesManager::reset(Board& board) {
     for (int i = 0; i < board.getNumGhosts(); ++i)
     {
         auto ghost = std::make_unique<Ghost>();
-		ghost->reset(board); //enemy virtual func, resets the board and the ghost place in location map 
+		ghost->reset(board);
         ghost->setX(board.getGhostX(i));
         ghost->setY(board.getGhostY(i));
 		ghost->setGhostInLocationMap();
@@ -32,6 +33,8 @@ void EnemiesManager::reset(Board& board) {
 	}
 
 }
+
+// Function to draw all the enemies
 void EnemiesManager::draw(Mario& mario) {
 
 	for (auto& enemy : enemies)
@@ -54,6 +57,8 @@ void EnemiesManager::draw(Mario& mario) {
 	getMG()->setCurrentColor(getMG()->getLightRed());
 
 }
+
+// Function to move all the enemies
 void EnemiesManager::move(Mario& mario) {
 	for (auto& enemy : enemies)
 	{
@@ -73,6 +78,7 @@ void EnemiesManager::move(Mario& mario) {
 	}
 }
 
+// Function to smash the enemies if mario uses the hammer
 void EnemiesManager::smashEnemies(Mario& mario){
 	for (auto& enemy : enemies)
 	{
@@ -103,13 +109,14 @@ void EnemiesManager::smashEnemies(Mario& mario){
 						enemy->printAnimation("SMASH!!", "_\\X/_");
 				}
 				enemy->deactivation();
-				mario.increaseScore(typeid(*enemy) == typeid(Ghost) ? 
-								mario.getGhostPoints() : mario.getBarrelPoints());
+				mario.increaseScore(typeid(*enemy) == typeid(Barrel) ? 
+									mario.getBarrelPoints() : mario.getGhostPoints());
 			}
 		}
 	}
 }
 
+// Function to activate the barrels
 void EnemiesManager::barrelsActivation() {
 	if (sleepCount == BARRELS_PACE) {
 		if (!enemies[activated_I]->checkActivationStatus()) {

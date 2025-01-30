@@ -23,19 +23,25 @@ void ShowConsoleCursor(bool showFlag) {
     SetConsoleCursorInfo(out, &cursorInfo);
 }
 
+// Function to choose randomley between 0 and 1
 int randomZeroOrOne()
 {
     return (rand() % 2);
 }
+
+// Function to get a random number in arange
 int getRandomIntInRange(int biggest)
 {
     return (rand() % (biggest + 1));
 }
 
+// Function to create a file name
 std::string createFileName(std::string filename, std::string sufix)
 {
     return (filename + '.' + sufix);
 }
+
+// Function to remove the suffix from a string
 void removeSuffix(std::string& str, const std::string& suffix) {
     if (str.size() >= suffix.size() &&
         str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0) {

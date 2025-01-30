@@ -17,17 +17,18 @@ class Ghost : public Enemy
 
 public:
 	Ghost() : Enemy(GHOST, true) { Enemy::setDirX(Enemy::getDirectionRandomly()); }
-
+	~Ghost() {}
 	
+	// virtual functions
 	void move() override;
 	void erase() override;
+	void reset(Board& board) override; 
+	void deactivation() override;
+	void explode() override;
+	bool checkEncounters(Mario& mario) override;
 
 	void switchGhostsMeeting();
 	bool isFloorEnd() const;
 	void resetGhostLocationInMap() {ghostsLocationsMap[getY()][getX()] = nullptr;}
-	void reset(Board& board) override; //shold be virtual
 	void setGhostInLocationMap() { ghostsLocationsMap[getY()][getX()] = this; }
-	void deactivation() override;
-	void explode() override;
-	bool checkEncounters(Mario& mario) override;
 };

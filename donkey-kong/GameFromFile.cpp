@@ -1,5 +1,6 @@
 #include "GameFromFile.h"
 
+// Function to run the game from file
 void GameFromFile::run() {
 	showAndLoadBoards();
 	steps = steps.readSteps(createFileName(getBoard().getBoardName(), "steps")); //reading the steps
@@ -10,6 +11,7 @@ void GameFromFile::run() {
 	checkNextStage();
 }
 
+// Function to load the boards from the file
 bool GameFromFile::showAndLoadBoards() {
 	system("cls");
 	namespace fs = std::filesystem;
@@ -43,6 +45,7 @@ bool GameFromFile::showAndLoadBoards() {
 	}
 }
 
+// Function to check if next stage exists
 void GameFromFile::checkNextStage()
 {
 	int currentBoardIndex = getCurrBoardIndex();
@@ -60,16 +63,15 @@ void GameFromFile::checkNextStage()
 		setRandomSeed(steps.getRandomSeed());
 		initGame();
 		runGame();
-		//currentState = GameState::NEXT_STAGE;
 	}
 	else {
 		system("cls");
 		std::cout << "No more stages. Exiting recording.\n";
 		Sleep(3000);
 	}
-		//currentState = GameState::MENU;
 }
 
+// Function to check if mario encounters a barrel or ghost
 void GameFromFile::checkEnemyEncounters(EnemiesManager& em, Mario& mario) {
 	if (em.getEncounters()) {
 		if (results.popResult().second != results.ResultValue::ENC_ENEMY) {
@@ -77,16 +79,11 @@ void GameFromFile::checkEnemyEncounters(EnemiesManager& em, Mario& mario) {
 		}
 		mario.downLives();
 		resetStage();
-		/*if (mario.getLives() == 0) {
-			if (results.popResult().second != results.ResultValue::GAME_LOSE) {
-				reportResultError("Result file does not match game over", getBoard().getBoardName(), getCurrItr());
-			}
-		}*/
 		em.setEncounters(false);
 	}
 }
 
-
+// Function to run the game loop
 void GameFromFile::runGame() {
 	int final_itr = steps.getFinalItr();
 	bool silent = getSilent();
@@ -94,9 +91,6 @@ void GameFromFile::runGame() {
 	Mario& mario = getMario();
 	EnemiesManager& enemiesManager = getEnemiesManager();
 	Hammer& hammer = getHammer();
-	
-	if (silent)
-		std::cout << "Running game in silent mode..." << std::endl;
 
 	setCurrItr(0);  //reset the itr counter
 	std::pair<int, char> next_step;
@@ -105,7 +99,7 @@ void GameFromFile::runGame() {
 		next_step = steps.popStep();  // gets the first step (if exist)
 
 	// moving loop for mario and barrels
-	for(int i = 0; i < final_itr; i++) {  //change the condition to a final itr - need to be saved in file
+	for(int i = 0; i < final_itr; i++) { 
 		// increament for the itr counter
 		setCurrItr(getCurrItr() + 1);
 
@@ -122,7 +116,7 @@ void GameFromFile::runGame() {
 				if (!steps.isEmpty())
 					next_step = steps.popStep();  //get the next step
 			}
-			Sleep(10);
+			Sleep(silent ? SLEEP_IN_SILENT : SLEEP_TIME);
 		}
 
 		if (!silent) {
@@ -167,10 +161,21 @@ void GameFromFile::runGame() {
 	}
 }
 
+// Function to report results error
 void GameFromFile::reportResultError(const std::string& message, const std::string& filename, size_t iteration) {
 	system("cls");
 	std::cout << "Screen" << filename << " - " << message << '\n';
 	std::cout << "Iteration: " << iteration << '\n';
 	std::cout << "Press any key to continue to next screen (if any)" << std::endl;
 	_getch();
+}
+
+// Function to check if mario has met Pauline
+void GameFromFile::marioMetPauline(Mario& mario) {
+	if (mario.metPauline()) {
+		if (results.popResult().second != results.ResultValue::STAGE_FINISH) {
+			reportResultError("Result file does not match finish stage", getBoard().getBoardName(), getCurrItr());
+		}
+		checkNextStage();
+	}
 }

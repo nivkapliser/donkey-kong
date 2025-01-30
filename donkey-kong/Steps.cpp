@@ -1,6 +1,6 @@
 #include "Steps.h"
 
-
+// Function to read steps from file
 Steps Steps::readSteps(const std::string& filename)
 {
     Steps res;
@@ -12,7 +12,7 @@ Steps Steps::readSteps(const std::string& filename)
     std::ifstream steps_f(filename);
     if (!steps_f.is_open()) {
         std::cout << "Error opening file\n";
-        return Steps();  //to change
+        return Steps();  
     }
     steps_f >> res.random_seed;
     steps_f >> res.final_itr;
@@ -29,9 +29,9 @@ Steps Steps::readSteps(const std::string& filename)
     return res;
 }
 
+// Function to save steps to file
 void Steps::saveSteps(const std::string& filename) const
 {
-
     std::ofstream steps_f(filename);
     steps_f << random_seed << '\n' << final_itr << '\n' << steps.size();
     for(const auto& step : steps)
@@ -39,6 +39,7 @@ void Steps::saveSteps(const std::string& filename) const
     steps_f.close();
 }
 
+// Function to pop steps from stack
 std::pair<int, char> Steps::popStep()
 {
     if (steps.empty())

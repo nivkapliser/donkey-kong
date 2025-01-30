@@ -1,6 +1,7 @@
 #include "SpacialGhost.h"
 
-void SpacialGhost::move() { // it should follow mario so need to find a way to get to him
+// Function to move the ghost
+void SpacialGhost::move() { 
 	setDirectionToMario();
 	if (isFloorEnd()) {
 		changeDir(Direction::STOP);
@@ -41,10 +42,12 @@ void SpacialGhost::move() { // it should follow mario so need to find a way to g
 	}
 }
 
+// Function to erase the spacial ghost
 void SpacialGhost::erase() {
 	Enemy::erase();
 }
 
+// Function to set the spacial ghost direction to mario
 void SpacialGhost::setDirectionToMario() {
 	int marioX = getMarioX();
 	int ghostX = getX();
@@ -59,6 +62,7 @@ void SpacialGhost::setDirectionToMario() {
 	}
 }
 
+// Fuction to check if the floor ends
 bool SpacialGhost::isFloorEnd() const{
 
 	int x = getX();
@@ -73,20 +77,24 @@ bool SpacialGhost::isFloorEnd() const{
 	return false;
 }
 
+// Function to deactivate the special ghost
 void SpacialGhost::deactivation() {
 	activation(false);
 }
 
+// Function to reset the special ghost
 void SpacialGhost::reset(Board& board) {
 	setBoard(board);
 }
 
+// Function to explode the special ghost
 void SpacialGhost::explode() {
 	bool isSilent = getBoard().getSilent();
 	if (!isSilent) printAnimation("BUSTED!", "xX@Xx", 700);
 	deactivation();
 }
 
+// Function to check if the special ghost encounters mario
 bool SpacialGhost::checkEncounters(Mario& mario) {
 	if (mario.getX() == getX() && mario.getY() == getY())
 	{

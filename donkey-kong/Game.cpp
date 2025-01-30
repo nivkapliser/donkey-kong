@@ -8,8 +8,6 @@
 #include <vector>
 #include <limits>
 
-
-
 // Initializes the game by resetting the board and setting up mario and barrels
 void Game::initGame() {
 	srand(random_seed);

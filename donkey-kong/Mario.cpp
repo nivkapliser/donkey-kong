@@ -28,7 +28,7 @@ void Mario::changeDir(Direction dir) {
 
 // Function to handle key press
 // based on code from the lab
-bool Mario::keyPressed(char key) { // add 'p' for hammer
+bool Mario::keyPressed(char key) { 
     bool legit = false;
     for (size_t i = 0; i < numKeys; i++) {
         if (std::tolower(key) == keys[i]) {
@@ -37,7 +37,7 @@ bool Mario::keyPressed(char key) { // add 'p' for hammer
             break;
         }
     }
-	if (std::tolower(key) == 'p') { // should be const
+	if (std::tolower(key) == 'p') { 
         if (hammer->isCollected())
             smash = true;
         legit = true;
@@ -125,8 +125,7 @@ void Mario::move() {
 
 // Function to check if mario met Hammer
 void Mario::checkIfMetHammer() {
-    if (hammer && !hammer->isCollected() && x == hammer->getX() && y == hammer->getY()) { // change to const char
-		//haveHammer = true;
+    if (hammer && !hammer->isCollected() && x == hammer->getX() && y == hammer->getY()) { 
         hammer->setCollected(true);
 	}
 }

@@ -1,14 +1,16 @@
 #pragma once
 #include "utils.h"
 
+/*
+* This class is responsible for saving and loading the results of the game.
+* The results are saved in a list of pairs of iteration and result, and than stored in a file.
+*/
+
+
 class Results
 {
 public:
-
 	enum ResultValue {
-		ENC_GHOST,      // encounter ghost
-		ENC_BARREL,     // encounter barrel
-		ENC_SP_GHOST,   // encounter special ghost
 		ENC_ENEMY,      // encounter enemy
 		ENC_FALL, 	    // fell too far	
 		STAGE_FINISH,   // mario met pauline
@@ -30,8 +32,8 @@ public:
 	void addResult(size_t iteration, ResultValue result) { if (save) { results.push_back({ iteration, result }); } }
 	void pushResult(size_t iteration, ResultValue result) { results.push_back({ iteration, result }); } // without the save check for the 'from file' game
 	std::pair<size_t, ResultValue> popResult(); // for load
-	bool isEmpty() { return results.empty(); } // where to use?
-	bool isFinishedBy(size_t itr) const { return results.empty() || results.back().first <= itr; } // where to use?
+	bool isEmpty() { return results.empty(); } 
+	bool isFinishedBy(size_t itr) const { return results.empty() || results.back().first <= itr; }
 	void clearResults() { results.clear(); }
 };
 

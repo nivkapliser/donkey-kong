@@ -46,6 +46,7 @@ void Ghost::move() {
 
 }
 
+// Function to erase the ghost from the board
 void Ghost::erase()
 {
 	Enemy::erase();
@@ -59,7 +60,9 @@ bool Ghost::isFloorEnd() const
 	int y = getY();
 	int dirY = getDirY();
 
-	if (getBoard().getChar(x + dirX, y + 1) == ' ' || getBoard().getChar(x + dirX, y + dirY) == getBoard().getLetter("WALL") || !getBoard().isValidMove(x + dirX, y + dirY))
+	if (getBoard().getChar(x + dirX, y + 1) == ' ' ||
+		getBoard().getChar(x + dirX, y + dirY) == getBoard().getLetter("WALL") ||
+		!getBoard().isValidMove(x + dirX, y + dirY))
 		return true;
 	return false;
 }
@@ -73,19 +76,21 @@ void Ghost::switchGhostsMeeting() {
 		ghostsMeeting = true;
 }
 
-
+// Function to reset the ghost
 void Ghost::reset(Board& board)
 {
 	setBoard(board);
 	resetGhostLocationInMap();
 }
 
+// Function to deactivate the ghost
 void Ghost::deactivation()
 {
 	activation(false);
 	resetGhostLocationInMap();
 }
 
+// Function to explode the ghost
 void Ghost::explode()
 {
 	bool isSilent = getBoard().getSilent();
@@ -93,6 +98,7 @@ void Ghost::explode()
 	deactivation();
 }
 
+// Function to check for encounters with mario
 bool Ghost :: checkEncounters(Mario& mario)
 {
 	// direct encounter

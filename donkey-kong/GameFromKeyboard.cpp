@@ -1,5 +1,6 @@
 #include "GameFromKeyboard.h"
 
+// Function to show the menu and get user input
 void GameFromKeyboard::showMenu() {
 	MenuGraphics menuGraphics = getMenuGraphics();
 	char choice;
@@ -20,8 +21,7 @@ void GameFromKeyboard::showMenu() {
 					currentState = GameState::RUNNING;
 					run = false;
 				}
-				else
-				{
+				else {
 					currentState = GameState::FINISH;
 					return;
 				}
@@ -51,6 +51,7 @@ void GameFromKeyboard::showMenu() {
 	system("cls");
 }
 
+// Function to run the game and control the states
 void GameFromKeyboard::run() {
 	MenuGraphics& menuGraphics = getMenuGraphics();
 	Board& board = getBoard();
@@ -59,7 +60,7 @@ void GameFromKeyboard::run() {
 
 	menuGraphics.displayOpenScreen();
 	while (run) {
-		switch (getGameState()) {
+		switch (getGameState()) {	
 		case GameState::MENU:		// the default game state
 			showMenu();
 			break;
@@ -77,7 +78,6 @@ void GameFromKeyboard::run() {
 			pauseGame();
 			break;
 		case GameState::GAME_OVER:	// to display game over screen and return to menu
-			//results.addResult(getCurrItr(), Results::ResultValue::GAME_FINISH);
 			saveFiles();
 			menuGraphics.displayGameOver();
 			currentState = GameState::MENU;
@@ -89,7 +89,6 @@ void GameFromKeyboard::run() {
 			checkNextStage();
 			break;
 		case GameState::NEXT_STAGE:	// moving on to the next stage after winning
-			// currItr is 0
 			resetStage();
 			runGame();
 			break;
@@ -105,14 +104,11 @@ void GameFromKeyboard::run() {
 	menuGraphics.displayGoodBye();
 }
 
-
+// Function to run the game loop
 void GameFromKeyboard::runGame() {
 	Mario& mario = getMario();
-	//BarrelManager& barrelsManager = getBarrelManager();
-	//GhostManager& ghostsManager = getGhostManager();
 	EnemiesManager& enemiesManager = getEnemiesManager();
 	Hammer& hammer = getHammer();
-	//SpacialGhost& spacialGhost = getSpacialGhost();
 	results.clearResults();
 	steps.clearSteps();
 	steps.setRandomSeed(getRandomSeed());
@@ -123,7 +119,6 @@ void GameFromKeyboard::runGame() {
 		mario.draw();
 		enemiesManager.draw(mario);
 		hammer.draw();
-		//spacialGhost.draw(); // for debug
 
 		// check and get user input
 		for (int i = 0; i < 2; i++) {
@@ -150,12 +145,8 @@ void GameFromKeyboard::runGame() {
 		}
 
 		enemiesManager.move(mario);
-		//spacialGhost.erase(); // for debug
-		//spacialGhost.move(); // for debug
 
-		// if mario encounters a barrel, reset the stage or game over
-		/*checkBarrelEncounters(barrelsManager, mario);
-		checkGhostEncounters(ghostsManager, mario);*/
+		// if mario encounters a barrel or ghost, reset the stage or game over
 		checkEnemyEncounters(enemiesManager, mario);
 
 		enemiesManager.barrelsActivation(); // reseting the barrel activation
@@ -177,10 +168,6 @@ void GameFromKeyboard::runGame() {
 		if (currentState == GameState::GAME_OVER) {
 			if (save)
 			{
-				// moved to the state control
-				//steps.setFinalItr(getCurrItr());
-				//std::string steps_f_name = createFileName(getBoard().getBoardName(), "steps");
-				//steps.saveSteps(steps_f_name);
 				results.addResult(getCurrItr(), Results::ResultValue::GAME_LOSE);
 			}
 			break;
@@ -207,7 +194,7 @@ void GameFromKeyboard::pauseGame() {
 }
 
 // Function to check if there is a next stage and move to it
-void GameFromKeyboard::checkNextStage() { // maybe should be inputs
+void GameFromKeyboard::checkNextStage() { 
 	int currentBoardIndex = getCurrBoardIndex();	
 	std::vector<std::string> boardFiles = getBoards();	
 	Board& board = getBoard();
@@ -223,6 +210,7 @@ void GameFromKeyboard::checkNextStage() { // maybe should be inputs
 		currentState = GameState::MENU;
 }
 
+// Function to reset the stage after mario dies
 void GameFromKeyboard::explodeMarioAndResetStage(Mario& mario) {	
 	Game::explodeMarioAndResetStage(mario);
 	if (mario.getLives() == 0) {
@@ -230,10 +218,9 @@ void GameFromKeyboard::explodeMarioAndResetStage(Mario& mario) {
 	}
 }
 
+// Function to check if mario has encountered a barrel or ghost
 void GameFromKeyboard::checkEnemyEncounters(EnemiesManager& em, Mario& mario) {
 	if (em.getEncounters()) {
-		//mario.ghosted();
-		// need to handle ghosted
 		mario.downLives();
 		results.addResult(getCurrItr(), Results::ResultValue::ENC_ENEMY);
 		resetStage();
@@ -244,8 +231,17 @@ void GameFromKeyboard::checkEnemyEncounters(EnemiesManager& em, Mario& mario) {
 	}
 }
 
+// Function to save the results and steps to files
 void GameFromKeyboard::saveFiles() {
 	results.saveResults(createFileName(getBoard().getBoardName(), "results"));
 	steps.setFinalItr(getCurrItr());
 	steps.saveSteps(createFileName(getBoard().getBoardName(), "steps"));
+}
+
+// Function to check if mario has met Pauline
+void GameFromKeyboard::marioMetPauline(Mario& mario) {
+	if (mario.metPauline()) {
+		currentState = GameState::GAME_WON;
+		results.addResult(getCurrItr(), Results::ResultValue::STAGE_FINISH);
+	}
 }

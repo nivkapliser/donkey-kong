@@ -3,8 +3,16 @@
 #include "Steps.h"
 #include "Results.h"
 
+/*
+* This class represent a game played from the keyboard. it can be played regularly or in a save mode.
+* If in save mode, the game will save the steps and results to files for feauture play.
+*/
+
 class GameFromFile : public Game
 {
+	static constexpr int SLEEP_TIME = 10;
+	static constexpr int SLEEP_IN_SILENT = 0; // no sleep in silent mode
+
 	Steps steps;
 	Results results;
 	
@@ -16,17 +24,11 @@ public:
 		getBoard().setSilent(_silent);
 	}
 	~GameFromFile() {}
+
 	void run() override;
 	void checkNextStage() override;
 	void checkEnemyEncounters(EnemiesManager& em, Mario& mario) override;
+	void marioMetPauline(Mario& mario) override;
 	void reportResultError(const std::string& message, const std::string& filename, size_t iteration);
-	void marioMetPauline(Mario& mario) override {
-		if (mario.metPauline()) {
-			if (results.popResult().second != results.ResultValue::STAGE_FINISH) {
-				reportResultError("Result file does not match finish stage", getBoard().getBoardName(), getCurrItr());
-			}
-			checkNextStage();	
-		}
-	}
 };
 

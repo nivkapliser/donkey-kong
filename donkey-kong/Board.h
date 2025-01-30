@@ -24,14 +24,14 @@ class Board
 	static constexpr char FLOOR[] = { '<', '>', '=' };
 	static constexpr char WALL = 'Q';
 	static constexpr char PAULINE = '$';
-	enum Mandatory { MARIO, DONKEY, LEGEND, GHOST, HAMMER, PAULI, LADD, FL0, FL1, FL2 }; // enum for mandatory chars in the board
+	enum Mandatory { MARIO, DONKEY, LEGEND, GHOST, SPAC_GHOST, HAMMER, PAULI, LADD, FL0, FL1, FL2 }; // enum for mandatory chars in the board
 	
 	// to get the start position of the entities
 	int legendX = -1;
 	int legendY = -1;
 	int donkeyX = -1;
 	int donkeyY = -1;
-	int set_table[10] = {}; //table which checks every mandatory char has been set
+	int set_table[11] = {}; //table which checks every mandatory char has been set
 
 	// to get the start position of the ghosts
 	std::vector<int> ghostsX;

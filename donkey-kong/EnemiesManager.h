@@ -2,10 +2,16 @@
 #include "Enemy.h"
 #include "MenuGraphics.h"
 #include "Board.h"
-#include <vector>
-#include <memory>
 #include "Manager.h"
 #include "Mario.h"
+#include <vector>
+#include <memory>
+
+/*
+* This class represents the enemies manager in the game and responsible for managing all enemies in the game.
+* It inherits from Manager class.
+*/
+
 
 class EnemiesManager : public Manager
 {
@@ -14,7 +20,7 @@ class EnemiesManager : public Manager
 
 	std::vector<std::unique_ptr<Enemy>> enemies;
 
-	Mario* pMario = nullptr; // to get mario location and move accordingly
+	Mario* pMario = nullptr;	// to get mario location and move accordingly
 
 	int sleepCount = 0;			// counter to keep track of the pace of the activation
 	int activated_I = 1;		// index of the next barrel to be activated
@@ -24,6 +30,7 @@ public:
 	};
 	~EnemiesManager() {};
 
+	// virtual functions
 	void reset(Board& board) override;
 	void draw(Mario& mario) override;
 	void move(Mario& mario) override;

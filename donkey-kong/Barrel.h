@@ -28,7 +28,9 @@ class Barrel : public Enemy
 
 public:
 	Barrel() : Enemy(BARREL_CHAR, false, 0) {}
-	
+	~Barrel() {}
+
+	// virtual functions
 	void move() override;
 	bool checkEncounters(Mario& mario) override;
 	void deactivation() override;

@@ -4,6 +4,13 @@
 #include "Steps.h"
 #include "Results.h"
 
+/*
+* This class represent a game played from a file. it can be played regularly or in a silent mode.
+* When played regularly, the game will read the steps and results from files and play the game accordingly.
+* If in silent mode, the game will not display the game graphics and will run faster. 
+* In both modes, the game will check the steps and results files for errors.
+*/
+
 class GameFromKeyboard : public Game
 {
 	// managing the game state - maybe only in gameFromKeyboard
@@ -13,33 +20,24 @@ class GameFromKeyboard : public Game
 	bool save = true; 
 	Steps steps;
 	Results results;
-	//int curr_itr = 0;
 
 	void showMenu();
 	void runGame() override;
-	void pauseGame(); // only in game from key
+	void pauseGame();
 	void checkNextStage() override;
 
 public:
 	GameFromKeyboard(bool _save) :Game(), save(_save) {
 		results.setSave(_save);
 	}
-
 	~GameFromKeyboard() {} 
-
-	GameState getGameState() const { return currentState; } // need?
 
 	void run() override;
 	void explodeMarioAndResetStage(Mario& mario);
 	void checkEnemyEncounters(EnemiesManager& em, Mario& mario) override;
-	void marioMetPauline(Mario& mario) override { 
-		if (mario.metPauline()) {
-			currentState = GameState::GAME_WON; 
-			results.addResult(getCurrItr(), Results::ResultValue::STAGE_FINISH);
-		} 
-	}
+	void marioMetPauline(Mario& mario) override;
+	GameState getGameState() const { return currentState; }
 	void saveFiles();
-
 };
 
  
