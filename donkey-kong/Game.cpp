@@ -31,7 +31,7 @@ void Game::resetStage() {
 	hammer.setCollected(false);
 	hammer.resetPosition();
 	hammer.setBoard(board);
-	enemiesManager.reset(board);
+	enemiesManager.reset(board, &mario);
 }
 
 bool Game::showAndLoadBoards() {

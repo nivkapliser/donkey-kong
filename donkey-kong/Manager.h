@@ -27,7 +27,7 @@ public:
 	void setEncounters(bool value) { encounters = value; }
 
 	// move, draw, and reset functions are pure virtual functions
-	virtual void reset(Board& board) = 0;
+	virtual void reset(Board& board, Mario* pMario = nullptr) = 0;
 	virtual void draw(Mario& mario) = 0;
 	virtual void move(Mario& mario) = 0;
 };

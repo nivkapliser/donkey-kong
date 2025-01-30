@@ -31,7 +31,7 @@ public:
 	~EnemiesManager() {};
 
 	// virtual functions
-	void reset(Board& board) override;
+	void reset(Board& board, Mario* pMario = nullptr) override;
 	void draw(Mario& mario) override;
 	void move(Mario& mario) override;
 

@@ -60,7 +60,7 @@ public:
 	// virtual functions
 	virtual void changeDir(Direction dir);
 	virtual void move() = 0;
-	virtual void reset(Board& board) = 0;
+	virtual void reset(Board& board, Mario* pMario = nullptr) = 0;
 	virtual void deactivation() = 0;
 	virtual bool getExploding() { return exploding; }
 	virtual void setExploding(bool b) { exploding = b; }

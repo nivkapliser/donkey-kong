@@ -35,7 +35,7 @@ public:
 	bool checkEncounters(Mario& mario) override;
 	void deactivation() override;
 	void activation(bool _active) override { Enemy::activation(_active); }
-	void reset(Board& board) override { setBoard(board); }
+	void reset(Board& board, Mario* pMario = nullptr) override { setBoard(board); }
 
 	// Barrel specific functions
 	bool fallingStatus() const { return isFalling; }

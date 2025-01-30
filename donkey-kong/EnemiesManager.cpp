@@ -5,7 +5,7 @@
 #include "Mario.h"
 
 // Function to reset the manager with all the enemies
-void EnemiesManager::reset(Board& board) {
+void EnemiesManager::reset(Board& board, Mario* pMario) {
 	enemies.clear();
     for (int i = 0; i < MAX_BARRELS; ++i)
     {
@@ -20,13 +20,13 @@ void EnemiesManager::reset(Board& board) {
 		ghost->reset(board);
         ghost->setX(board.getGhostX(i));
         ghost->setY(board.getGhostY(i));
-		ghost->setGhostInLocationMap();
+		//ghost->setGhostInLocationMap();
         enemies.push_back(std::move(ghost));
     }
 
 	for (int i = 0; i < board.getNumSpacialGhosts(); ++i) {
 		auto spacialGhost = std::make_unique<SpacialGhost>(pMario);
-		spacialGhost->setBoard(board);
+		spacialGhost->reset(board, pMario);
 		spacialGhost->setX(board.getSpacialGhostX(i));
 		spacialGhost->setY(board.getSpacialGhostY(i));
 		enemies.push_back(std::move(spacialGhost));

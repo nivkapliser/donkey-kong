@@ -42,6 +42,7 @@ void Ghost::move() {
 
 	setX(x + dirX);
 	setY(y + dirY);
+
 	setGhostInLocationMap(); //update the ghosts location table
 
 }
@@ -77,10 +78,10 @@ void Ghost::switchGhostsMeeting() {
 }
 
 // Function to reset the ghost
-void Ghost::reset(Board& board)
+void Ghost::reset(Board& board, Mario* pMario)
 {
 	setBoard(board);
-	resetGhostLocationInMap();
+	setGhostInLocationMap();
 }
 
 // Function to deactivate the ghost

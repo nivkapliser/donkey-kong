@@ -9,6 +9,7 @@ void SpacialGhost::move() {
 	Board pBoard = getBoard();
 	int x = getX(), y = getY();
 	int dirX = getDirX(), dirY = getDirY();
+
 	// need to add climbing ladder
 	if (pBoard.isLadder(x, y) || pBoard.isLadder(x, y + 1)) {
 		if (pMario->getY() < getY()) {
@@ -24,6 +25,7 @@ void SpacialGhost::move() {
 				return;
 			}
 		}
+
 		else if ((pMario->getY() > getY()) && pBoard.isLadder(x, y + 1)) {
 			// Deccending ladder
 			setY(++y);
@@ -51,6 +53,7 @@ void SpacialGhost::erase() {
 void SpacialGhost::setDirectionToMario() {
 	int marioX = getMarioX();
 	int ghostX = getX();
+
 	if (marioX > ghostX) {
 		 changeDir(Direction::RIGHT);
 	}
@@ -83,7 +86,8 @@ void SpacialGhost::deactivation() {
 }
 
 // Function to reset the special ghost
-void SpacialGhost::reset(Board& board) {
+void SpacialGhost::reset(Board& board, Mario* pMario) {
+	setMario(pMario);
 	setBoard(board);
 }
 

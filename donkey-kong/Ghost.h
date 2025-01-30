@@ -22,7 +22,7 @@ public:
 	// virtual functions
 	void move() override;
 	void erase() override;
-	void reset(Board& board) override; 
+	void reset(Board& board, Mario* pMario = nullptr) override;
 	void deactivation() override;
 	void explode() override;
 	bool checkEncounters(Mario& mario) override;
