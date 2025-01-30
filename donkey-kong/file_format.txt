@@ -1,0 +1,14 @@
+Results format:
+first line - number of life remained at the end of the stage.
+second line - number of line in this file (not include the first and second line).
+then:
+saving pairs of <iteration, ResultValue> for each result recorded in the game. 
+the ResultValue can be: {
+	ENC_ENEMY,      // encounter enemy
+	ENC_FALL, 	    // fell too far	
+	STAGE_FINISH,   // mario met pauline
+	GAME_WON,       // mario won the game (finish all stages)
+	GAME_LOSE,      // mario lost the game (no more lives)
+	GAME_FINISH,	// game finished for some reason (esc, etc);
+	NO_RESULT 	    // no result
+}

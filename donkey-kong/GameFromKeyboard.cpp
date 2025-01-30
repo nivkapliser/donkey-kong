@@ -234,7 +234,7 @@ void GameFromKeyboard::checkEnemyEncounters(EnemiesManager& em, Mario& mario) {
 // Function to save the results and steps to files
 void GameFromKeyboard::saveFiles() {
 	if (save) {
-		results.saveResults(createFileName(getBoard().getBoardName(), "results"));
+		results.saveResults(createFileName(getBoard().getBoardName(), "results"), getMario().getLives());	
 		steps.setFinalItr(getCurrItr());
 		steps.saveSteps(createFileName(getBoard().getBoardName(), "steps"));
 	}

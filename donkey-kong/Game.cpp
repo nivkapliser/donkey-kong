@@ -10,7 +10,6 @@
 
 // Initializes the game by resetting the board and setting up mario and barrels
 void Game::initGame() {
-	srand(random_seed);
 	mario.resetLives();
 	mario.resetScore();
 	resetStage();
@@ -18,6 +17,7 @@ void Game::initGame() {
 
 // Resets the stage entities, including the board, mario, and barrels
 void Game::resetStage() {
+	srand(random_seed);
 	system("cls");
 	board.reset();	
 	mario.resetMarioPosition();

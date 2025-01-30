@@ -61,11 +61,11 @@ void GameFromFile::checkNextStage()
 		steps = steps.readSteps(createFileName(board.getBoardName(), "steps"));
 		results = results.readResults(createFileName(board.getBoardName(), "results"));
 		setRandomSeed(steps.getRandomSeed());
-		initGame();
+		resetStage();
 		runGame();
 	}
 	else {
-		system("cls");
+		system("cls"); 
 		if (getSilent()) std::cout << "Ran in Silent mode.\n";
 		std::cout << "No more stages, everything looks good!!\n";
 		std::cout << "Exiting recording.";
@@ -159,6 +159,10 @@ void GameFromFile::runGame() {
 			if (results.popResult().second != results.ResultValue::GAME_LOSE) {
 				reportResultError("Result file does not match game over", getBoard().getBoardName(), getCurrItr());
 			}
+		}
+
+		if (mario.getLives() < results.getLives()) {
+			reportResultError("Result file does not match lives", getBoard().getBoardName(), getCurrItr());
 		}
 	}
 }
