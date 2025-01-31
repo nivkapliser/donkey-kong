@@ -5,6 +5,7 @@ Results Results::readResults(const std::string& filename) {
 	std::ifstream results_file(filename);
 	Results results;
 	size_t size;
+	results_file >> results.score;
 	results_file >> results.life;	
 	results_file >> size;
 	while (!results_file.eof() && size-- != 0) {
@@ -17,9 +18,10 @@ Results Results::readResults(const std::string& filename) {
 }
 
 // Function to save the results to a file
-void Results::saveResults(const std::string& filename, int life) const {
+void Results::saveResults(const std::string& filename) const {
 	if (save) {
 		std::ofstream results_file(filename);
+		results_file << score << '\n';
 		results_file << life << '\n';
 		results_file << results.size();
 		for (const auto& result : results) {

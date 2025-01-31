@@ -78,6 +78,8 @@ public:
 	int getLives() const { return lives; }
 	void setBoard(Board& board) { pBoard = &board; }
 	void setLastPoint() { lastPoint = pBoard->getChar(x, y); }
+	int getScore() const { return score; }
+	void setScore(int s) { score = s; }
 
 	// drawing and erasing mario, lives and score
 	void draw() const {

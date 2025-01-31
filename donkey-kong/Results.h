@@ -19,16 +19,15 @@ public:
 		GAME_FINISH,	// game finished for some reason (esc, etc);
 		NO_RESULT 	    // no result
 	}; 
-	int life = 0;
+	int life = 0; // stage start lives
+	int score = 0; // stage start score
 private:
-
 	std::list<std::pair<size_t, ResultValue>> results; // pairs of iteration and result
 	bool save = false;
-
 public:
 	void setSave(bool _save) { save = _save; }
 	static Results readResults(const std::string& filename);
-	void saveResults(const std::string& filename, int life) const;
+	void saveResults(const std::string& filename) const;
 	void addResult(size_t iteration, ResultValue result) { if (save) { results.push_back({ iteration, result }); } }
 	void pushResult(size_t iteration, ResultValue result) { results.push_back({ iteration, result }); } // without the save check for the 'from file' game
 	std::pair<size_t, ResultValue> popResult(); // for load
@@ -36,5 +35,8 @@ public:
 	bool isFinishedBy(size_t itr) const { return results.empty() || results.back().first <= itr; }
 	void clearResults() { results.clear(); }
 	int getLives() const { return life; }
+	void setLives(int _life) { life = _life; }
+	void setScore(int _score) { score = _score; }
+	int getScore() const { return score; }
 };
 

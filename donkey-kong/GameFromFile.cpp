@@ -7,6 +7,8 @@ void GameFromFile::run() {
 	results = results.readResults(createFileName(getBoard().getBoardName(), "results")); //reading the results
 	setRandomSeed(steps.getRandomSeed());  //random seed set
 	initGame();
+	getMario().setLives(results.getLives());
+	getMario().setScore(results.getScore());
 	runGame();
 	checkNextStage();
 }
@@ -61,7 +63,10 @@ void GameFromFile::checkNextStage()
 		steps = steps.readSteps(createFileName(board.getBoardName(), "steps"));
 		results = results.readResults(createFileName(board.getBoardName(), "results"));
 		setRandomSeed(steps.getRandomSeed());
+
 		resetStage();
+		mario.setLives(results.getLives());
+		mario.setScore(results.getScore());
 		runGame();
 	}
 	else {
@@ -93,7 +98,7 @@ void GameFromFile::runGame() {
 	Mario& mario = getMario();
 	EnemiesManager& enemiesManager = getEnemiesManager();
 	Hammer& hammer = getHammer();
-
+	mario.drawLife();
 	setCurrItr(0);  //reset the itr counter
 	std::pair<int, char> next_step;
 	
@@ -160,10 +165,14 @@ void GameFromFile::runGame() {
 				reportResultError("Result file does not match game over", getBoard().getBoardName(), getCurrItr());
 			}
 		}
+	}
 
-		if (mario.getLives() < results.getLives()) {
-			reportResultError("Result file does not match lives", getBoard().getBoardName(), getCurrItr());
-		}
+	// might not needded
+	if (mario.getLives() < results.getLives()) {
+		reportResultError("Result file does not match lives", getBoard().getBoardName(), getCurrItr());
+	}
+	if (mario.getScore() != results.getScore()) {
+		reportResultError("Result file does not match score", getBoard().getBoardName(), getCurrItr());
 	}
 }
 

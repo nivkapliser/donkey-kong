@@ -66,6 +66,9 @@ void GameFromKeyboard::run() {
 			break;
 		case GameState::RUNNING:	// to start the game movement loop
 			initGame();
+			//check
+			results.setLives(mario.getLives());
+			results.setScore(mario.getScore());
 			runGame();
 			break;
 		case GameState::RESUME:		// to resume the game after pausing
@@ -90,6 +93,9 @@ void GameFromKeyboard::run() {
 			break;
 		case GameState::NEXT_STAGE:	// moving on to the next stage after winning
 			resetStage();
+			//check
+			results.setLives(mario.getLives());
+			results.setScore(mario.getScore());
 			runGame();
 			break;
 		case GameState::FINISH:		// to exit the game loop
@@ -234,7 +240,7 @@ void GameFromKeyboard::checkEnemyEncounters(EnemiesManager& em, Mario& mario) {
 // Function to save the results and steps to files
 void GameFromKeyboard::saveFiles() {
 	if (save) {
-		results.saveResults(createFileName(getBoard().getBoardName(), "results"), getMario().getLives());	
+		results.saveResults(createFileName(getBoard().getBoardName(), "results"));	
 		steps.setFinalItr(getCurrItr());
 		steps.saveSteps(createFileName(getBoard().getBoardName(), "steps"));
 	}
