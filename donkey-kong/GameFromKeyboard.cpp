@@ -117,7 +117,7 @@ void GameFromKeyboard::runGame() {
 	Hammer& hammer = getHammer();
 	results.clearResults();
 	steps.clearSteps();
-	steps.setRandomSeed(getRandomSeed());
+	steps.setRandomSeed(getRandomSeed());	
 
 	// moving loop for mario and barrels
 	while (currentState == GameState::RUNNING || currentState == GameState::NEXT_STAGE) {

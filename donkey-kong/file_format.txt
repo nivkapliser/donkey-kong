@@ -1,6 +1,7 @@
 Results format:
-first line - number of life remained at the end of the stage.
-second line - number of line in this file (not include the first and second line).
+first line - score at the beginning of the stage.
+second line - number of life remained at the beginning of the stage.
+third line - number of line in this file (not include the first, second and third lines).
 then:
 saving pairs of <iteration, ResultValue> for each result recorded in the game. 
 the ResultValue can be: {

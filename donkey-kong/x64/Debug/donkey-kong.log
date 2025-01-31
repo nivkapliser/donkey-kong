@@ -1,7 +1,5 @@
 ﻿  GameFromFile.cpp
   GameFromKeyboard.cpp
-  Results.cpp
-  main.cpp
   Generating Code...
 C:\Users\niv\Desktop\Donkey-Kong\donkey-kong\GameFromFile.cpp(48,1): warning C4715: 'GameFromFile::showAndLoadBoards': not all control paths return a value
   donkey-kong.vcxproj -> C:\Users\niv\Desktop\Donkey-Kong\x64\Debug\donkey-kong.exe
