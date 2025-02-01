@@ -18,6 +18,8 @@ void GameFromKeyboard::showMenu() {
 			switch (choice) {
 			case '1':
 				if (showAndLoadBoards()) {
+					if (save)
+						clearPreviousFiles();
 					currentState = GameState::RUNNING;
 					run = false;
 				}
@@ -246,6 +248,30 @@ void GameFromKeyboard::saveFiles() {
 		steps.setFinalItr(getCurrItr());
 		steps.saveSteps(createFileName(getBoard().getBoardName(), "steps"));
 	}
+}
+
+void GameFromKeyboard::clearPreviousFiles()
+{
+		namespace fs = std::filesystem;
+
+		try {
+			for (const auto& entry : fs::directory_iterator(".")) {
+				if (!entry.is_regular_file()) continue;  // Skip directories and special files
+
+				std::string fileName = entry.path().filename().string();
+
+				// Check if the filename ends with "steps" or "results"
+				if (fileName.size() >= 5 &&
+					(fileName.substr(fileName.size() - 5) == "steps" ||
+						fileName.substr(fileName.size() - 7) == "results")) {
+
+					fs::remove(entry.path());  // Delete the file safely
+				}
+			}
+		}
+		catch (...) {
+			// Silently catch all exceptions (no aborts)
+		}
 }
 
 // Function to check if mario has met Pauline

@@ -38,6 +38,7 @@ public:
 	bool marioMetPauline(Mario& mario) override;
 	GameState getGameState() const { return currentState; }
 	void saveFiles();
+	void clearPreviousFiles();
 };
 
  
