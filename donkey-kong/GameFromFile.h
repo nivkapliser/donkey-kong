@@ -18,6 +18,7 @@ class GameFromFile : public Game
 	
 	void runGame() override;
 	bool showAndLoadBoards() override;
+	int final_board = -1;
 public:
 	GameFromFile(bool _silent) : Game() {
 		setSilent(_silent);
@@ -30,5 +31,8 @@ public:
 	bool checkEnemyEncounters(EnemiesManager& em, Mario& mario) override;
 	bool marioMetPauline(Mario& mario) override;
 	void reportResultError(const std::string& message, const std::string& filename, size_t iteration);
+	int getFinalBoard() { return final_board; }
+	void setFinalBoard(int board) { final_board = board; }
+
 };
 

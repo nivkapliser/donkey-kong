@@ -61,7 +61,10 @@ void GameFromFile::checkNextStage()
 	std::vector<std::string> boardFiles = getBoards();
 	
 
-	if (currentBoardIndex + 1 < boardFiles.size()) {
+	if (currentBoardIndex + 1 < boardFiles.size() || final_board != -1) {
+		if (final_board != -1)
+			return;
+
 		setCurrentBoardIndex(++currentBoardIndex);
 		Board& board = getBoard();
 		Hammer& hammer = getHammer();
@@ -70,8 +73,20 @@ void GameFromFile::checkNextStage()
 		steps = steps.readSteps(createFileName(board.getBoardName(), "steps"));
 		results = results.readResults(createFileName(board.getBoardName(), "results"));
 		if (steps.isEmpty() || results.isEmpty()) {
-			std::cout << "Error while reading steps or results file. Exiting game.\n";
-			Sleep(3000);
+			system("cls");
+			if (getSilent())
+			{
+				if(getFinalBoard() == -1)
+					setFinalBoard(currentBoardIndex + 1);
+				std::cout << "Running in silent mode worked well until screen number " << final_board << std::endl;
+				std::cout << "There is no results file or steps file for screen number "<< final_board << " .Exiting game";
+			}
+			else
+			{
+				std::cout << "Error while reading steps or results file. Exiting game.\n";
+				Sleep(3000);
+				setFinalBoard(currentBoardIndex + 1);
+			}
 			return;
 		}
 		setRandomSeed(steps.getRandomSeed());
