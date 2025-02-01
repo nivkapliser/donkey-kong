@@ -79,15 +79,13 @@ void GameFromFile::checkNextStage()
 }
 
 // Function to check if mario encounters a barrel or ghost
-void GameFromFile::checkEnemyEncounters(EnemiesManager& em, Mario& mario) {
+bool GameFromFile::checkEnemyEncounters(EnemiesManager& em, Mario& mario) {
 	if (em.getEncounters()) {
-		if (results.popResult().second != results.ResultValue::ENC_ENEMY) {
-			reportResultError("Result file does not match enemy encounter", getBoard().getBoardName(), getCurrItr());	
-		}
 		mario.downLives();
-		resetStage();
 		em.setEncounters(false);
+		return true;
 	}
+	return false;
 }
 
 // Function to run the game loop
@@ -102,15 +100,12 @@ void GameFromFile::runGame() {
 	setCurrItr(0);  //reset the itr counter
 	std::pair<int, char> next_step;
 	std::pair<size_t, char> curr_result;
-
 	
 	if (!steps.isEmpty())
 		next_step = steps.popStep();  // gets the first step (if exist)
 
 	// moving loop for mario and barrels
 	for(int i = 0; i < final_itr; i++) { 
-		// increament for the itr counter
-		setCurrItr(getCurrItr() + 1);
 
 		if (!silent) {
 			mario.draw();
@@ -143,7 +138,14 @@ void GameFromFile::runGame() {
 		enemiesManager.move(mario);
 		
 		// if mario encounters a barrel or ghost, reset the stage or game over
-		checkEnemyEncounters(enemiesManager, mario);
+		if (checkEnemyEncounters(enemiesManager, mario))
+		{
+			curr_result = results.popResult();
+			if (curr_result.first != i || curr_result.second != results.ResultValue::ENC_ENEMY) {
+				reportResultError("Result file does not match enemy encounter", getBoard().getBoardName(), getCurrItr());
+			}
+			resetStage();
+		}
 
 		enemiesManager.barrelsActivation(); // reseting the barrel activation	
 
@@ -154,7 +156,8 @@ void GameFromFile::runGame() {
 		// check if mario has fallen 5 lines and reset the stage
 		if (mario.fellTooFar() && mario.isOnFloor()) {
 			explodeMarioAndResetStage(mario);
-			if (results.popResult().second != results.ResultValue::ENC_FALL) {
+			curr_result = results.popResult();
+			if (curr_result.first != i || curr_result.second != results.ResultValue::ENC_FALL) {
 				reportResultError("Result file does not match Mario fell too far", getBoard().getBoardName(), getCurrItr());
 			}
 		}
@@ -163,10 +166,18 @@ void GameFromFile::runGame() {
 		marioMetPauline(mario);
 
 		if (mario.getLives() == 0) {
-			if (!results.isEmpty() && results.popResult().second != results.ResultValue::GAME_LOSE) {
-				reportResultError("Result file does not match game over", getBoard().getBoardName(), getCurrItr());
+			if (!results.isEmpty())
+			{
+				curr_result = results.popResult();
+				if (curr_result.first != i || curr_result.second != results.ResultValue::GAME_LOSE) {
+					reportResultError("Result file does not match game over", getBoard().getBoardName(), getCurrItr());
+				}
+
 			}
+
 		}
+		// increament for the itr counter
+		setCurrItr(getCurrItr() + 1);
 	}
 
 	//// might not needded
@@ -188,11 +199,14 @@ void GameFromFile::reportResultError(const std::string& message, const std::stri
 }
 
 // Function to check if mario has met Pauline
-void GameFromFile::marioMetPauline(Mario& mario) {
+bool GameFromFile::marioMetPauline(Mario& mario) {
 	if (mario.metPauline()) {
-		if (results.popResult().second != results.ResultValue::STAGE_FINISH) {
+		std::pair<size_t, char> curr_result = results.popResult();
+		if (curr_result.first != getCurrItr() || curr_result.second != results.ResultValue::STAGE_FINISH) {
 			reportResultError("Result file does not match finish stage", getBoard().getBoardName(), getCurrItr());
 		}
 		checkNextStage();
+		return true;
 	}
+	return false;
 }

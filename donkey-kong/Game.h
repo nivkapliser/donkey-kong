@@ -47,8 +47,8 @@ public:
 
 	// some virtual functions to be implemented by the derived classes
 	virtual void run() = 0; 
-	virtual void marioMetPauline(Mario& mario) = 0;
-	virtual void checkEnemyEncounters(EnemiesManager& em, Mario& mario) = 0;
+	virtual bool marioMetPauline(Mario& mario) = 0;
+	virtual bool checkEnemyEncounters(EnemiesManager& em, Mario& mario) = 0;
 
 	// getters and setters
 	Mario& getMario() { return mario; } 

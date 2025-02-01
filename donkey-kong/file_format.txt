@@ -1,7 +1,6 @@
 Results format:
-first line - score at the beginning of the stage.
-second line - number of life remained at the beginning of the stage.
-third line - number of line in this file (not include the first, second and third lines).
+first line - number of life remained at the end of the stage.
+second line - number of line in this file (not include the first and second line).
 then:
 saving pairs of <iteration, ResultValue> for each result recorded in the game. 
 the ResultValue can be: {
@@ -13,3 +12,12 @@ the ResultValue can be: {
 	GAME_FINISH,	// game finished for some reason (esc, etc);
 	NO_RESULT 	    // no result
 }
+
+
+Steps format:
+first line - current random seed value
+second line - the total number of iterations
+third line - number of pairs in the lines below.
+then:
+saving pairs of <Iteration, Key> for each valid key pressed in the game. 
+valid keys are: { a, s, d, w, x, p }

@@ -34,8 +34,8 @@ public:
 
 	void run() override;
 	void explodeMarioAndResetStage(Mario& mario);
-	void checkEnemyEncounters(EnemiesManager& em, Mario& mario) override;
-	void marioMetPauline(Mario& mario) override;
+	bool checkEnemyEncounters(EnemiesManager& em, Mario& mario) override;
+	bool marioMetPauline(Mario& mario) override;
 	GameState getGameState() const { return currentState; }
 	void saveFiles();
 };

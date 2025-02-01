@@ -121,7 +121,6 @@ void GameFromKeyboard::runGame() {
 
 	// moving loop for mario and barrels
 	while (currentState == GameState::RUNNING || currentState == GameState::NEXT_STAGE) {
-		setCurrItr(getCurrItr() + 1);
 		mario.draw();
 		enemiesManager.draw(mario);
 		hammer.draw();
@@ -178,6 +177,7 @@ void GameFromKeyboard::runGame() {
 			}
 			break;
 		}
+		setCurrItr(getCurrItr() + 1);
 	}
 }
 
@@ -225,7 +225,7 @@ void GameFromKeyboard::explodeMarioAndResetStage(Mario& mario) {
 }
 
 // Function to check if mario has encountered a barrel or ghost
-void GameFromKeyboard::checkEnemyEncounters(EnemiesManager& em, Mario& mario) {
+bool GameFromKeyboard::checkEnemyEncounters(EnemiesManager& em, Mario& mario) {
 	if (em.getEncounters()) {
 		mario.downLives();
 		results.addResult(getCurrItr(), Results::ResultValue::ENC_ENEMY);
@@ -234,7 +234,9 @@ void GameFromKeyboard::checkEnemyEncounters(EnemiesManager& em, Mario& mario) {
 			currentState = GameState::GAME_OVER;
 		}
 		em.setEncounters(false);
+		return true;
 	}
+	return false;
 }
 
 // Function to save the results and steps to files
@@ -247,9 +249,11 @@ void GameFromKeyboard::saveFiles() {
 }
 
 // Function to check if mario has met Pauline
-void GameFromKeyboard::marioMetPauline(Mario& mario) {
+bool GameFromKeyboard::marioMetPauline(Mario& mario) {
 	if (mario.metPauline()) {
 		currentState = GameState::GAME_WON;
 		results.addResult(getCurrItr(), Results::ResultValue::STAGE_FINISH);
+		return true;
 	}
+	return false;
 }

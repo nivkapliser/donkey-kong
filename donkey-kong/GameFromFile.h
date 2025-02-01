@@ -27,8 +27,8 @@ public:
 
 	void run() override;
 	void checkNextStage() override;
-	void checkEnemyEncounters(EnemiesManager& em, Mario& mario) override;
-	void marioMetPauline(Mario& mario) override;
+	bool checkEnemyEncounters(EnemiesManager& em, Mario& mario) override;
+	bool marioMetPauline(Mario& mario) override;
 	void reportResultError(const std::string& message, const std::string& filename, size_t iteration);
 };
 
