@@ -2,7 +2,7 @@
 
 // Function to show the menu and get user input
 void GameFromKeyboard::showMenu() {
-	MenuGraphics menuGraphics = getMenuGraphics();
+	MenuGraphics& menuGraphics = getMenuGraphics();
 	char choice;
 	bool run = true;
 	std::string input; // to clear the buffer

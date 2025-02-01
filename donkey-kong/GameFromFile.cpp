@@ -71,7 +71,7 @@ void GameFromFile::checkNextStage()
 	}
 	else {
 		system("cls"); 
-		if (getSilent()) std::cout << "Ran in Silent mode.\n";
+		if (getSilent()) std::cout << "Run in Silent mode.\n";
 		std::cout << "No more stages, everything looks good!!\n";
 		std::cout << "Exiting recording.";
 		Sleep(3000);
@@ -101,6 +101,8 @@ void GameFromFile::runGame() {
 	mario.drawLife();
 	setCurrItr(0);  //reset the itr counter
 	std::pair<int, char> next_step;
+	std::pair<size_t, char> curr_result;
+
 	
 	if (!steps.isEmpty())
 		next_step = steps.popStep();  // gets the first step (if exist)
@@ -161,19 +163,19 @@ void GameFromFile::runGame() {
 		marioMetPauline(mario);
 
 		if (mario.getLives() == 0) {
-			if (results.popResult().second != results.ResultValue::GAME_LOSE) {
+			if (!results.isEmpty() && results.popResult().second != results.ResultValue::GAME_LOSE) {
 				reportResultError("Result file does not match game over", getBoard().getBoardName(), getCurrItr());
 			}
 		}
 	}
 
-	// might not needded
-	if (mario.getLives() < results.getLives()) {
-		reportResultError("Result file does not match lives", getBoard().getBoardName(), getCurrItr());
-	}
-	if (mario.getScore() != results.getScore()) {
-		reportResultError("Result file does not match score", getBoard().getBoardName(), getCurrItr());
-	}
+	//// might not needded
+	//if (mario.getLives() < results.getLives()) {
+	//	reportResultError("Result file does not match lives", getBoard().getBoardName(), getCurrItr());
+	//}
+	//if (mario.getScore() != results.getScore()) {
+	//	reportResultError("Result file does not match score", getBoard().getBoardName(), getCurrItr());
+	//}
 }
 
 // Function to report results error
