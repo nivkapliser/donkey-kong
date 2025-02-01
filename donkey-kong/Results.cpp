@@ -3,6 +3,9 @@
 // Function to read the results from a file
 Results Results::readResults(const std::string& filename) {
 	std::ifstream results_file(filename);
+	if (!results_file.is_open()) {
+		return Results();
+	}
 	Results results;
 	size_t size;
 	results_file >> results.score;

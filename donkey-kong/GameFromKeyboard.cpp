@@ -256,21 +256,21 @@ void GameFromKeyboard::clearPreviousFiles()
 
 		try {
 			for (const auto& entry : fs::directory_iterator(".")) {
-				if (!entry.is_regular_file()) continue;  // Skip directories and special files
+				if (!entry.is_regular_file()) continue;  // skip directories and special files
 
 				std::string fileName = entry.path().filename().string();
 
-				// Check if the filename ends with "steps" or "results"
+				// check if the filename ends with "steps" or "results"
 				if (fileName.size() >= 5 &&
 					(fileName.substr(fileName.size() - 5) == "steps" ||
 						fileName.substr(fileName.size() - 7) == "results")) {
 
-					fs::remove(entry.path());  // Delete the file safely
+					fs::remove(entry.path());  // delete the file safely
 				}
 			}
 		}
 		catch (...) {
-			// Silently catch all exceptions (no aborts)
+			// silently catch all exceptions (no aborts)
 		}
 }
 

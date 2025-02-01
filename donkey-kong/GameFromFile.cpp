@@ -3,8 +3,15 @@
 // Function to run the game from file
 void GameFromFile::run() {
 	showAndLoadBoards();
+
 	steps = steps.readSteps(createFileName(getBoard().getBoardName(), "steps")); //reading the steps
 	results = results.readResults(createFileName(getBoard().getBoardName(), "results")); //reading the results
+	if (steps.isEmpty() || results.isEmpty()) {
+		std::cout << "Error while reading steps or results file. Exiting game.\n";
+		Sleep(3000);
+		return;
+	}
+	
 	setRandomSeed(steps.getRandomSeed());  //random seed set
 	initGame();
 	getMario().setLives(results.getLives());
@@ -62,6 +69,11 @@ void GameFromFile::checkNextStage()
 		board.readBoard(boardFiles[currentBoardIndex], mario, hammer);
 		steps = steps.readSteps(createFileName(board.getBoardName(), "steps"));
 		results = results.readResults(createFileName(board.getBoardName(), "results"));
+		if (steps.isEmpty() || results.isEmpty()) {
+			std::cout << "Error while reading steps or results file. Exiting game.\n";
+			Sleep(3000);
+			return;
+		}
 		setRandomSeed(steps.getRandomSeed());
 
 		resetStage();
@@ -179,14 +191,6 @@ void GameFromFile::runGame() {
 		// increament for the itr counter
 		setCurrItr(getCurrItr() + 1);
 	}
-
-	//// might not needded
-	//if (mario.getLives() < results.getLives()) {
-	//	reportResultError("Result file does not match lives", getBoard().getBoardName(), getCurrItr());
-	//}
-	//if (mario.getScore() != results.getScore()) {
-	//	reportResultError("Result file does not match score", getBoard().getBoardName(), getCurrItr());
-	//}
 }
 
 // Function to report results error
