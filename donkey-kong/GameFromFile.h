@@ -19,6 +19,7 @@ class GameFromFile : public Game
 	void runGame() override;
 	bool showAndLoadBoards() override;
 	int final_board = -1;
+
 public:
 	GameFromFile(bool _silent) : Game() {
 		setSilent(_silent);

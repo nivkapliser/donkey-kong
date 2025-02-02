@@ -96,11 +96,11 @@ public:
 		std::cout << ' ';
 	}
 	void drawLife() const {
-		gotoxy(pBoard->getLegendX() + 7, pBoard->getLegendY()); // should be const.. 
+		gotoxy(pBoard->getLegendX() + 7, pBoard->getLegendY()); 
 		std::cout << lives;
 	}
 	void drawScore() const {
-		gotoxy(pBoard->getLegendX() + 18, pBoard->getLegendY()); // should be const.. 
+		gotoxy(pBoard->getLegendX() + 18, pBoard->getLegendY()); 
 		std::cout << score;
 	}
 

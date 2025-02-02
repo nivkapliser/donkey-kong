@@ -29,9 +29,9 @@ public:
 	static Results readResults(const std::string& filename);
 	void saveResults(const std::string& filename) const;
 	void addResult(size_t iteration, ResultValue result) { if (save) { results.push_back({ iteration, result }); } }
-	void pushResult(size_t iteration, ResultValue result) { results.push_back({ iteration, result }); } // without the save check for the 'from file' game
-	std::pair<size_t, ResultValue> popResult(); // for load
-	bool isEmpty() { return results.empty(); } 
+	void pushResult(size_t iteration, ResultValue result) { results.push_back({ iteration, result }); } 
+	std::pair<size_t, ResultValue> popResult(); 
+	bool isEmpty() const { return results.empty(); } 
 	bool isFinishedBy(size_t itr) const { return results.empty() || results.back().first <= itr; }
 	void clearResults() { results.clear(); }
 	int getLives() const { return life; }

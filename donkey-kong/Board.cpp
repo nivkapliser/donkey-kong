@@ -174,7 +174,7 @@ int Board::setStartPositions(std::string line, Mario& mario, Hammer& hammer, int
 			ghostsY.push_back(i);
 			set_table[GHOST] = 1;
 		}
-		else if (line[j] == 'X') { // need to add to the set_table
+		else if (line[j] == 'X') {
 			if (j == 0)
 				return -1;
 			boardFile[i][j] = ' ';

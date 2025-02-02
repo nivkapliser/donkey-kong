@@ -45,7 +45,7 @@ class Board
 	std::string curr_board_name;
 	MenuGraphics* menuGraphics;
 	bool silent = false;
-	bool loadMode = false; // might not need this
+	bool loadMode = false; 
 
 public:
 	Board(MenuGraphics* mg) : menuGraphics(mg) { 
@@ -59,10 +59,10 @@ public:
 	int getLegendY() const { return legendY; }
 	static int getMaxX() { return MAX_X; }
 	static int getMaxY() { return MAX_Y; }
-	int getGhostX(int index) { return ghostsX[index]; }
-	int getGhostY(int index) { return ghostsY[index]; }
-	int getSpacialGhostX(int index) { return spaGhostsX[index]; }
-	int getSpacialGhostY(int index) { return spaGhostsY[index]; }
+	int getGhostX(int index) const { return ghostsX[index]; }
+	int getGhostY(int index) const { return ghostsY[index]; }
+	int getSpacialGhostX(int index) const { return spaGhostsX[index]; }
+	int getSpacialGhostY(int index) const { return spaGhostsY[index]; }
 	int getDonkeyKongX() const { return donkeyX; }
 	int getDonkeyKongY() const { return donkeyY; }
 	size_t getNumGhosts() const { return ghostsX.size(); }

@@ -13,7 +13,7 @@
 
 class GameFromKeyboard : public Game
 {
-	// managing the game state - maybe only in gameFromKeyboard
+	// managing the game state 
 	enum class GameState { MENU, RUNNING, PAUSED, RESUME, GAME_OVER, GAME_WON, NEXT_STAGE, FINISH };
 	GameState currentState = GameState::MENU; // the default starting state
 	

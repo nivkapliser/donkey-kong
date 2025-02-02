@@ -1,5 +1,7 @@
 #include "Ghost.h"
 
+
+// so we can avoid ghost meeting efficiently for all ghosts
 Ghost* Ghost::ghostsLocationsMap[26][80]; //static decleration
 
 

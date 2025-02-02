@@ -92,7 +92,6 @@ void SpacialGhost::deactivation() {
 
 // Function to reset the special ghost
 void SpacialGhost::reset(Board& board, Mario* pMario) {
-	//setMario(pMario);
 	setBoard(board);
 }
 

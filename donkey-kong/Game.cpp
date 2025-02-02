@@ -107,7 +107,7 @@ void Game::checkHammer(Mario& mario, Hammer& hammer) {
 void Game::smashEnemy(EnemiesManager& em, Mario& mario) {
 	if (mario.getSmash()) {
 		em.smashEnemies(mario);
-		mario.smashEnemies(); // might need to send the load mode
+		mario.smashEnemies(); 
 	}
 }
 

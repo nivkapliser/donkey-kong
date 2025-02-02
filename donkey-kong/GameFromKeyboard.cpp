@@ -68,7 +68,6 @@ void GameFromKeyboard::run() {
 			break;
 		case GameState::RUNNING:	// to start the game movement loop
 			initGame();
-			//check
 			results.setLives(mario.getLives());
 			results.setScore(mario.getScore());
 			runGame();
@@ -95,7 +94,6 @@ void GameFromKeyboard::run() {
 			break;
 		case GameState::NEXT_STAGE:	// moving on to the next stage after winning
 			resetStage();
-			//check
 			results.setLives(mario.getLives());
 			results.setScore(mario.getScore());
 			runGame();
@@ -173,7 +171,7 @@ void GameFromKeyboard::runGame() {
 		marioMetPauline(mario);
 
 		if (currentState == GameState::GAME_OVER) {
-			if (save) // maybe not needed
+			if (save) 
 			{
 				results.addResult(getCurrItr(), Results::ResultValue::GAME_LOSE);
 			}

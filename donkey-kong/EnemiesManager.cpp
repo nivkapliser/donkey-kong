@@ -20,7 +20,6 @@ void EnemiesManager::reset(Board& board, Mario* pMario) {
 		ghost->reset(board);
         ghost->setX(board.getGhostX(i));
         ghost->setY(board.getGhostY(i));
-		//ghost->setGhostInLocationMap();
         enemies.push_back(std::move(ghost));
     }
 

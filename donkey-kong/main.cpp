@@ -5,13 +5,6 @@
 #include <conio.h>
 #include <Windows.h>
 
-/*
-TODO:
-1. READ FROM MAIN ARGUMENTS ---------------V
-6. CHECK IF FUNCTIONS NEED TO BE CONST
-8. CHECK BUGS
-*/
-
 int main(int argc, char** argv)
 {
 	bool isLoad = argc > 1 && std::string(argv[1]) == "-load";
